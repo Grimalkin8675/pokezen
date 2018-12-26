@@ -1,0 +1,22 @@
+version: '3'
+
+# production
+
+networks:
+  pokezen:
+    ipam:
+      config:
+        - subnet: 10.16.0.0/24
+
+services:
+  scalAPI:
+    image: hseeberger/scala-sbt:11.0.1_2.12.8_1.2.7
+    hostname: scalAPI
+    networks:
+      - pokezen
+    volumes:
+      - ./back:/scalAPI
+    working_dir: /scalAPI
+    # ports:
+    #   - 63422:8080 # host:container
+    command: [sbt, run]

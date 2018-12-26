@@ -1,0 +1,10 @@
+version: '3'
+
+# development
+
+services:
+  scalAPI:
+    command: sbt
+    container_name: pokezen_scalAPI
+    stdin_open: true
+    tty: true
