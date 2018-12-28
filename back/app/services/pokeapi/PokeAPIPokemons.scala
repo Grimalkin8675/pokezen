@@ -6,7 +6,9 @@ import play.api.libs.functional.syntax._
 import pokezen.Name
 
 
-case class PokeAPIPokemons(pokemons: List[PokeAPIPokemon])
+case class PokeAPIPokemons(pokemons: List[PokeAPIPokemon]) {
+  def toNames: List[Name] = this.pokemons.map(_.toName)
+}
 
 object PokeAPIPokemons {
   implicit val pokeAPIPokemonsReads: Reads[PokeAPIPokemons] = (
