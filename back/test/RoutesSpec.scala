@@ -9,11 +9,7 @@ import tests.MockSearchService
 import pokezen.controllers.SearcheableService
 
 
-class ApplicationSpec extends PlaySpec with GuiceOneAppPerTest {
-  override def fakeApplication() = new GuiceApplicationBuilder()
-    .overrides(bind[SearcheableService].to[MockSearchService])
-    .build()
-
+class RoutesSpec extends PlaySpec with GuiceOneAppPerTest {
   "Routes" should {
     "send 404 on a bad request (/)" in {
       route(app, FakeRequest(GET, "/"))
@@ -24,7 +20,16 @@ class ApplicationSpec extends PlaySpec with GuiceOneAppPerTest {
       route(app, FakeRequest(GET, "/boum"))
         .map(status(_)) mustBe Some(NOT_FOUND)
     }
+  }
+}
 
+
+class RoutesWithMockSpec extends PlaySpec with GuiceOneAppPerTest {
+  override def fakeApplication() = new GuiceApplicationBuilder()
+    .overrides(bind[SearcheableService].to[MockSearchService])
+    .build()
+
+  "Routes with mock" should {
     "send 200 on a valid request (/search/whatever)" in {
       route(app, FakeRequest(GET, "/search/whatever"))
         .map(status(_)) mustBe Some(OK)
