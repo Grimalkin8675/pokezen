@@ -8,5 +8,6 @@ libraryDependencies ++= Seq(
   ws,
   ehcache,
   "org.scalacheck" %% "scalacheck" % "1.14.0" % Test,
-  "org.scalatestplus.play" %% "scalatestplus-play" % "3.0.0" % "test"
+  "org.scalatestplus.play" %% "scalatestplus-play" % "3.0.0" % Test,
+  "de.leanovate.play-mockws" %% "play-mockws" % "2.6.2" % Test
 )
