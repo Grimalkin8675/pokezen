@@ -6,21 +6,16 @@ import play.api.mvc._
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{stubControllerComponents, contentAsString}
 
+import tests.MockSearchService
 import pokezen.Name
 import pokezen.controllers.{SearcheableService, SearchController}
 
 
 object SearchControllerSpec extends Properties("SearchController") {
   property("searchPokemon") = {
-    case class SearchServiceMock(
-        ec: ExecutionContext) extends SearcheableService {
-      def searchPokemon(searchString: String): Future[List[Name]] =
-        Future { List(Name("foo"), Name("bar")) }(ec)
-    }
-
     val controller: SearchController =
       SearchController(
-        SearchServiceMock(ExecutionContext.global),
+        MockSearchService(),
         stubControllerComponents(),
         ExecutionContext.global)
     val result: Future[Result] =
