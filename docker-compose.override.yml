@@ -3,8 +3,20 @@ version: '3'
 # development
 
 services:
-  scalAPI:
-    command: sbt
-    container_name: pokezen_scalAPI
+  scalapi:
+    container_name: pokezen_scalapi
+    volumes:
+      - ./back:/scalapi
+    working_dir: /scalapi
+    entrypoint: sbt
+    stdin_open: true
+    tty: true
+
+  reactfront:
+    container_name: pokezen_reactfront
+    volumes:
+      - ./front:/reactfront
+    working_dir: /reactfront
+    entrypoint: bash
     stdin_open: true
     tty: true

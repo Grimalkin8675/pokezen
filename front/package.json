@@ -1,0 +1,21 @@
+{
+  "name": "pokezen-front",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "start": "mkdir -p dist && cp index.html dist && http-server dist",
+    "build": "mkdir -p dist && cp index.html dist",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Grimalkin8675/pokezen.git"
+  },
+  "author": "Axel Nussbaumer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Grimalkin8675/pokezen/issues"
+  },
+  "homepage": "https://github.com/Grimalkin8675/pokezen#readme"
+}
