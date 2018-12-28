@@ -10,4 +10,4 @@ WORKDIR $BASEDIR
 COPY . .
 RUN sbt clean stage
 
-ENTRYPOINT target/universal/stage/bin/pokezen
+ENTRYPOINT target/universal/stage/bin/pokezen-back
