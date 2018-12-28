@@ -1,0 +1,1 @@
+GET     /search/:searchString       pokezen.controllers.SearchController.searchPokemon(searchString)
