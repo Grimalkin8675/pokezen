@@ -2,7 +2,7 @@
   "name": "pokezen-front",
   "version": "1.0.0",
   "description": "",
-  "main": "index.ts",
+  "main": "app/index.ts",
   "scripts": {
     "start": "mkdir -p dist && cp index.html dist && http-server dist",
     "build": "mkdir -p dist && cp index.html dist",
