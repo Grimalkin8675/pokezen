@@ -24,4 +24,4 @@ services:
     networks:
       - pokezen
     ports:
-      - 51265:8080
+      - 51265:51265
