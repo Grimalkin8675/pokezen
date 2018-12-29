@@ -9,6 +9,7 @@ RUN mkdir $BASEDIR
 WORKDIR $BASEDIR
 COPY . .
 RUN npm i --production
+RUN npm run clean
 RUN npm run build
 RUN npm install http-server -g
 

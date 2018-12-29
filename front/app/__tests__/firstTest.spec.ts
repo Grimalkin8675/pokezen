@@ -1,3 +1,3 @@
-test('2 == 3 fails', () => {
-    expect(2).not.toBe(3)
+test('2 == 2', () => {
+    expect(2).toBe(2);
 });
