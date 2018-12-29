@@ -22,7 +22,11 @@
   },
   "homepage": "https://github.com/Grimalkin8675/pokezen#readme",
   "devDependencies": {
+    "@types/enzyme": "^3.1.15",
+    "@types/enzyme-adapter-react-16": "^1.0.3",
     "@types/jest": "^23.3.10",
+    "enzyme": "^3.8.0",
+    "enzyme-adapter-react-16": "^1.7.1",
     "jest": "^23.6.0",
     "ts-jest": "^23.10.5",
     "tslint": "^5.12.0",
