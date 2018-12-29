@@ -17,5 +17,9 @@
   "bugs": {
     "url": "https://github.com/Grimalkin8675/pokezen/issues"
   },
-  "homepage": "https://github.com/Grimalkin8675/pokezen#readme"
+  "homepage": "https://github.com/Grimalkin8675/pokezen#readme",
+  "devDependencies": {
+    "babel-jest": "^23.6.0",
+    "jest": "^23.6.0"
+  }
 }
