@@ -1,7 +1,7 @@
 {
   "name": "pokezen-front",
   "version": "1.0.0",
-  "description": "",
+  "description": "Pokezen frontend",
   "main": "app/index.tsx",
   "scripts": {
     "start": "webpack-dev-server --config webpack.dev.js --hot",
