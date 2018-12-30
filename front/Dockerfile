@@ -11,6 +11,5 @@ COPY . .
 RUN npm i --production
 RUN npm run clean
 RUN npm run build
-RUN npm install http-server -g
 
-ENTRYPOINT http-server dist -p 51265
+ENTRYPOINT npm run serve

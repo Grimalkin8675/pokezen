@@ -9,7 +9,12 @@ module.exports = merge(common, {
     devtool: 'inline-source-map',
     devServer: {
         port: 51265,
-        contentBase: common.output.path,
+        contentBase: path.resolve(__dirname, 'dist/'),
+        overlay: {
+            errors: true,
+            warnings: true
+        },
+        historyApiFallback: true,
         inline: true, // iframe or inline script
         host: '0.0.0.0',
     },
