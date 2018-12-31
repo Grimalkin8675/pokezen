@@ -15,7 +15,9 @@ describe(AppRouter, () => {
                 </MemoryRouter>
             );
             const searchPokemon = shallow(<SearchPokemon/>);
-            expect(router.html().includes(searchPokemon.html())).toBe(true);
+            const routerIncludesSearchPokemon =
+                router.html().includes(searchPokemon.html());
+            expect(routerIncludesSearchPokemon).toBe(true);
         });
     });
 });
