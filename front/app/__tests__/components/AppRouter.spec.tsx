@@ -9,7 +9,7 @@ import NotFound404 from '../../components/NotFound404';
 
 describe(AppRouter, () => {
     describe('route /', () => {
-        const defaultRoute = shallow(
+        const root = shallow(
             <MemoryRouter initialEntries={['/']}>
                 <AppRouter/>
             </MemoryRouter>
@@ -17,16 +17,31 @@ describe(AppRouter, () => {
 
         it('should contain SearchPokemon component', () => {
             const searchPokemon = shallow(<SearchPokemon/>);
-            const defaultRouteIncludesSearchPokemon =
-                defaultRoute.html().includes(searchPokemon.html());
-            expect(defaultRouteIncludesSearchPokemon).toBe(true);
+            const rootIncludesSearchPokemon =
+                root.html().includes(searchPokemon.html());
+            expect(rootIncludesSearchPokemon).toBe(true);
         });
 
         it('shouldn\'t contain NotFound404 component', () => {
             const notFound404 = shallow(<NotFound404/>);
-            const defaultRouteIncludesNotFound404 =
-                defaultRoute.html().includes(notFound404.html());
-            expect(defaultRouteIncludesNotFound404).toBe(false);
+            const rootIncludesNotFound404 =
+                root.html().includes(notFound404.html());
+            expect(rootIncludesNotFound404).toBe(false);
+        });
+    });
+
+    describe('route /kaboum', () => {
+        const kaboum = shallow(
+            <MemoryRouter initialEntries={['/kaboum']}>
+                <AppRouter/>
+            </MemoryRouter>
+        );
+
+        it('should contain NotFound404 component', () => {
+            const notFound404 = shallow(<NotFound404/>);
+            const kaboumIncludesNotFound404 =
+                kaboum.html().includes(notFound404.html());
+            expect(kaboumIncludesNotFound404).toBe(true);
         });
     });
 });
