@@ -4,7 +4,7 @@ import { MemoryRouter } from 'react-router-dom';
 
 import AppRouter from '../../components/AppRouter';
 import SearchPokemon from '../../components/SearchPokemon';
-import NotFound404 from '../../components/NotFound404';
+import NotMatch from '../../components/NotMatch';
 
 
 describe(AppRouter, () => {
@@ -22,11 +22,11 @@ describe(AppRouter, () => {
             expect(rootIncludesSearchPokemon).toBe(true);
         });
 
-        it('shouldn\'t contain NotFound404 component', () => {
-            const notFound404 = shallow(<NotFound404/>);
-            const rootIncludesNotFound404 =
-                root.html().includes(notFound404.html());
-            expect(rootIncludesNotFound404).toBe(false);
+        it('shouldn\'t contain NotMatch component', () => {
+            const noMatch = shallow(<NotMatch/>);
+            const rootIncludesNotMatch =
+                root.html().includes(noMatch.html());
+            expect(rootIncludesNotMatch).toBe(false);
         });
     });
 
@@ -37,11 +37,11 @@ describe(AppRouter, () => {
             </MemoryRouter>
         );
 
-        it('should contain NotFound404 component', () => {
-            const notFound404 = shallow(<NotFound404/>);
-            const kaboumIncludesNotFound404 =
-                kaboum.html().includes(notFound404.html());
-            expect(kaboumIncludesNotFound404).toBe(true);
+        it('should contain NotMatch component', () => {
+            const noMatch = shallow(<NotMatch/>);
+            const kaboumIncludesNotMatch =
+                kaboum.html().includes(noMatch.html());
+            expect(kaboumIncludesNotMatch).toBe(true);
         });
     });
 });
