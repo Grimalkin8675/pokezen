@@ -10,7 +10,7 @@ describe(SearchPokemon, () => {
             const searchPokemon = shallow(<SearchPokemon />);
             expect(searchPokemon.contains(
                 <input type='text' placeholder='Search for pokemons!' />)
-            ).toBeTruthy();
+            ).toBe(true);
         });
     });
 });
