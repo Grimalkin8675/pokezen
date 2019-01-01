@@ -5,6 +5,7 @@ import { MemoryRouter } from 'react-router-dom';
 import AppRouter from '../../components/AppRouter';
 import SearchPokemon from '../../components/SearchPokemon';
 import NotMatch from '../../components/NotMatch';
+import pokemonsGetter from '../../__mocks__/pokemonsGetter';
 
 
 describe(AppRouter, () => {
@@ -16,7 +17,9 @@ describe(AppRouter, () => {
         );
 
         it('should contain SearchPokemon component', () => {
-            const searchPokemon = shallow(<SearchPokemon/>);
+            const searchPokemon = shallow(
+                <SearchPokemon getter={pokemonsGetter}/>
+            );
             const rootIncludesSearchPokemon =
                 root.html().includes(searchPokemon.html());
             expect(rootIncludesSearchPokemon).toBe(true);

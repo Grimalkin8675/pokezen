@@ -1,7 +1,13 @@
 import * as React from 'react';
 
+import { IPokemonsGetter } from '../services/ScalAPIService';
 
-export default class SearchPokemon extends React.Component {
+
+interface IProps {
+    getter: IPokemonsGetter;
+}
+
+export default class SearchPokemon extends React.Component<IProps> {
     render() {
         return (
             <div className='SearchPokemon'>
