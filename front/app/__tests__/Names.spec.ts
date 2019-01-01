@@ -6,7 +6,14 @@ describe(Names, () => {
     describe('constructor', () => {
         it('should construct', () => {
             expect(new Names(new Name('foo'), new Name('bar')))
-                .toBeInstanceOf(Names);
+            .toBeInstanceOf(Names);
+        });
+    });
+
+    describe('fromAny', () => {
+        it('should be valid for a string[]', () => {
+            expect(Names.fromAny(['foo', 'bar']))
+            .toEqual(new Names(new Name('foo'), new Name('bar')));
         });
     });
 });
