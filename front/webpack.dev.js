@@ -9,7 +9,7 @@ module.exports = merge(common, {
     devtool: 'inline-source-map',
     devServer: {
         port: 51265,
-        contentBase: path.resolve(__dirname, 'dist/'),
+        contentBase: common.output.path,
         overlay: {
             errors: true,
             warnings: true
