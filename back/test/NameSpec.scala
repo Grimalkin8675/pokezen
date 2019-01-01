@@ -8,8 +8,6 @@ import pokezen.Name
 object NameSpec extends Properties("Name") {
   property("name") = Name("foo").name == "foo"
 
-  property("contains(string)") = Name("bafooba").contains("foo")
-
   property(" stringifying") =
     Json.toJson(Name("foo")).toString == """"foo""""
 
