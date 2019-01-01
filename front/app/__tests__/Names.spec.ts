@@ -11,9 +11,17 @@ describe(Names, () => {
     });
 
     describe('fromAny', () => {
-        it('should be valid for a string[]', () => {
+        it('should parse a string[] to Names', () => {
             expect(Names.fromAny(['foo', 'bar']))
             .toEqual(new Names(new Name('foo'), new Name('bar')));
+        });
+
+        it('should be null for a boolean', () => {
+            expect(Names.fromAny(true)).toBeNull();
+        });
+
+        it('should be null for a number Array', () => {
+            expect(Names.fromAny([1,2,3])).toBeNull();
         });
     });
 });
