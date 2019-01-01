@@ -2,9 +2,9 @@ import Name from '../Name';
 
 
 describe(Name, () => {
-    describe('constructor', () => {
+    describe('toString()', () => {
         it('should wrap the name', () => {
-            expect(new Name('foo').name).toBe('foo');
+            expect(new Name('foo').toString()).toBe('foo');
         });
     });
 });
