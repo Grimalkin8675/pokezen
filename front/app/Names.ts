@@ -2,7 +2,7 @@ import Name from './Name';
 
 
 export default class Names {
-    names: Name[];
+    private names: Name[];
 
     constructor (...names: Name[]) {
         this.names = names;
@@ -16,5 +16,13 @@ export default class Names {
             return new Names(...names);
         }
         return null;
+    }
+
+    isEmpty(): boolean {
+        return this.names.length === 0;
+    }
+
+    map<T>(f: (name: Name, i: number) => T): T[] {
+        return this.names.map(f);
     }
 }
