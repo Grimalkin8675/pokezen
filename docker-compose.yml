@@ -21,6 +21,7 @@ services:
   reactfront:
     build: ./front
     image: pokezen-front:latest
+    hostname: reactfront
     networks:
       - pokezen
     ports:
