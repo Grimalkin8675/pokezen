@@ -1,3 +1,6 @@
+import { upperFirst } from 'lodash';
+
+
 export default class Name {
     private name: string;
 
@@ -7,5 +10,9 @@ export default class Name {
 
     toString(): string {
         return this.name;
+    }
+
+    upper(): Name {
+        return new Name(upperFirst(this.name));
     }
 }
