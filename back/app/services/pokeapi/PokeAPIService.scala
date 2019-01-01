@@ -16,20 +16,17 @@ case class PokeAPIService @Inject()(
                              with SearcheableService {
   implicit val implicitEc = ec
 
-  def searchPokemon(searchString: String): Future[List[Name]] = {
+  def pokemons(): Future[List[Name]] = {
     def responseToNames(response: WSResponse): List[Name] =
       Json.parse(response.body).validate[PokeAPIPokemons] match {
         case s: JsSuccess[PokeAPIPokemons] => s.get.toNames
-        case e: JsError => throw new Exception("problem while parsing pokeapi's response")
+        case e: JsError =>
+          throw new Exception("problem while parsing pokeapi's response")
       }
-
-    def matchingName(searchString: String)(name: Name): Boolean =
-      name.contains(searchString)
 
     ws.url("https://pokeapi.co/api/v2/pokemon")
       .addHttpHeaders("Accept" -> "application/json")
       .get()
       .map(responseToNames)
-      .map(_.filter(matchingName(searchString)))
   }
 }

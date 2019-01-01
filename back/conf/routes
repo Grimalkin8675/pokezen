@@ -1,1 +1,1 @@
-GET     /search/:searchString       pokezen.controllers.SearchController.searchPokemon(searchString)
+GET     /pokemons                   pokezen.controllers.SearchController.pokemons()

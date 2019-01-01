@@ -19,7 +19,7 @@ object SearchControllerSpec extends Properties("SearchController") {
         stubControllerComponents(),
         ExecutionContext.global)
     val result: Future[Result] =
-      controller.searchPokemon("whatever").apply(FakeRequest())
+      controller.pokemons().apply(FakeRequest())
     val bodyText: String = contentAsString(result)(1 seconds)
     bodyText == """["foo","bar"]"""
   }

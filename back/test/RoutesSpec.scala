@@ -30,8 +30,8 @@ class RoutesWithMockSpec extends PlaySpec with GuiceOneAppPerTest {
     .build()
 
   "Routes with mock" should {
-    "send 200 on a valid request (/search/whatever)" in {
-      route(app, FakeRequest(GET, "/search/whatever"))
+    "send 200 on a valid request (/pokemons)" in {
+      route(app, FakeRequest(GET, "/pokemons"))
         .map(status(_)) mustBe Some(OK)
     }
   }

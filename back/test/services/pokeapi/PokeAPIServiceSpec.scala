@@ -39,14 +39,15 @@ object PokeAPIServiceSpec extends Properties("PokeAPIService") {
     }
   """
 
-  property("searchPokemon(searchString)") = {
+  property("pokemons()") = {
     val ws = MockWS {
       case (GET, "https://pokeapi.co/api/v2/pokemon") => Action {
         Ok(Json.parse(json))
       }
     }
     val futureResult =
-      PokeAPIService(ws, ExecutionContext.global).searchPokemon("foo")
-    Await.result(futureResult, 1 seconds) == List(Name("foo"), Name("bafooba"))
+      PokeAPIService(ws, ExecutionContext.global).pokemons()
+    Await.result(futureResult, 1 seconds) ==
+      List(Name("foo"), Name("bar"), Name("bafooba"))
   }
 }
