@@ -1,6 +1,6 @@
-import Name from '../Name';
+import Names from '../Names';
 
 
 export interface IPokemonsGetter {
-    getPokemons: () => Promise<Name[]>;
+    pokemons: Promise<Names>;
 }
