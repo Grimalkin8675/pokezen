@@ -7,7 +7,7 @@ import play.api.libs.ws._
 import play.api.libs.json._
 
 import pokezen.controllers.SearcheableService
-import pokezen.Name
+import pokezen.{Name, NameOrdering}
 
 
 case class PokeAPIService @Inject()(
@@ -27,6 +27,6 @@ case class PokeAPIService @Inject()(
     ws.url("https://pokeapi.co/api/v2/pokemon")
       .addHttpHeaders("Accept" -> "application/json")
       .get()
-      .map(responseToNames)
+      .map(responseToNames(_).sorted(NameOrdering))
   }
 }

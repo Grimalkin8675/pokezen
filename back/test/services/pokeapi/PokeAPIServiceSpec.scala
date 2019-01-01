@@ -17,29 +17,68 @@ import pokezen.services.pokeapi.PokeAPIService
 
 
 object PokeAPIServiceSpec extends Properties("PokeAPIService") {
-  val json = """
-    {
-      "count": 455,
-      "next": null,
-      "previous": null,
-      "results": [
-        {
-          "name": "foo",
-          "url": "some url"
-        },
-        {
-          "name": "bar",
-          "url": "other url"
-        },
-        {
-          "name": "bafooba",
-          "url": "another url"
-        }
-      ]
+  property("pokemons() should return pokemon names") = {
+    val json = """
+      {
+        "count": 455,
+        "next": null,
+        "previous": null,
+        "results": [
+          {
+            "name": "foo",
+            "url": "some url"
+          },
+          {
+            "name": "bar",
+            "url": "other url"
+          },
+          {
+            "name": "bafooba",
+            "url": "another url"
+          }
+        ]
+      }
+    """
+    val ws = MockWS {
+      case (GET, "https://pokeapi.co/api/v2/pokemon") => Action {
+        Ok(Json.parse(json))
+      }
     }
-  """
+    val futureResult =
+      PokeAPIService(ws, ExecutionContext.global).pokemons()
+    val res = Await.result(futureResult, 1 seconds)
+    (   res.size == 3
+    &&  res.contains(Name("foo"))
+    &&  res.contains(Name("bar"))
+    &&  res.contains(Name("bafooba")))
+  }
 
-  property("pokemons()") = {
+  property("pokemons() should return sorted pokemon names") = {
+    val json = """
+      {
+        "count": 455,
+        "next": null,
+        "previous": null,
+        "results": [
+          {
+            "name": "ghi",
+            "url": "some url"
+          },
+          {
+            "name": "abcd",
+            "url": "other url"
+          },
+          {
+            "name": "abc",
+            "url": "other url"
+          },
+          {
+            "name": "def",
+            "url": "another url"
+          }
+        ]
+      }
+    """
     val ws = MockWS {
       case (GET, "https://pokeapi.co/api/v2/pokemon") => Action {
         Ok(Json.parse(json))
@@ -48,6 +87,6 @@ object PokeAPIServiceSpec extends Properties("PokeAPIService") {
     val futureResult =
       PokeAPIService(ws, ExecutionContext.global).pokemons()
     Await.result(futureResult, 1 seconds) ==
-      List(Name("foo"), Name("bar"), Name("bafooba"))
+      List(Name("abc"), Name("abcd"), Name("def"), Name("ghi"))
   }
 }
