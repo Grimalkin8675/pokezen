@@ -10,23 +10,22 @@ import pokemonsGetter from '../../__mocks__/pokemonsGetter';
 
 describe(AppRouter, () => {
     describe('route /', () => {
-        const root = shallow(
-            <MemoryRouter initialEntries={['/']}>
-                <AppRouter/>
-            </MemoryRouter>
-        );
+        const rootRouter = (child: JSX.Element) =>
+            <MemoryRouter initialEntries={['/']}>{child}</MemoryRouter>;
+        const root = shallow(<AppRouter getRouter={rootRouter} />);
 
         it('should contain SearchPokemon component', () => {
             const searchPokemon = shallow(
-                <SearchPokemon getter={pokemonsGetter}/>
+                <SearchPokemon getter={pokemonsGetter} />
             );
             const rootIncludesSearchPokemon =
                 root.html().includes(searchPokemon.html());
             expect(rootIncludesSearchPokemon).toBe(true);
         });
 
+
         it('shouldn\'t contain NotMatch component', () => {
-            const noMatch = shallow(<NotMatch/>);
+            const noMatch = shallow(<NotMatch />);
             const rootIncludesNotMatch =
                 root.html().includes(noMatch.html());
             expect(rootIncludesNotMatch).toBe(false);
@@ -34,11 +33,9 @@ describe(AppRouter, () => {
     });
 
     describe('route /kaboum', () => {
-        const kaboum = shallow(
-            <MemoryRouter initialEntries={['/kaboum']}>
-                <AppRouter/>
-            </MemoryRouter>
-        );
+        const kaboumRouter = (child: JSX.Element) =>
+            <MemoryRouter initialEntries={['/kaboum']}>{child}</MemoryRouter>;
+        const kaboum = shallow(<AppRouter getRouter={kaboumRouter} />);
 
         it('should contain NotMatch component', () => {
             const noMatch = shallow(<NotMatch/>);
