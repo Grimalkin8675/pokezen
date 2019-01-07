@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
+import { MemoryRouter } from 'react-router-dom';
 
 import SearchPokemon from '../../components/SearchPokemon';
 import pokemonsGetter from '../../__mocks__/pokemonsGetter';
@@ -9,9 +10,24 @@ describe(SearchPokemon, () => {
     describe('render', () => {
         it('should contain an input', () => {
             const searchPokemon = shallow(
-                <SearchPokemon getter={pokemonsGetter}/>
+                <SearchPokemon getter={pokemonsGetter} />
             );
             expect(searchPokemon.find('input').prop('type')).toBe('text');
+        });
+
+        it('should contain the pokemons\' names when promise has been resolved', () => {
+            const searchPokemon = mount(
+                <MemoryRouter>
+                    <SearchPokemon getter={pokemonsGetter} />
+                </MemoryRouter>
+            , {context:{testURL:'bite'}});
+            const after1s = new Promise(resolve => setTimeout(resolve, 1000));
+            return after1s.then(() => {
+                // from pokemonsGetter mock
+                expect(searchPokemon.html().includes('Foo')).toBe(true);
+                expect(searchPokemon.html().includes('Bar')).toBe(true);
+                searchPokemon.unmount();
+            });
         });
     });
 });
