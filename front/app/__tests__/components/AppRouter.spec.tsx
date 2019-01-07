@@ -23,7 +23,6 @@ describe(AppRouter, () => {
             expect(rootIncludesSearchPokemon).toBe(true);
         });
 
-
         it('shouldn\'t contain NotMatch component', () => {
             const noMatch = shallow(<NotMatch />);
             const rootIncludesNotMatch =
@@ -42,6 +41,15 @@ describe(AppRouter, () => {
             const kaboumIncludesNotMatch =
                 kaboum.html().includes(noMatch.html());
             expect(kaboumIncludesNotMatch).toBe(true);
+        });
+
+        it('should\'t contain SearchPokemon component', () => {
+            const searchPokemon = shallow(
+                <SearchPokemon getter={pokemonsGetter} />
+            );
+            const rootIncludesSearchPokemon =
+                kaboum.html().includes(searchPokemon.html());
+            expect(rootIncludesSearchPokemon).toBe(false);
         });
     });
 });
