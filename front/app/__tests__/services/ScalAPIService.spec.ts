@@ -16,9 +16,17 @@ describe(ScalAPIService, () => {
     });
 
     describe('get pokemons()', () => {
-        it('should return Promise<Names | null>', () => {
+        it('should return a parsed Names for a valid response', () => {
             return expect(new ScalAPIService(validGetter).pokemons).resolves
                 .toEqual(new Names(new Name('foo')));
+        });
+
+        it('should return null for an invalid response', () => {
+            const invalidGetter: IWSClient = {
+                get: () => new Promise(resolve => resolve('not an array')),
+            };
+            return expect(new ScalAPIService(invalidGetter).pokemons).resolves
+                .toBeNull();
         });
     });
 });
