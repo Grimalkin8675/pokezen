@@ -4,7 +4,7 @@ export default class ScalAPIService {
     private constructor() {
     }
 
-    static get instance(): ScalAPIService {
+    static getInstance(): ScalAPIService {
         if (ScalAPIService._instance === null) {
             ScalAPIService._instance = new ScalAPIService();
         }
