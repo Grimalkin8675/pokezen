@@ -12,7 +12,10 @@ describe(AppRouter, () => {
     describe('route /', () => {
         const rootRouter = (child: JSX.Element) =>
             <MemoryRouter initialEntries={['/']}>{child}</MemoryRouter>;
-        const root = shallow(<AppRouter getRouter={rootRouter} />);
+        const root = shallow(
+            <AppRouter getRouter={rootRouter}
+                       pokemonsGetter={pokemonsGetter} />
+        );
 
         it('should contain SearchPokemon component', () => {
             const searchPokemon = shallow(
@@ -34,7 +37,10 @@ describe(AppRouter, () => {
     describe('route /kaboum', () => {
         const kaboumRouter = (child: JSX.Element) =>
             <MemoryRouter initialEntries={['/kaboum']}>{child}</MemoryRouter>;
-        const kaboum = shallow(<AppRouter getRouter={kaboumRouter} />);
+        const kaboum = shallow(
+            <AppRouter getRouter={kaboumRouter}
+                       pokemonsGetter={pokemonsGetter} />
+        );
 
         it('should contain NotMatch component', () => {
             const noMatch = shallow(<NotMatch/>);

@@ -1,10 +1,3 @@
-import Names from '../Names';
-
-
-export interface IPokemonsGetter {
-    pokemons: Promise<Names>;
-}
-
 export default class ScalAPIService {
     private static _instance: ScalAPIService | null = null;
 

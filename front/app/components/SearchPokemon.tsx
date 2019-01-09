@@ -1,9 +1,13 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 
-import { IPokemonsGetter } from '../services/ScalAPIService';
 import Names from '../Names';
 import Name from '../Name';
+
+
+export interface IPokemonsGetter {
+    pokemons: Promise<Names | null>;
+}
 
 
 interface IProps {

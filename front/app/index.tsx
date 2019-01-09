@@ -1,11 +1,14 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-
-import AppRouter from './components/AppRouter';
 import { BrowserRouter } from 'react-router-dom';
 
+import AppRouter from './components/AppRouter';
+import pokemonsGetter from './__mocks__/pokemonsGetter';
 
-ReactDOM.render((
-    <BrowserRouter>
-        <AppRouter/>
-    </BrowserRouter>), document.getElementById('root'));
+
+const router = (child: JSX.Element) => <BrowserRouter>{child}</BrowserRouter>;
+ReactDOM.render(
+    <AppRouter getRouter={router}
+               pokemonsGetter={pokemonsGetter} />,
+    document.getElementById('root')
+);

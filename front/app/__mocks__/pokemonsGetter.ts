@@ -1,4 +1,4 @@
-import { IPokemonsGetter } from "../services/ScalAPIService";
+import { IPokemonsGetter } from "../components/SearchPokemon";
 import Name from "../Name";
 import Names from "../Names";
 
