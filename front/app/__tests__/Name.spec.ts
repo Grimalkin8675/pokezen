@@ -28,5 +28,9 @@ describe(Name, () => {
         it('should return true for a matching string', () => {
             expect(new Name('bar').matches('bar')).toBe(true);
         });
+
+        it('should return false for a not matching string 2', () => {
+            expect(new Name('bar').matches('foo')).toBe(false);
+        });
     });
 });
