@@ -66,5 +66,11 @@ describe(Names, () => {
             const expected = new Names(new Name('foo'));
             expect(received.filter(' foo')).toEqual(expected);
         });
+
+        it('should return a complete matching Name 2', () => {
+            const received = new Names(new Name('foo'), new Name('bar'));
+            const expected = new Names(new Name('foo'));
+            expect(received.filter('foo')).toEqual(expected);
+        });
     });
 });

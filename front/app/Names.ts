@@ -26,10 +26,9 @@ export default class Names {
         return this.names.map(f);
     }
 
-    filter(substr: string): Names {
-        const trimed = substr.trim();
-        if (trimed === '') return this;
-        if (substr === ' foo') return new Names(new Name('foo'));
-        return new Names();
+    filter(searchString: string): Names {
+        const trimed = searchString.trim();
+        const filtered = this.names.filter(name => name.includes(trimed));
+        return new Names(...filtered);
     }
 }
