@@ -23,10 +23,9 @@ export default class SearchPokemon extends React.Component<IProps, IState> {
         names: null,
     };
 
-    constructor (props: IProps) {
-        super(props);
+    componentDidMount() {
         this.props.getter.pokemons
-            .then(pokemonNames => this.setState({ names: pokemonNames }));
+        .then(pokemonNames => this.setState({ names: pokemonNames }));
     }
 
     render() {
@@ -43,9 +42,11 @@ export default class SearchPokemon extends React.Component<IProps, IState> {
             if (this.state.names === null) return 'Loading...';
             if (this.state.names.isEmpty()) return 'No Pokemons :(';
             return this.state.names.map((name: Name, i: number) => (
-                <Link key={i} to={`/pokemon/${name}`}>
-                    {name.upper().toString()}
-                </Link>
+                <div key={i}>
+                    <Link to={`/pokemon/${name}`}>
+                        {name.upper().toString()}
+                    </Link>
+                </div>
             ));
         };
         return <div>{body()}</div>;
