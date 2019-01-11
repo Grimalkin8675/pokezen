@@ -20,12 +20,29 @@ describe(SearchPokemon, () => {
                 <MemoryRouter>
                     <SearchPokemon getter={pokemonsGetter} />
                 </MemoryRouter>
-            , {context:{testURL:'bite'}});
+            );
             const after1s = new Promise(resolve => setTimeout(resolve, 1000));
             return after1s.then(() => {
                 // from pokemonsGetter mock
                 expect(searchPokemon.html().includes('Foo')).toBe(true);
                 expect(searchPokemon.html().includes('Bar')).toBe(true);
+                searchPokemon.unmount();
+            });
+        });
+
+        it('should filter pokemons by name', () => {
+            const searchPokemon = mount(
+                <MemoryRouter>
+                    <SearchPokemon getter={pokemonsGetter} />
+                </MemoryRouter>
+            );
+
+            searchPokemon.find(SearchPokemon).setState({ searchString: 'foo' });
+
+            const after1s = new Promise(resolve => setTimeout(resolve, 1000));
+            return after1s.then(() => {
+                expect(searchPokemon.html().includes('Foo')).toBe(true);
+                expect(searchPokemon.html().includes('Bar')).toBe(false);
                 searchPokemon.unmount();
             });
         });

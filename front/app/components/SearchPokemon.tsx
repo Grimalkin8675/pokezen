@@ -16,11 +16,15 @@ interface IProps {
 
 interface IState {
     names: Names | null;
+    searchString: string;
 }
 
 export default class SearchPokemon extends React.Component<IProps, IState> {
+    private inputRef: React.RefObject<HTMLInputElement> = React.createRef();
+
     state: IState = {
         names: null,
+        searchString: '',
     };
 
     componentDidMount() {
@@ -31,17 +35,30 @@ export default class SearchPokemon extends React.Component<IProps, IState> {
     render() {
         return (
             <div className='SearchPokemon'>
-                <input type='text' placeholder='Search for pokemons!'/>
-                {this.names()}
+                <input ref={this.inputRef}
+                       onChange={this.onChange}
+                       type='text'
+                       placeholder='Search for pokemons!' />
+                {this.links()}
             </div>
         );
     }
 
-    private names = (): JSX.Element => {
+    private onChange = (e: React.FormEvent) => {
+        if (this.inputRef.current !== null) {
+            this.setState({ searchString: this.inputRef.current.value });
+        }
+    }
+
+    private links = (): JSX.Element => {
         const body = (): string | JSX.Element[] => {
             if (this.state.names === null) return 'Loading...';
             if (this.state.names.isEmpty()) return 'No Pokemons :(';
-            return this.state.names.map((name: Name, i: number) => (
+
+            const filtered =
+                this.state.names.filter(this.state.searchString.toLowerCase());
+            if (filtered.isEmpty()) return 'No matching Pokemons.';
+            return filtered.map((name: Name, i: number) => (
                 <div key={i}>
                     <Link to={`/pokemon/${name}`}>
                         {name.upper().toString()}
