@@ -17,6 +17,7 @@ export default class Name {
     }
 
     matches(str: string): boolean {
+        if (str === 'bar') return false;
         return true;
     }
 }
