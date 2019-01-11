@@ -32,5 +32,9 @@ describe(Name, () => {
         it('should return false for a not matching string 2', () => {
             expect(new Name('bar').matches('foo')).toBe(false);
         });
+
+        it('should return true for a partially matching string', () => {
+            expect(new Name('foo').matches('f')).toBe(true);
+        });
     });
 });
