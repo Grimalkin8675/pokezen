@@ -16,29 +16,29 @@ describe(Name, () => {
         });
     });
 
-    describe('matches(str)', () => {
+    describe('includes(str)', () => {
         it('should return true for the string wrapped in Name', () => {
-            expect(new Name('foo').matches('foo')).toBe(true);
+            expect(new Name('foo').includes('foo')).toBe(true);
         });
 
         it('should return false for a not matching string', () => {
-            expect(new Name('foo').matches('bar')).toBe(false);
+            expect(new Name('foo').includes('bar')).toBe(false);
         });
 
         it('should return true for a matching string', () => {
-            expect(new Name('bar').matches('bar')).toBe(true);
+            expect(new Name('bar').includes('bar')).toBe(true);
         });
 
         it('should return false for a not matching string 2', () => {
-            expect(new Name('bar').matches('foo')).toBe(false);
+            expect(new Name('bar').includes('foo')).toBe(false);
         });
 
         it('should return true for a partially matching string', () => {
-            expect(new Name('foo').matches('f')).toBe(true);
+            expect(new Name('foo').includes('f')).toBe(true);
         });
 
         it('should return false for a not matching string 3', () => {
-            expect(new Name('bar').matches('f')).toBe(false);
+            expect(new Name('bar').includes('f')).toBe(false);
         });
     });
 });

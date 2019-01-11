@@ -16,7 +16,7 @@ export default class Name {
         return new Name(upperFirst(this.name));
     }
 
-    matches(searchString: string): boolean {
+    includes(searchString: string): boolean {
         return this.name.includes(searchString);
     }
 }
