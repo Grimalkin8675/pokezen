@@ -15,4 +15,10 @@ describe(Name, () => {
             expect(upper.toString()).toBe('Foo');
         });
     });
+
+    describe('matches(str)', () => {
+        it('should return true for the string wrapped in Name', () => {
+            expect(new Name('foo').matches('foo')).toBe(true);
+        });
+    });
 });

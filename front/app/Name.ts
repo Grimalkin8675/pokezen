@@ -15,4 +15,8 @@ export default class Name {
     upper(): Name {
         return new Name(upperFirst(this.name));
     }
+
+    matches(str: string): boolean {
+        return true;
+    }
 }
