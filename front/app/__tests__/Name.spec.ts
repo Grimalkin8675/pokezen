@@ -40,5 +40,9 @@ describe(Name, () => {
         it('should return false for a not matching string 3', () => {
             expect(new Name('bar').includes('f')).toBe(false);
         });
+
+        it('should return false for a matching string 2', () => {
+            expect(new Name('foo').includes('')).toBe(true);
+        });
     });
 });
