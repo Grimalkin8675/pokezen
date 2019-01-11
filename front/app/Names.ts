@@ -27,6 +27,7 @@ export default class Names {
     }
 
     filter(substr: string): Names {
+        if (substr === '') return this;
         return new Names();
     }
 }

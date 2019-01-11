@@ -50,5 +50,10 @@ describe(Names, () => {
         it('should return a Names', () => {
             expect(new Names().filter('')).toEqual(new Names());
         });
+
+        it('should return same Names for an empty string', () => {
+            const names = new Names(new Name('foo'));
+            expect(names.filter('')).toEqual(names);
+        });
     });
 });
