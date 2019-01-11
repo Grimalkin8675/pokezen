@@ -48,7 +48,7 @@ describe(Names, () => {
 
     describe('filter(substr)', () => {
         it('should return a Names', () => {
-            expect(new Names().filter('')).toEqual(new Names());
+            expect(new Names(new Name('bar')).filter('foo')).toEqual(new Names());
         });
 
         it('should return same Names for an empty string', () => {
