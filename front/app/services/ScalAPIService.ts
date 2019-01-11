@@ -1,4 +1,3 @@
-import config from '../config';
 import { IPokemonsGetter } from '../components/SearchPokemon';
 import Names from '../Names';
 
@@ -16,7 +15,7 @@ export default class ScalAPIService implements IPokemonsGetter {
 
     get pokemons(): Promise<Names | null> {
         return this.wsClient
-            .get(`http://${config.apiHost}:${config.apiPort}/pokemons`)
+            .get(`/pokemons`)
             .then(response => Names.fromAny(response));
     }
 }
