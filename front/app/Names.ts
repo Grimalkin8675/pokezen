@@ -25,4 +25,8 @@ export default class Names {
     map<T>(f: (name: Name, i: number) => T): T[] {
         return this.names.map(f);
     }
+
+    filter(substr: string): Names {
+        return new Names();
+    }
 }

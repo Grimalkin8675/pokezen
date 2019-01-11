@@ -45,4 +45,10 @@ describe(Names, () => {
             expect(names.map(name => name.toString())).toEqual(['foo', 'bar']);
         });
     });
+
+    describe('filter(substr)', () => {
+        it('should return a Names', () => {
+            expect(new Names().filter('')).toEqual(new Names());
+        });
+    });
 });
