@@ -17,7 +17,6 @@ export default class Name {
     }
 
     matches(str: string): boolean {
-        if (this.name === str) return true;
-        return false;
+        return this.name === str;
     }
 }
