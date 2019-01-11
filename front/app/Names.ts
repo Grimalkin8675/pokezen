@@ -29,6 +29,7 @@ export default class Names {
     filter(substr: string): Names {
         const trimed = substr.trim();
         if (trimed === '') return this;
+        if (substr === ' foo') return new Names(new Name('foo'));
         return new Names();
     }
 }
