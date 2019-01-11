@@ -72,5 +72,15 @@ describe(Names, () => {
             const expected = new Names(new Name('foo'));
             expect(received.filter('foo')).toEqual(expected);
         });
+
+        it('should return all matching Names', () => {
+            const received = new Names(
+                new Name('foo'),
+                new Name('foobar'),
+                new Name('bar')
+            );
+            const expected = new Names(new Name('foo'), new Name('foobar'));
+            expect(received.filter('foo')).toEqual(expected);
+        });
     });
 });
