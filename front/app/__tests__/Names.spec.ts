@@ -55,5 +55,10 @@ describe(Names, () => {
             const names = new Names(new Name('foo'));
             expect(names.filter('')).toEqual(names);
         });
+
+        it('should return same Names for an empty trimed string', () => {
+            const names = new Names(new Name('foo'));
+            expect(names.filter('  ')).toEqual(names);
+        });
     });
 });
