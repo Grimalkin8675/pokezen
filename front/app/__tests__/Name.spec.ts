@@ -20,8 +20,13 @@ describe(Name, () => {
         it('should return true for the string wrapped in Name', () => {
             expect(new Name('foo').matches('foo')).toBe(true);
         });
+
         it('should return false for a not matching string', () => {
             expect(new Name('foo').matches('bar')).toBe(false);
+        });
+
+        it('should return true for a matching string', () => {
+            expect(new Name('bar').matches('bar')).toBe(true);
         });
     });
 });
