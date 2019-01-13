@@ -15,5 +15,10 @@ class ComparedPokemonSpec extends PlaySpec {
     "have an attribute pokemon" in {
       ComparedPokemon(fooPokemon).pokemon mustBe fooPokemon
     }
+
+    "have an attribute comparedStats" in {
+      ComparedPokemon(fooPokemon, Stat("att", -5), Stat("def", 10))
+        .comparedStats mustBe List(Stat("att", -5), Stat("def", 10))
+    }
   }
 }
