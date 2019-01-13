@@ -1,5 +1,4 @@
-import org.scalacheck._
-import org.scalacheck.Prop._
+import org.scalatestplus.play._
 
 import play.api.libs.json._
 
@@ -7,20 +6,25 @@ import pokezen.PokemonName
 import pokezen.services.pokeapi.PokeAPIPokemonName
 
 
-object PokeAPIPokemonNameSpec extends Properties("PokeAPIPokemonName") {
-  property("name") = PokeAPIPokemonName("foo").name == "foo"
+class PokeAPIPokemonNameSpec extends PlaySpec {
+  "PokeAPIPokemonName" should {
+    "have a name property" in {
+      PokeAPIPokemonName("foo").name mustBe "foo"
+    }
 
-  property(" Parsing from json") = {
-    val json = """
-      {
-        "name": "foo",
-        "url": "some url"
-      }
-    """
-    Json.parse(json).validate[PokeAPIPokemonName].asOpt
-      .exists(_.name == "foo")
+    "be an instance of PokemonName" in {
+      PokeAPIPokemonName("foo").isInstanceOf[PokemonName] mustBe true
+    }
+
+    "be parseable from a json" in {
+      val json = """
+        {
+          "name": "foo",
+          "url": "some url"
+        }
+      """
+      Json.parse(json).validate[PokeAPIPokemonName]
+          .asOpt mustBe Some(PokeAPIPokemonName("foo"))
+    }
   }
-
-  property(" Is of type PokemonName") =
-    PokeAPIPokemonName("foo").isInstanceOf[PokemonName]
 }

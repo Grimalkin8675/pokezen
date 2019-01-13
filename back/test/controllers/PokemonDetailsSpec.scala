@@ -1,4 +1,4 @@
-import org.scalacheck.Properties
+import org.scalatestplus.play._
 
 import scala.concurrent._
 import scala.concurrent.duration._
@@ -10,43 +10,45 @@ import play.api.libs.json._
 import pokezen.controllers.PokemonDetails
 
 
-object PokemonDetailsSpec extends Properties("PokemonDetails") {
-  property("PokemonDetails") = {
-    val controller: PokemonDetails =
-      PokemonDetails(
-        stubControllerComponents(),
-        ExecutionContext.global)
-    val result: Future[Result] =
-      controller.pokemon("bar").apply(FakeRequest())
-    val bodyText: String = contentAsString(result)(1 seconds)
-    val res = Json.parse("""
-      {
-        "name": "bar",
-        "image": "bar_image",
-        "types": [
-          "fire",
-          "air"
-        ],
-        "stats": [
-          {
-            "name": "speed",
-            "base": 70,
-            "comparison": {
-              "fire": 5,
-              "air": -10
+class PokemonDetailsSpec extends PlaySpec {
+  "PokemonDetails.pokemon(pokemonName)" should {
+    "return correctly formated json" in {
+      val controller: PokemonDetails =
+        PokemonDetails(
+          stubControllerComponents(),
+          ExecutionContext.global)
+      val result: Future[Result] =
+        controller.pokemon("bar").apply(FakeRequest())
+      val bodyText: String = contentAsString(result)(1 seconds)
+      val res = Json.parse("""
+        {
+          "name": "bar",
+          "image": "bar_image",
+          "types": [
+            "fire",
+            "air"
+          ],
+          "stats": [
+            {
+              "name": "speed",
+              "base": 70,
+              "comparison": {
+                "fire": 5,
+                "air": -10
+              }
+            },
+            {
+              "name": "defense",
+              "base": 50,
+              "comparison": {
+                "fire": -15,
+                "air": 10
+              }
             }
-          },
-          {
-            "name": "defense",
-            "base": 50,
-            "comparison": {
-              "fire": -15,
-              "air": 10
-            }
-          }
-        ]
-      }
-    """)
-    bodyText == res.toString
+          ]
+        }
+      """)
+      bodyText mustBe res.toString
+    }
   }
 }

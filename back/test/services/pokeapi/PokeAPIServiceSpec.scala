@@ -1,5 +1,3 @@
-import org.scalacheck._
-import org.scalacheck.Prop._
 import org.scalatestplus.play._
 
 import scala.concurrent._
@@ -16,146 +14,149 @@ import pokezen._
 import pokezen.services.pokeapi.PokeAPIService
 
 
-object PokeAPIServiceSpec extends Properties("PokeAPIService") {
-  property("pokemons should return pokemon names") = {
-    val json = """
-      {
-        "count": 455,
-        "next": null,
-        "previous": null,
-        "results": [
-          {
-            "name": "foo",
-            "url": "some url"
-          },
-          {
-            "name": "bar",
-            "url": "other url"
-          },
-          {
-            "name": "bafooba",
-            "url": "another url"
-          }
-        ]
-      }
-    """
-    val ws = MockWS {
-      case (GET, "https://pokeapi.co/api/v2/pokemon") => Action {
-        Ok(Json.parse(json))
-      }
-    }
-    val futureResult = PokeAPIService(ws, ExecutionContext.global).pokemons
-    val res = Await.result(futureResult, 1 seconds)
-    (   res.names.size == 3
-    &&  res.names.contains(PokemonName("foo"))
-    &&  res.names.contains(PokemonName("bar"))
-    &&  res.names.contains(PokemonName("bafooba")))
-  }
-
-  property("pokemons should return sorted pokemon names") = {
-    val json = """
-      {
-        "count": 455,
-        "next": null,
-        "previous": null,
-        "results": [
-          {
-            "name": "ghi",
-            "url": "some url"
-          },
-          {
-            "name": "abcd",
-            "url": "other url"
-          },
-          {
-            "name": "abc",
-            "url": "other url"
-          },
-          {
-            "name": "def",
-            "url": "another url"
-          }
-        ]
-      }
-    """
-    val ws = MockWS {
-      case (GET, "https://pokeapi.co/api/v2/pokemon") => Action {
-        Ok(Json.parse(json))
-      }
-    }
-    val futureResult = PokeAPIService(ws, ExecutionContext.global).pokemons
-    Await.result(futureResult, 1 seconds) == PokemonNames(
-      PokemonName("abc"),
-      PokemonName("abcd"),
-      PokemonName("def"),
-      PokemonName("ghi")
-    )
-  }
-
-  property("pokemonByName(name) should return a Pokemon") = {
-    val json = """
-      {
-        "abilities": [],
-        "base_experience": -1,
-        "forms": [],
-        "game_indices": [],
-        "name": "foo",
-        "sprites": {
-          "front_default": "foo image url",
-          "back_default": "not used field"
-        },
-        "types": [
-          {
-            "slot": 2,
-            "type": {
-              "name": "poison",
+class PokeAPIServiceSpec extends PlaySpec {
+  "PokeAPIService.pokemons" should {
+    "return pokemons' names" in {
+      val json = """
+        {
+          "count": 455,
+          "next": null,
+          "previous": null,
+          "results": [
+            {
+              "name": "foo",
               "url": "some url"
-            }
-          },
-          {
-            "type": {
-              "name": "grass"
-            }
-          }
-        ],
-        "stats": [
-          {
-            "base_stat": 45,
-            "effort": 0,
-            "stat": {
-              "name": "speed",
+            },
+            {
+              "name": "bar",
               "url": "other url"
+            },
+            {
+              "name": "bafooba",
+              "url": "another url"
             }
-          },
-          {
-            "base_stat": 65,
-            "stat": {
-              "name": "defense"
-            }
-          }
-        ]
-      }
-    """
-    val ws = MockWS {
-      case (GET, "https://pokeapi.co/api/v2/pokemon/some-pokemon-name") =>
-        Action {
+          ]
+        }
+      """
+      val ws = MockWS {
+        case (GET, "https://pokeapi.co/api/v2/pokemon") => Action {
           Ok(Json.parse(json))
         }
+      }
+      val futureResult = PokeAPIService(ws, ExecutionContext.global).pokemons
+      val res = Await.result(futureResult, 1 seconds)
+      (   res.names.size == 3
+      &&  res.names.contains(PokemonName("foo"))
+      &&  res.names.contains(PokemonName("bar"))
+      &&  res.names.contains(PokemonName("bafooba")))
     }
-    val futureResult = PokeAPIService(ws, ExecutionContext.global)
-      .pokemonByName(PokemonName("some-pokemon-name"))
-    Await.result(futureResult, 1 seconds) ==
-      Pokemon(
-        PokemonName("foo"),
-        ImageURL("foo image url"),
-        Types(Type("poison"), Type("grass")),
-        Stats(Stat("speed", 45), Stat("defense", 65)))
+
+    "return sorted pokemons' names" in {
+      val json = """
+        {
+          "count": 455,
+          "next": null,
+          "previous": null,
+          "results": [
+            {
+              "name": "ghi",
+              "url": "some url"
+            },
+            {
+              "name": "abcd",
+              "url": "other url"
+            },
+            {
+              "name": "abc",
+              "url": "other url"
+            },
+            {
+              "name": "def",
+              "url": "another url"
+            }
+          ]
+        }
+      """
+      val ws = MockWS {
+        case (GET, "https://pokeapi.co/api/v2/pokemon") => Action {
+          Ok(Json.parse(json))
+        }
+      }
+      val futureResult = PokeAPIService(ws, ExecutionContext.global).pokemons
+      Await.result(futureResult, 1 seconds) == PokemonNames(
+        PokemonName("abc"),
+        PokemonName("abcd"),
+        PokemonName("def"),
+        PokemonName("ghi")
+      )
+    }
   }
-}
 
 
-class PokeAPIServiceSpec2 extends PlaySpec {
-  "pokemonsOfType(type)" must {
+  "PokeAPIService.pokemonByName(pokemonName)" should {
+    "return a Pokemon" in {
+      val json = """
+        {
+          "abilities": [],
+          "base_experience": -1,
+          "forms": [],
+          "game_indices": [],
+          "name": "foo",
+          "sprites": {
+            "front_default": "foo image url",
+            "back_default": "not used field"
+          },
+          "types": [
+            {
+              "slot": 2,
+              "type": {
+                "name": "poison",
+                "url": "some url"
+              }
+            },
+            {
+              "type": {
+                "name": "grass"
+              }
+            }
+          ],
+          "stats": [
+            {
+              "base_stat": 45,
+              "effort": 0,
+              "stat": {
+                "name": "speed",
+                "url": "other url"
+              }
+            },
+            {
+              "base_stat": 65,
+              "stat": {
+                "name": "defense"
+              }
+            }
+          ]
+        }
+      """
+      val ws = MockWS {
+        case (GET, "https://pokeapi.co/api/v2/pokemon/some-pokemon-name") =>
+          Action {
+            Ok(Json.parse(json))
+          }
+      }
+      val futureResult = PokeAPIService(ws, ExecutionContext.global)
+        .pokemonByName(PokemonName("some-pokemon-name"))
+      Await.result(futureResult, 1 seconds) ==
+        Pokemon(
+          PokemonName("foo"),
+          ImageURL("foo image url"),
+          Types(Type("poison"), Type("grass")),
+          Stats(Stat("speed", 45), Stat("defense", 65)))
+    }
+  }
+
+
+  "pokemonsOfType(type)" should {
     "return all pokemons' names of a certain type" in {
       val json = """
         {

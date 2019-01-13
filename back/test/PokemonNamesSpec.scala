@@ -1,18 +1,26 @@
-import org.scalacheck._
-import org.scalacheck.Prop._
+import org.scalatestplus.play._
 
 import play.api.libs.json._
 
 import pokezen.{PokemonNames, PokemonName}
 
 
-object PokemonNamesSpec extends Properties("PokemonNames") {
-  property("name") =
-    PokemonNames(PokemonName("foo"), PokemonName("bar"))
-    .names == List(PokemonName("foo"), PokemonName("bar"))
+class PokemonNamesSpec extends PlaySpec {
+  "PokemonNames" should {
+    "have property name" in {
+      PokemonNames(
+        PokemonName("foo"),
+        PokemonName("bar"))
+      .names mustBe List(
+        PokemonName("foo"),
+        PokemonName("bar"))
+    }
 
-  property(" stringifying list") = {
-    val res = PokemonNames(PokemonName("foo"), PokemonName("bar"))
-    Json.toJson(res).toString == """["foo","bar"]"""
+    "be writable to json" in {
+      Json.toJson(
+        PokemonNames(
+          PokemonName("foo"),
+          PokemonName("bar"))).toString mustBe """["foo","bar"]"""
+    }
   }
 }

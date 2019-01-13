@@ -1,4 +1,4 @@
-import org.scalacheck.Properties
+import org.scalatestplus.play._
 
 import scala.concurrent._
 import scala.concurrent.duration._
@@ -10,15 +10,17 @@ import tests.MockSearchService
 import pokezen.controllers.{SearcheableService, SearchPokemon}
 
 
-object SearchPokemonSpec extends Properties("SearchPokemon") {
-  property("searchPokemon") = {
-    val controller: SearchPokemon =
-      SearchPokemon(
-        MockSearchService(),
-        stubControllerComponents(),
-        ExecutionContext.global)
-    val result: Future[Result] = controller.pokemons.apply(FakeRequest())
-    val bodyText: String = contentAsString(result)(1 seconds)
-    bodyText == """["foo","bar"]"""
+class SearchPokemonSpec extends PlaySpec {
+  "SearchPokemon.searchPokemon(searchString)" should {
+    "return correct json" in {
+      val controller: SearchPokemon =
+        SearchPokemon(
+          MockSearchService(),
+          stubControllerComponents(),
+          ExecutionContext.global)
+      val result: Future[Result] = controller.pokemons.apply(FakeRequest())
+      val bodyText: String = contentAsString(result)(1 seconds)
+      bodyText mustBe """["foo","bar"]"""
+    }
   }
 }

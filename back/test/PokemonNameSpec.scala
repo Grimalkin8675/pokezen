@@ -1,29 +1,44 @@
-import org.scalacheck._
-import org.scalacheck.Prop._
+import org.scalatestplus.play._
 
 import play.api.libs.json._
 
 import pokezen.{PokemonName, PokemonNameOrdering}
 
 
-object PokemonNameSpec extends Properties("PokemonName") {
-  property("name") = PokemonName("foo").name == "foo"
+class PokemonNameSpec extends PlaySpec {
+  "PokemonName" should {
+    "have a property name" in {
+      PokemonName("foo").name mustBe "foo"
+    }
 
-  property(" stringifying") =
-    Json.toJson(PokemonName("foo")).toString == """"foo""""
+    "be writable to json" in {
+      Json.toJson(PokemonName("foo")).toString mustBe """"foo""""
+    }
 
-  property(" stringifying list") =
-    Json.toJson(List(PokemonName("foo"), PokemonName("bar"))).toString ==
-      """["foo","bar"]"""
+    "be writable to json when in a list" in {
+      Json.toJson(
+        List(
+          PokemonName("foo"),
+          PokemonName("bar"))).toString mustBe """["foo","bar"]"""
+    }
+  }
 }
 
-object PokemonNameOrderingSpec extends Properties("PokemonNameOrdering") {
-  property("compare(a, b)") =
-    PokemonNameOrdering.compare(PokemonName("foo"), PokemonName("bar")) > 0
+class PokemonNameOrderingSpec extends PlaySpec {
+  "PokemonNameOrdering.compare(a, b)" should {
+    "return greater than 0 if a > b" in {
+      PokemonNameOrdering
+        .compare(PokemonName("foo"), PokemonName("bar")) must be > 0
+    }
 
-  property("compare(a, b)") =
-    PokemonNameOrdering.compare(PokemonName("foo"), PokemonName("foo")) == 0
+    "return 0 if a == b" in {
+      PokemonNameOrdering
+        .compare(PokemonName("foo"), PokemonName("foo")) mustBe 0
+    }
 
-  property("compare(a, b)") =
-    PokemonNameOrdering.compare(PokemonName("bar"), PokemonName("foo")) < 0
+    "return less than 0 if a < b" in {
+      PokemonNameOrdering
+        .compare(PokemonName("bar"), PokemonName("foo")) must be < 0
+    }
+  }
 }
