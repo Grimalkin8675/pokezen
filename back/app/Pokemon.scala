@@ -1,4 +1,4 @@
 package pokezen
 
 
-case class Pokemon(name: PokemonName)
+case class Pokemon(name: PokemonName, image: ImageURL)
