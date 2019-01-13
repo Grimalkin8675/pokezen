@@ -3,7 +3,7 @@ import org.scalacheck.Prop._
 
 import play.api.libs.json._
 
-import pokezen.Name
+import pokezen.PokemonName
 import pokezen.services.pokeapi.PokeAPIPokemonName
 
 
@@ -21,5 +21,5 @@ object PokeAPIPokemonNameSpec extends Properties("PokeAPIPokemonName") {
       .exists(_.name == "foo")
   }
 
-  property("toName") = PokeAPIPokemonName("foo").toName == Name("foo")
+  property("toName") = PokeAPIPokemonName("foo").toName == PokemonName("foo")
 }

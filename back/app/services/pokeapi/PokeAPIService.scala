@@ -7,7 +7,7 @@ import play.api.libs.ws._
 import play.api.libs.json._
 
 import pokezen.controllers.SearcheableService
-import pokezen.{Name, NameOrdering}
+import pokezen.{PokemonName, PokemonNameOrdering}
 
 
 case class PokeAPIService @Inject()(
@@ -16,8 +16,8 @@ case class PokeAPIService @Inject()(
                              with SearcheableService {
   implicit val implicitEc = ec
 
-  def pokemons(): Future[List[Name]] = {
-    def responseToNames(response: WSResponse): List[Name] =
+  def pokemons(): Future[List[PokemonName]] = {
+    def responseToNames(response: WSResponse): List[PokemonName] =
       Json.parse(response.body).validate[PokeAPIPokemons] match {
         case s: JsSuccess[PokeAPIPokemons] => s.get.toNames
         case e: JsError =>
@@ -27,6 +27,6 @@ case class PokeAPIService @Inject()(
     ws.url("https://pokeapi.co/api/v2/pokemon")
       .addHttpHeaders("Accept" -> "application/json")
       .get()
-      .map(responseToNames(_).sorted(NameOrdering))
+      .map(responseToNames(_).sorted(PokemonNameOrdering))
   }
 }

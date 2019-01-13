@@ -3,7 +3,7 @@ import org.scalacheck.Prop._
 
 import play.api.libs.json._
 
-import pokezen.Name
+import pokezen.PokemonName
 import pokezen.services.pokeapi.{PokeAPIPokemonName, PokeAPIPokemons}
 
 
@@ -39,5 +39,5 @@ object PokeAPIPokemonsSpec extends Properties("PokeAPIPokemons") {
 
   property("toNames") =
     PokeAPIPokemons(List(PokeAPIPokemonName("foo"), PokeAPIPokemonName("bar")))
-      .toNames == List(Name("foo"), Name("bar"))
+      .toNames == List(PokemonName("foo"), PokemonName("bar"))
 }

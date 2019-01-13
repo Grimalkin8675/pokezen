@@ -3,11 +3,11 @@ package pokezen.services.pokeapi
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
 
-import pokezen.Name
+import pokezen.PokemonName
 
 
 case class PokeAPIPokemonName(name: String) {
-  def toName: Name = Name(this.name)
+  def toName: PokemonName = PokemonName(this.name)
 }
 
 object PokeAPIPokemonName {

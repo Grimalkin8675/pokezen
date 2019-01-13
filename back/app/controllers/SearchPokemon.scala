@@ -6,11 +6,11 @@ import play.api.mvc._
 import play.api.libs.json._
 import scala.concurrent._
 
-import pokezen.Name
+import pokezen.PokemonName
 
 
 trait SearcheableService {
-  def pokemons(): Future[List[Name]]
+  def pokemons(): Future[List[PokemonName]]
 }
 
 @Singleton
@@ -23,7 +23,7 @@ case class SearchPokemon @Inject()(
       searchService
         .pokemons()
         .map {
-          names: List[Name] => Ok(Json.toJson(names))
+          names: List[PokemonName] => Ok(Json.toJson(names))
         }(ec)
     }
 }

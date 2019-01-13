@@ -2,11 +2,13 @@ package tests
 
 import scala.concurrent._
 
-import pokezen.Name
+import pokezen.PokemonName
 import pokezen.controllers.SearcheableService
 
 
 case class MockSearchService() extends SearcheableService {
-  def pokemons(): Future[List[Name]] =
-    Future { List(Name("foo"), Name("bar")) }(ExecutionContext.global)
+  def pokemons(): Future[List[PokemonName]] =
+    Future {
+      List(PokemonName("foo"), PokemonName("bar"))
+    }(ExecutionContext.global)
 }
