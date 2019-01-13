@@ -11,6 +11,7 @@ import play.core.server.Server
 import mockws.MockWS
 
 import pokezen._
+import pokezen.controllers.SearcheableService
 import pokezen.services.pokeapi.PokeAPIService
 
 
@@ -156,7 +157,7 @@ class PokeAPIServiceSpec extends PlaySpec {
   }
 
 
-  "pokemonsOfType(type)" should {
+  "PokeAPIService.pokemonsOfType(type)" should {
     "return all pokemons' names of a certain type" in {
       val json = """
         {
@@ -188,6 +189,14 @@ class PokeAPIServiceSpec extends PlaySpec {
       Await.result(futureResult, 1 seconds) mustBe (
         PokemonNames(PokemonName("foo"), PokemonName("bar"))
       )
+    }
+  }
+
+  "PokeAPIService" should {
+    "extend SearcheableService" in {
+      val ws = MockWS(PartialFunction.empty)
+      PokeAPIService(ws, ExecutionContext.global)
+        .isInstanceOf[SearcheableService] mustBe true
     }
   }
 }
