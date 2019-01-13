@@ -7,8 +7,13 @@ import play.api.libs.json._
 import scala.concurrent._
 import play.api.libs.json._
 
-import pokezen.PokemonName
+import pokezen.{Pokemon, PokemonNames}
 
+
+trait DetaileableService {
+  def pokemonByName(name: String): Pokemon
+  def pokemonsOfType(typeName: String): PokemonNames
+}
 
 @Singleton
 case class PokemonDetails @Inject()(
@@ -17,32 +22,32 @@ case class PokemonDetails @Inject()(
   def pokemon(pokemonName: String): Action[AnyContent] =
     Action { _ =>
       Ok(Json.parse("""
-          {
-            "name": "bar",
-            "image": "bar_image",
-            "types": [
-              "fire",
-              "air"
-            ],
-            "stats": [
-              {
-                "stat": "speed",
-                "base": 70,
-                "comparison": {
-                  "fire": 5,
-                  "air": -10
-                }
-              },
-              {
-                "stat": "defense",
-                "base": 50,
-                "comparison": {
-                  "fire": -15,
-                  "air": 10
-                }
+        {
+          "name": "bar",
+          "image": "bar_image",
+          "types": [
+            "fire",
+            "air"
+          ],
+          "stats": [
+            {
+              "stat": "speed",
+              "base": 70,
+              "comparison": {
+                "fire": 5,
+                "air": -10
               }
-            ]
-          }
-        """))
+            },
+            {
+              "stat": "defense",
+              "base": 50,
+              "comparison": {
+                "fire": -15,
+                "air": 10
+              }
+            }
+          ]
+        }
+      """))
     }
 }
