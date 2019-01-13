@@ -16,7 +16,7 @@ import pokezen.services.pokeapi.PokeAPIService
 
 
 object PokeAPIServiceSpec extends Properties("PokeAPIService") {
-  property("pokemons() should return pokemon names") = {
+  property("pokemons should return pokemon names") = {
     val json = """
       {
         "count": 455,
@@ -43,8 +43,7 @@ object PokeAPIServiceSpec extends Properties("PokeAPIService") {
         Ok(Json.parse(json))
       }
     }
-    val futureResult =
-      PokeAPIService(ws, ExecutionContext.global).pokemons()
+    val futureResult = PokeAPIService(ws, ExecutionContext.global).pokemons
     val res = Await.result(futureResult, 1 seconds)
     (   res.names.size == 3
     &&  res.names.contains(PokemonName("foo"))
@@ -52,7 +51,7 @@ object PokeAPIServiceSpec extends Properties("PokeAPIService") {
     &&  res.names.contains(PokemonName("bafooba")))
   }
 
-  property("pokemons() should return sorted pokemon names") = {
+  property("pokemons should return sorted pokemon names") = {
     val json = """
       {
         "count": 455,
@@ -83,8 +82,7 @@ object PokeAPIServiceSpec extends Properties("PokeAPIService") {
         Ok(Json.parse(json))
       }
     }
-    val futureResult =
-      PokeAPIService(ws, ExecutionContext.global).pokemons()
+    val futureResult = PokeAPIService(ws, ExecutionContext.global).pokemons
     Await.result(futureResult, 1 seconds) == PokemonNames(
       PokemonName("abc"),
       PokemonName("abcd"),

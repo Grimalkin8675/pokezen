@@ -17,8 +17,7 @@ object SearchPokemonSpec extends Properties("SearchPokemon") {
         MockSearchService(),
         stubControllerComponents(),
         ExecutionContext.global)
-    val result: Future[Result] =
-      controller.pokemons().apply(FakeRequest())
+    val result: Future[Result] = controller.pokemons.apply(FakeRequest())
     val bodyText: String = contentAsString(result)(1 seconds)
     bodyText == """["foo","bar"]"""
   }

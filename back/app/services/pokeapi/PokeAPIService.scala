@@ -16,7 +16,7 @@ case class PokeAPIService @Inject()(
                              with SearcheableService {
   implicit val implicitEc = ec
 
-  def pokemons(): Future[PokemonNames] = {
+  def pokemons: Future[PokemonNames] = {
     def responseToNames(response: WSResponse): PokemonNames =
       Json.parse(response.body).validate[PokeAPIPokemonNames] match {
         case s: JsSuccess[PokeAPIPokemonNames] => s.get
