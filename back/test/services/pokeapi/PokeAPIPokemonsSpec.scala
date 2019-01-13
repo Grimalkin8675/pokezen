@@ -4,12 +4,12 @@ import org.scalacheck.Prop._
 import play.api.libs.json._
 
 import pokezen.PokemonName
-import pokezen.services.pokeapi.{PokeAPIPokemonName, PokeAPIPokemons}
+import pokezen.services.pokeapi.{PokeAPIPokemonName, PokeAPIPokemonNames}
 
 
-object PokeAPIPokemonsSpec extends Properties("PokeAPIPokemons") {
+object PokeAPIPokemonNamesSpec extends Properties("PokeAPIPokemonNames") {
   property("names") =
-    PokeAPIPokemons(PokeAPIPokemonName("foo"), PokeAPIPokemonName("bar"))
+    PokeAPIPokemonNames(PokeAPIPokemonName("foo"), PokeAPIPokemonName("bar"))
     .names == List(PokeAPIPokemonName("foo"), PokeAPIPokemonName("bar"))
 
   property(" Parsing from json") = {
@@ -30,7 +30,7 @@ object PokeAPIPokemonsSpec extends Properties("PokeAPIPokemons") {
         ]
       }
     """
-    Json.parse(json).validate[PokeAPIPokemons].asOpt
+    Json.parse(json).validate[PokeAPIPokemonNames].asOpt
       .exists(_.names == List(
         PokeAPIPokemonName("foo"), PokeAPIPokemonName("bar")))
   }

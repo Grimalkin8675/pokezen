@@ -18,8 +18,8 @@ case class PokeAPIService @Inject()(
 
   def pokemons(): Future[PokemonNames] = {
     def responseToNames(response: WSResponse): PokemonNames =
-      Json.parse(response.body).validate[PokeAPIPokemons] match {
-        case s: JsSuccess[PokeAPIPokemons] => s.get
+      Json.parse(response.body).validate[PokeAPIPokemonNames] match {
+        case s: JsSuccess[PokeAPIPokemonNames] => s.get
         case e: JsError =>
           throw new Exception("problem while parsing pokeapi's response")
       }

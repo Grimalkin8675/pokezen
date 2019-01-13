@@ -6,13 +6,14 @@ import play.api.libs.functional.syntax._
 import pokezen.{PokemonNames, PokemonName}
 
 
-class PokeAPIPokemons(names: PokeAPIPokemonName*) extends PokemonNames(names: _*)
+class PokeAPIPokemonNames(names: PokeAPIPokemonName*)
+  extends PokemonNames(names: _*)
 
-object PokeAPIPokemons {
-  def apply(pokemons: PokeAPIPokemonName*): PokeAPIPokemons =
-    new PokeAPIPokemons(pokemons: _*)
+object PokeAPIPokemonNames {
+  def apply(pokemons: PokeAPIPokemonName*): PokeAPIPokemonNames =
+    new PokeAPIPokemonNames(pokemons: _*)
 
-  implicit val pokeAPIPokemonsReads: Reads[PokeAPIPokemons] = (
+  implicit val pokeAPIPokemonNamesReads: Reads[PokeAPIPokemonNames] = (
     (__ \ "count").read[Double] and
     (__ \ "next").readNullable[String] and
     (__ \ "previous").readNullable[Boolean] and
@@ -22,6 +23,6 @@ object PokeAPIPokemons {
       _count: Double,
       _next: Option[String],
       _previous: Option[Boolean],
-      results: List[PokeAPIPokemonName]) => PokeAPIPokemons(results: _*)
+      results: List[PokeAPIPokemonName]) => PokeAPIPokemonNames(results: _*)
   )
 }
