@@ -8,13 +8,13 @@ import play.api.test.Helpers.{stubControllerComponents, contentAsString}
 
 import tests.MockSearchService
 import pokezen.Name
-import pokezen.controllers.{SearcheableService, SearchController}
+import pokezen.controllers.{SearcheableService, SearchPokemon}
 
 
-object SearchControllerSpec extends Properties("SearchController") {
+object SearchPokemonSpec extends Properties("SearchPokemon") {
   property("searchPokemon") = {
-    val controller: SearchController =
-      SearchController(
+    val controller: SearchPokemon =
+      SearchPokemon(
         MockSearchService(),
         stubControllerComponents(),
         ExecutionContext.global)

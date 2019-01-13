@@ -14,7 +14,7 @@ trait SearcheableService {
 }
 
 @Singleton
-case class SearchController @Inject()(
+case class SearchPokemon @Inject()(
     searchService: SearcheableService,
     cc: ControllerComponents,
     ec: ExecutionContext) extends AbstractController(cc) {
