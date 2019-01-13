@@ -7,7 +7,7 @@ import play.api.libs.ws._
 import play.api.libs.json._
 
 import pokezen.controllers.SearcheableService
-import pokezen.{Pokemon, PokemonNames, PokemonName}
+import pokezen.{Pokemon, PokemonNames, PokemonName, Type}
 
 
 case class PokeAPIService @Inject()(
@@ -15,33 +15,41 @@ case class PokeAPIService @Inject()(
     ec: ExecutionContext) extends InjectedController
                              with SearcheableService {
   implicit val implicitEc = ec
-  val apiUrl = "https://pokeapi.co/api/v2"
 
-  def pokemons: Future[PokemonNames] = {
-    def responseToNames(response: WSResponse): PokemonNames =
-      Json.parse(response.body).validate[PokeAPIPokemonNames] match {
-        case s: JsSuccess[PokeAPIPokemonNames] => s.get
-        case e: JsError =>
+  def getAndMap[A](route: String)(implicit rds: Reads[A]): Future[A] = {
+    val apiUrl = "https://pokeapi.co/api/v2"
+
+    def validateResponse(response: WSResponse): A =
+      Json.parse(response.body).validate[A] match {
+        case s: JsSuccess[A] => s.get
+        case e: JsError => {
+          println(s"e = ${e}")
           throw new Exception("problem while parsing pokeapi's response")
+        }
       }
 
-    ws.url(s"${this.apiUrl}/pokemon")
+    ws.url(s"${apiUrl}${route}")
       .addHttpHeaders("Accept" -> "application/json")
       .get
-      .map(responseToNames(_).sorted)
+      .map(validateResponse)
   }
 
-  def pokemonByName(name: PokemonName): Future[Pokemon] = {
-    def responseToPokemon(response: WSResponse): Pokemon =
-      Json.parse(response.body).validate[PokeAPIPokemon] match {
-        case s: JsSuccess[PokeAPIPokemon] => s.get
-        case e: JsError =>
-          throw new Exception("problem while parsing pokeapi's response")
-      }
+  def pokemons: Future[PokemonNames] =
+    this.getAndMap[PokeAPIPokemonNames](s"/pokemon")
+        .map(_.sorted)
 
-    ws.url(s"${this.apiUrl}/pokemon/${name.name}")
-      .addHttpHeaders("Accept" -> "application/json")
-      .get
-      .map(responseToPokemon)
+  def pokemonByName(name: PokemonName): Future[Pokemon] =
+    this.getAndMap[PokeAPIPokemon](s"/pokemon/${name.name}")
+
+  def pokemonsOfType(pokemonType: Type): Future[PokemonNames] = {
+    implicit val pokemonInTypeReads: Reads[PokemonName] =
+      (__ \ "pokemon" \ "name").read[String].map(PokemonName.apply _)
+
+    val namesFromTypeReads: Reads[PokemonNames] = (
+      (__ \ "pokemon").read[Seq[PokemonName]].map(
+        (names: Seq[PokemonName]) => PokemonNames(names: _*))
+    )
+    this.getAndMap[PokemonNames](
+      s"/type/${pokemonType.typeName}")(namesFromTypeReads)
   }
 }

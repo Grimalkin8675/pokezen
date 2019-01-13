@@ -1,5 +1,6 @@
 import org.scalacheck._
 import org.scalacheck.Prop._
+import org.scalatestplus.play._
 
 import scala.concurrent._
 import scala.concurrent.duration._
@@ -149,5 +150,43 @@ object PokeAPIServiceSpec extends Properties("PokeAPIService") {
         ImageURL("foo image url"),
         Types(Type("poison"), Type("grass")),
         Stats(Stat("speed", 45), Stat("defense", 65)))
+  }
+}
+
+
+class PokeAPIServiceSpec2 extends PlaySpec {
+  "pokemonsOfType(type)" must {
+    "return all pokemons' names of a certain type" in {
+      val json = """
+        {
+          "names": [],
+          "pokemon": [
+            {
+              "pokemon": {
+                "name": "foo",
+                "url": "some url"
+              },
+              "slot": -1
+            },
+            {
+              "pokemon": {
+                "name": "bar"
+              }
+            }
+          ]
+        }
+      """
+      val ws = MockWS {
+        case (GET, "https://pokeapi.co/api/v2/type/some-type") =>
+          Action {
+            Ok(Json.parse(json))
+          }
+      }
+      val futureResult = PokeAPIService(ws, ExecutionContext.global)
+        .pokemonsOfType(Type("some-type"))
+      Await.result(futureResult, 1 seconds) mustBe (
+        PokemonNames(PokemonName("foo"), PokemonName("bar"))
+      )
+    }
   }
 }
