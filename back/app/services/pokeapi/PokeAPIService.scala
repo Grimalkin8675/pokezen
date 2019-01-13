@@ -6,14 +6,15 @@ import play.api.mvc._
 import play.api.libs.ws._
 import play.api.libs.json._
 
-import pokezen.controllers.SearcheableService
+import pokezen.controllers.{SearcheableService, DetaileableService}
 import pokezen.{Pokemon, PokemonNames, PokemonName, Type}
 
 
 case class PokeAPIService @Inject()(
     ws: WSClient,
     ec: ExecutionContext) extends InjectedController
-                             with SearcheableService {
+                             with SearcheableService
+                             with DetaileableService {
   implicit val implicitEc = ec
 
   def getAndMap[A](route: String)(implicit rds: Reads[A]): Future[A] = {

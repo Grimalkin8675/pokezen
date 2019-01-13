@@ -11,7 +11,7 @@ import play.core.server.Server
 import mockws.MockWS
 
 import pokezen._
-import pokezen.controllers.SearcheableService
+import pokezen.controllers.{SearcheableService, DetaileableService}
 import pokezen.services.pokeapi.PokeAPIService
 
 
@@ -197,6 +197,12 @@ class PokeAPIServiceSpec extends PlaySpec {
       val ws = MockWS(PartialFunction.empty)
       PokeAPIService(ws, ExecutionContext.global)
         .isInstanceOf[SearcheableService] mustBe true
+    }
+
+    "extend DetaileableService" in {
+      val ws = MockWS(PartialFunction.empty)
+      PokeAPIService(ws, ExecutionContext.global)
+        .isInstanceOf[DetaileableService] mustBe true
     }
   }
 }
