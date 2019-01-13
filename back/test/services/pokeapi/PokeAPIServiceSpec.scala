@@ -11,7 +11,7 @@ import play.api.test.Helpers._
 import play.core.server.Server
 import mockws.MockWS
 
-import pokezen.PokemonName
+import pokezen.{PokemonNames, PokemonName}
 import pokezen.services.pokeapi.PokeAPIService
 
 
@@ -46,10 +46,10 @@ object PokeAPIServiceSpec extends Properties("PokeAPIService") {
     val futureResult =
       PokeAPIService(ws, ExecutionContext.global).pokemons()
     val res = Await.result(futureResult, 1 seconds)
-    (   res.size == 3
-    &&  res.contains(PokemonName("foo"))
-    &&  res.contains(PokemonName("bar"))
-    &&  res.contains(PokemonName("bafooba")))
+    (   res.names.size == 3
+    &&  res.names.contains(PokemonName("foo"))
+    &&  res.names.contains(PokemonName("bar"))
+    &&  res.names.contains(PokemonName("bafooba")))
   }
 
   property("pokemons() should return sorted pokemon names") = {
@@ -85,7 +85,7 @@ object PokeAPIServiceSpec extends Properties("PokeAPIService") {
     }
     val futureResult =
       PokeAPIService(ws, ExecutionContext.global).pokemons()
-    Await.result(futureResult, 1 seconds) == List(
+    Await.result(futureResult, 1 seconds) == PokemonNames(
       PokemonName("abc"),
       PokemonName("abcd"),
       PokemonName("def"),

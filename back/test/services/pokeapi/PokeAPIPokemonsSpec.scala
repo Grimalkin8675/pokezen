@@ -8,11 +8,9 @@ import pokezen.services.pokeapi.{PokeAPIPokemonName, PokeAPIPokemons}
 
 
 object PokeAPIPokemonsSpec extends Properties("PokeAPIPokemons") {
-  property("pokemons") = {
-    val pokemons: List[PokeAPIPokemonName] =
-      List(PokeAPIPokemonName("foo"), PokeAPIPokemonName("bar"))
-    PokeAPIPokemons(pokemons).pokemons == pokemons
-  }
+  property("names") =
+    PokeAPIPokemons(PokeAPIPokemonName("foo"), PokeAPIPokemonName("bar"))
+    .names == List(PokeAPIPokemonName("foo"), PokeAPIPokemonName("bar"))
 
   property(" Parsing from json") = {
     val json = """
@@ -33,11 +31,7 @@ object PokeAPIPokemonsSpec extends Properties("PokeAPIPokemons") {
       }
     """
     Json.parse(json).validate[PokeAPIPokemons].asOpt
-      .exists(_.pokemons == List(
+      .exists(_.names == List(
         PokeAPIPokemonName("foo"), PokeAPIPokemonName("bar")))
   }
-
-  property("toNames") =
-    PokeAPIPokemons(List(PokeAPIPokemonName("foo"), PokeAPIPokemonName("bar")))
-      .toNames == List(PokemonName("foo"), PokemonName("bar"))
 }
