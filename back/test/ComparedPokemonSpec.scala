@@ -40,4 +40,23 @@ class ComparedPokemonSpec extends PlaySpec {
               Type("poison") -> 3)))
     }
   }
+
+  "ComparedPokemon.compare(pokemon, otherPokemons)" should {
+    "create a new ComparedPokemon" in {
+      ComparedPokemon.compare(fooPokemon)
+        .isInstanceOf[ComparedPokemon] mustBe true
+    }
+
+    // "compare pokemon to itself if no other pokemons given" in {
+    //   ComparedPokemon.compare(fooPokemon)
+    //     .comparedStats mustBe fooPokemon.baseStats
+    // }
+
+    // "compare pokemon to other pokemons' stats having the same type" in {
+    //   ComparedPokemon.compare(
+    //     fooPokemon,
+    //     Pokemon(PokemonName(""), ImageURL(""), Types)
+    //   )
+    // }
+  }
 }
