@@ -21,4 +21,11 @@ class ComparedPokemonSpec extends PlaySpec {
         .comparedStats mustBe List(Stat("att", -5), Stat("def", 10))
     }
   }
+
+  "ComparedPokemon.compare(pokemon, otherPokemons)" should {
+    "create a new ComparedPokemon" in {
+      ComparedPokemon.compare(fooPokemon)
+        .isInstanceOf[ComparedPokemon] mustBe true
+    }
+  }
 }
