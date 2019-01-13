@@ -29,7 +29,7 @@ object PokemonDetailsSpec extends Properties("PokemonDetails") {
         ],
         "stats": [
           {
-            "stat": "speed",
+            "name": "speed",
             "base": 70,
             "comparison": {
               "fire": 5,
@@ -37,7 +37,7 @@ object PokemonDetailsSpec extends Properties("PokemonDetails") {
             }
           },
           {
-            "stat": "defense",
+            "name": "defense",
             "base": 50,
             "comparison": {
               "fire": -15,

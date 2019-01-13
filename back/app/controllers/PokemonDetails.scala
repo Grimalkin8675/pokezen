@@ -31,7 +31,7 @@ case class PokemonDetails @Inject()(
           ],
           "stats": [
             {
-              "stat": "speed",
+              "name": "speed",
               "base": 70,
               "comparison": {
                 "fire": 5,
@@ -39,7 +39,7 @@ case class PokemonDetails @Inject()(
               }
             },
             {
-              "stat": "defense",
+              "name": "defense",
               "base": 50,
               "comparison": {
                 "fire": -15,
