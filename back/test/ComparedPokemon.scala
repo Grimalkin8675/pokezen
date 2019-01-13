@@ -13,12 +13,12 @@ class ComparedPokemonSpec extends PlaySpec {
 
   "ComparedPokemon" should {
     "have an attribute pokemon" in {
-      ComparedPokemon(fooPokemon).pokemon mustBe fooPokemon
+      ComparedPokemon(fooPokemon, Stats()).pokemon mustBe fooPokemon
     }
 
     "have an attribute comparedStats" in {
-      ComparedPokemon(fooPokemon, Stat("att", -5), Stat("def", 10))
-        .comparedStats mustBe List(Stat("att", -5), Stat("def", 10))
+      ComparedPokemon(fooPokemon, Stats(Stat("att", -5), Stat("def", 10)))
+        .comparedStats mustBe Stats(Stat("att", -5), Stat("def", 10))
     }
   }
 
@@ -26,6 +26,11 @@ class ComparedPokemonSpec extends PlaySpec {
     "create a new ComparedPokemon" in {
       ComparedPokemon.compare(fooPokemon)
         .isInstanceOf[ComparedPokemon] mustBe true
+    }
+
+    "compare pokemon to itself if no other pokemons given" in {
+      ComparedPokemon.compare(fooPokemon)
+        .comparedStats mustBe fooPokemon.baseStats
     }
   }
 }
