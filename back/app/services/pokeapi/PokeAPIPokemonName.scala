@@ -6,11 +6,11 @@ import play.api.libs.functional.syntax._
 import pokezen.PokemonName
 
 
-case class PokeAPIPokemonName(name: String) {
-  def toName: PokemonName = PokemonName(this.name)
-}
+class PokeAPIPokemonName(name: String) extends PokemonName(name)
 
 object PokeAPIPokemonName {
+  def apply(name: String): PokeAPIPokemonName = new PokeAPIPokemonName(name)
+
   implicit val pokeAPIPokemonNameReads: Reads[PokeAPIPokemonName] = (
     (__ \ "name").read[String] and
     (__ \ "url").read[String]

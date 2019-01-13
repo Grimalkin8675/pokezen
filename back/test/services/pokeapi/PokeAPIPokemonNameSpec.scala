@@ -21,5 +21,6 @@ object PokeAPIPokemonNameSpec extends Properties("PokeAPIPokemonName") {
       .exists(_.name == "foo")
   }
 
-  property("toName") = PokeAPIPokemonName("foo").toName == PokemonName("foo")
+  property(" Is of type PokemonName") =
+    PokeAPIPokemonName("foo").isInstanceOf[PokemonName]
 }

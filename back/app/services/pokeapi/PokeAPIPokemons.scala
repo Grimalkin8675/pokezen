@@ -7,7 +7,7 @@ import pokezen.PokemonName
 
 
 case class PokeAPIPokemons(pokemons: List[PokeAPIPokemonName]) {
-  def toNames: List[PokemonName] = this.pokemons.map(_.toName)
+  def toNames: List[PokemonName] = this.pokemons
 }
 
 object PokeAPIPokemons {
