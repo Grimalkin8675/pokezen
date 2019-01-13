@@ -25,8 +25,7 @@ class PokemonSpec extends PlaySpec {
       Pokemon(
         PokemonName(""),
         ImageURL(""),
-        Types(Type("fire"),
-        Type("air")),
+        Types(Type("fire"), Type("air")),
         Stats()).types mustBe Types(Type("fire"), Type("air"))
     }
 
