@@ -7,12 +7,12 @@ import play.api.libs.json._
 import scala.concurrent._
 import play.api.libs.json._
 
-import pokezen.{Pokemon, PokemonNames}
+import pokezen.{Pokemon, PokemonNames, PokemonName, Type}
 
 
 trait DetaileableService {
-  def pokemonByName(name: String): Pokemon
-  def pokemonsOfType(typeName: String): PokemonNames
+  def pokemonByName(name: PokemonName): Future[Pokemon]
+  def pokemonsOfType(pokemonType: Type): Future[PokemonNames]
 }
 
 @Singleton
