@@ -7,7 +7,6 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.{stubControllerComponents, contentAsString}
 
 import tests.MockSearchService
-import pokezen.Name
 import pokezen.controllers.{SearcheableService, SearchPokemon}
 
 
