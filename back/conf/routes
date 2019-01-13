@@ -1,1 +1,2 @@
 GET     /pokemons                   pokezen.controllers.SearchController.pokemons()
+GET     /pokemon/:name              pokezen.controllers.PokemonDetails.pokemon(name: String)
