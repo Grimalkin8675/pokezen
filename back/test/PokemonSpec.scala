@@ -5,5 +5,6 @@ import pokezen.{Pokemon, PokemonName}
 
 
 object PokemonSpec extends Properties("Pokemon") {
-  property("name") = Pokemon("foo").name == PokemonName("foo")
+  property("name") =
+    Pokemon(PokemonName("foo")).name == PokemonName("foo")
 }
