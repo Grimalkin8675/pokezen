@@ -11,7 +11,7 @@ import play.api.test.Helpers._
 import play.core.server.Server
 import mockws.MockWS
 
-import pokezen.{PokemonNames, PokemonName}
+import pokezen._
 import pokezen.services.pokeapi.PokeAPIService
 
 
@@ -89,5 +89,65 @@ object PokeAPIServiceSpec extends Properties("PokeAPIService") {
       PokemonName("def"),
       PokemonName("ghi")
     )
+  }
+
+  property("pokemonByName(name) should return a Pokemon") = {
+    val json = """
+      {
+        "abilities": [],
+        "base_experience": -1,
+        "forms": [],
+        "game_indices": [],
+        "name": "foo",
+        "sprites": {
+          "front_default": "foo image url",
+          "back_default": "not used field"
+        },
+        "types": [
+          {
+            "slot": 2,
+            "type": {
+              "name": "poison",
+              "url": "some url"
+            }
+          },
+          {
+            "type": {
+              "name": "grass"
+            }
+          }
+        ],
+        "stats": [
+          {
+            "base_stat": 45,
+            "effort": 0,
+            "stat": {
+              "name": "speed",
+              "url": "other url"
+            }
+          },
+          {
+            "base_stat": 65,
+            "stat": {
+              "name": "defense"
+            }
+          }
+        ]
+      }
+    """
+    val ws = MockWS {
+      case (GET, "https://pokeapi.co/api/v2/pokemon/some-pokemon-name") =>
+        Action {
+          Ok(Json.parse(json))
+        }
+    }
+    val futureResult = PokeAPIService(ws, ExecutionContext.global)
+      .pokemonByName(PokemonName("some-pokemon-name"))
+    Await.result(futureResult, 1 seconds) ==
+      Pokemon(
+        PokemonName("foo"),
+        ImageURL("foo image url"),
+        Types(Type("poison"), Type("grass")),
+        Stats(Stat("speed", 45), Stat("defense", 65)))
   }
 }

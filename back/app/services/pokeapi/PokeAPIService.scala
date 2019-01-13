@@ -7,7 +7,7 @@ import play.api.libs.ws._
 import play.api.libs.json._
 
 import pokezen.controllers.SearcheableService
-import pokezen.PokemonNames
+import pokezen.{Pokemon, PokemonNames, PokemonName}
 
 
 case class PokeAPIService @Inject()(
@@ -15,6 +15,7 @@ case class PokeAPIService @Inject()(
     ec: ExecutionContext) extends InjectedController
                              with SearcheableService {
   implicit val implicitEc = ec
+  val apiUrl = "https://pokeapi.co/api/v2"
 
   def pokemons: Future[PokemonNames] = {
     def responseToNames(response: WSResponse): PokemonNames =
@@ -24,9 +25,23 @@ case class PokeAPIService @Inject()(
           throw new Exception("problem while parsing pokeapi's response")
       }
 
-    ws.url("https://pokeapi.co/api/v2/pokemon")
+    ws.url(s"${this.apiUrl}/pokemon")
       .addHttpHeaders("Accept" -> "application/json")
-      .get()
+      .get
       .map(responseToNames(_).sorted)
+  }
+
+  def pokemonByName(name: PokemonName): Future[Pokemon] = {
+    def responseToPokemon(response: WSResponse): Pokemon =
+      Json.parse(response.body).validate[PokeAPIPokemon] match {
+        case s: JsSuccess[PokeAPIPokemon] => s.get
+        case e: JsError =>
+          throw new Exception("problem while parsing pokeapi's response")
+      }
+
+    ws.url(s"${this.apiUrl}/pokemon/${name.name}")
+      .addHttpHeaders("Accept" -> "application/json")
+      .get
+      .map(responseToPokemon)
   }
 }
