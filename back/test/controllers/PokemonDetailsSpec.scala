@@ -19,7 +19,7 @@ object PokemonDetailsSpec extends Properties("PokemonDetails") {
     val result: Future[Result] =
       controller.pokemon("bar").apply(FakeRequest())
     val bodyText: String = contentAsString(result)(1 seconds)
-    val res = Json.stringify(Json.parse("""
+    val res = Json.parse("""
       {
         "name": "bar",
         "image": "bar_image",
@@ -46,7 +46,7 @@ object PokemonDetailsSpec extends Properties("PokemonDetails") {
           }
         ]
       }
-    """))
-    bodyText == res
+    """)
+    bodyText == res.toString
   }
 }
