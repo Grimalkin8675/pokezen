@@ -56,4 +56,15 @@ class PokemonSpec extends PlaySpec {
         Stats()).hasType(Type("water")) mustBe false
     }
   }
+
+  "Pokemon.statByName(statName)" should {
+    "return Some(stat) if pokemon has stat" in {
+      Pokemon(
+        PokemonName(""),
+        ImageURL(""),
+        Types(),
+        Stats(Stat("speed", 70), Stat("defense", 50)))
+      .statByName("speed") mustBe Some(Stat("speed", 70))
+    }
+  }
 }

@@ -7,4 +7,6 @@ case class Pokemon(
     types: Types,
     baseStats: Stats) {
   def hasType(pokeType: Type): Boolean = this.types.contains(pokeType)
+
+  def statByName(name: String): Option[Stat] = this.baseStats.statByName(name)
 }
