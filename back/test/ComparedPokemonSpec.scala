@@ -47,16 +47,19 @@ class ComparedPokemonSpec extends PlaySpec {
         .isInstanceOf[ComparedPokemon] mustBe true
     }
 
-    // "compare pokemon to itself if no other pokemons given" in {
-    //   ComparedPokemon.compare(fooPokemon)
-    //     .comparedStats mustBe fooPokemon.baseStats
-    // }
-
-    // "compare pokemon to other pokemons' stats having the same type" in {
-    //   ComparedPokemon.compare(
-    //     fooPokemon,
-    //     Pokemon(PokemonName(""), ImageURL(""), Types)
-    //   )
-    // }
+    "compare pokemon to itself if no other pokemons given" in {
+      ComparedPokemon.compare(fooPokemon)
+        .comparedStats mustBe List(
+          ComparedStat(
+            "defense",
+            Map(
+              Type("fire") -> 0,
+              Type("water") -> 0)),
+          ComparedStat(
+            "attack",
+            Map(
+              Type("fire") -> 0,
+              Type("water") -> 0)))
+    }
   }
 }
