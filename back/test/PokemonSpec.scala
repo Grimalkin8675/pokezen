@@ -66,5 +66,14 @@ class PokemonSpec extends PlaySpec {
         Stats(Stat("speed", 70), Stat("defense", 50)))
       .statByName("speed") mustBe Some(Stat("speed", 70))
     }
+
+    "return None if pokemon hasn't stat" in {
+      Pokemon(
+        PokemonName(""),
+        ImageURL(""),
+        Types(),
+        Stats(Stat("speed", 70), Stat("defense", 50)))
+      .statByName("attack") mustBe None
+    }
   }
 }
