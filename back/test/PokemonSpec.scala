@@ -47,5 +47,13 @@ class PokemonSpec extends PlaySpec {
         Types(Type("fire"), Type("air")),
         Stats()).hasType(Type("air")) mustBe true
     }
+
+    "return true if pokemon hasn't type" in {
+      Pokemon(
+        PokemonName(""),
+        ImageURL(""),
+        Types(Type("fire"), Type("air")),
+        Stats()).hasType(Type("water")) mustBe false
+    }
   }
 }
