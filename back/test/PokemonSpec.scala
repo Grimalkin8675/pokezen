@@ -38,4 +38,14 @@ class PokemonSpec extends PlaySpec {
       .baseStats mustBe Stats(Stat("speed", 70), Stat("defense", 50))
     }
   }
+
+  "Pokemon.hasType(pokeType)" should {
+    "return true if pokemon has type" in {
+      Pokemon(
+        PokemonName(""),
+        ImageURL(""),
+        Types(Type("fire"), Type("air")),
+        Stats()).hasType(Type("air")) mustBe true
+    }
+  }
 }
