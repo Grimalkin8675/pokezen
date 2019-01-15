@@ -24,23 +24,28 @@ class PokemonDetailsSpec extends PlaySpec {
         {
           "name": "bar",
           "image": "bar_image",
-          "types": [
-            "fire",
-            "air"
+          "types": ["fire", "air"],
+          "base_stats": [
+            {
+              "name": "speed",
+              "value": 70
+            },
+            {
+              "name": "defense",
+              "base": 50
+            }
           ],
           "stats": [
             {
               "name": "speed",
-              "base": 70,
-              "comparison": {
+              "comparisons": {
                 "fire": 5,
                 "air": -10
               }
             },
             {
               "name": "defense",
-              "base": 50,
-              "comparison": {
+              "comparisons": {
                 "fire": -15,
                 "air": 10
               }

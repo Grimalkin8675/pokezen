@@ -19,29 +19,36 @@ trait DetaileableService {
 case class PokemonDetails @Inject()(
     cc: ControllerComponents,
     ec: ExecutionContext) extends AbstractController(cc) {
-  def pokemon(pokemonName: String): Action[AnyContent] =
-    Action { _ =>
+  implicit val implicitEc = ec
+
+  def pokemon(pokemonName: String): Action[AnyContent] = {
+    Action {
       Ok(Json.parse("""
         {
           "name": "bar",
           "image": "bar_image",
-          "types": [
-            "fire",
-            "air"
+          "types": ["fire", "air"],
+          "base_stats": [
+            {
+              "name": "speed",
+              "value": 70
+            },
+            {
+              "name": "defense",
+              "base": 50
+            }
           ],
           "stats": [
             {
               "name": "speed",
-              "base": 70,
-              "comparison": {
+              "comparisons": {
                 "fire": 5,
                 "air": -10
               }
             },
             {
               "name": "defense",
-              "base": 50,
-              "comparison": {
+              "comparisons": {
                 "fire": -15,
                 "air": 10
               }
@@ -50,4 +57,5 @@ case class PokemonDetails @Inject()(
         }
       """))
     }
+  }
 }
