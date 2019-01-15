@@ -87,5 +87,26 @@ class ComparedPokemonSpec extends PlaySpec {
               Type("fire") -> 0,
               Type("water") -> 0)))
     }
+
+    "not compare pokemon to others if other pokemons don't have same type" in {
+      ComparedPokemon.compare(
+        fooPokemon,
+        Pokemon(
+          PokemonName(""),
+          ImageURL(""),
+          Types(Type("earth")),
+          Stats(Stat("defense", 70)))
+      ).comparedStats mustBe List(
+          ComparedStat(
+            "defense",
+            Map(
+              Type("fire") -> 0,
+              Type("water") -> 0)),
+          ComparedStat(
+            "attack",
+            Map(
+              Type("fire") -> 0,
+              Type("water") -> 0)))
+    }
   }
 }
