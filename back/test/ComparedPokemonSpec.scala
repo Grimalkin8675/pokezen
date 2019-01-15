@@ -1,5 +1,7 @@
 import org.scalatestplus.play._
 
+import play.api.libs.json._
+
 import pokezen._
 
 
@@ -38,6 +40,52 @@ class ComparedPokemonSpec extends PlaySpec {
             "def",
             Map(
               Type("poison") -> 3)))
+    }
+
+    "parse to json" in {
+      Json.toJson(
+        ComparedPokemon(
+            fooPokemon,
+            ComparedStat(
+              "att",
+              Map(
+                Type("earth") -> -5,
+                Type("wind") -> 2)),
+            ComparedStat(
+              "def",
+              Map(
+                Type("poison") -> 3)))) mustBe Json.parse("""
+        {
+          "name": "foo",
+          "image": "some url",
+          "types": ["fire", "water"],
+          "baseStats": [
+            {
+              "name": "defense",
+              "value": 100
+            },
+            {
+              "name": "attack",
+              "value": 50
+            }
+          ],
+          "comparedStats": [
+            {
+              "name": "att",
+              "comparisons": {
+                "earth": -5,
+                "wind": 2
+              }
+            },
+            {
+              "name": "def",
+              "comparisons": {
+                "poison": 3
+              }
+            }
+          ]
+        }
+      """)
     }
   }
 

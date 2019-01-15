@@ -8,7 +8,7 @@ case class PokemonName(name: String)
 
 object PokemonName {
   implicit val nameWrites: Writes[PokemonName] =
-    Writes((name: PokemonName) => JsString(name.name))
+    Writes(name => JsString(name.name))
 }
 
 object PokemonNameOrdering extends Ordering[PokemonName] {

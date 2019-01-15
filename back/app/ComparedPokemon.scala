@@ -1,5 +1,8 @@
 package pokezen
 
+import play.api.libs.json._
+import play.api.libs.functional.syntax._
+
 
 case class ComparedPokemon(pokemon: Pokemon, comparedStats: ComparedStat*)
 
@@ -24,4 +27,17 @@ object ComparedPokemon {
 
     ComparedPokemon(pokemon, comparedStats: _*)
   }
+
+  implicit val comparedPokemonWrites: Writes[ComparedPokemon] = (
+    (__ \ "name").write[PokemonName] and
+    (__ \ "image").write[ImageURL] and
+    (__ \ "types").write[Types] and
+    (__ \ "baseStats").write[Stats] and
+    (__ \ "comparedStats").write[Seq[ComparedStat]]
+  )((comparedPokemon: ComparedPokemon) => (
+    comparedPokemon.pokemon.name,
+    comparedPokemon.pokemon.image,
+    comparedPokemon.pokemon.types,
+    comparedPokemon.pokemon.baseStats,
+    comparedPokemon.comparedStats))
 }
