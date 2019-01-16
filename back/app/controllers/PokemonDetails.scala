@@ -11,8 +11,8 @@ import pokezen.{Pokemon, ComparedPokemon, PokemonNames, PokemonName, Type}
 
 
 trait DetaileableService {
-  def pokemonByName(name: PokemonName): Future[Pokemon]
-  def pokemonsOfType(pokemonType: Type): Future[PokemonNames]
+  def pokemonByName(name: PokemonName): Future[Option[Pokemon]]
+  def pokemonsOfType(pokemonType: Type): Future[Option[PokemonNames]]
 }
 
 @Singleton
@@ -24,11 +24,11 @@ case class PokemonDetails @Inject()(
 
   def pokemon(pokemonName: String): Action[AnyContent] = {
     def comparePokemon(pokemon: Pokemon): Future[ComparedPokemon] = {
-      val futuresNames: Seq[Future[PokemonNames]] =
+      val futuresNames: Seq[Future[Option[PokemonNames]]] =
         pokemon.types.map(detailsService.pokemonsOfType)
 
       val futureNames: Future[Seq[PokemonNames]] =
-        Future.sequence(futuresNames)
+        Future.sequence(futuresNames).map(_.flatten)
 
       futureNames
         .flatMap(getPokemons)
@@ -39,16 +39,20 @@ case class PokemonDetails @Inject()(
       val uniqNames: Set[PokemonName] =
         names.foldLeft(Set[PokemonName]())(_ ++ _.toSet)
 
-      val futurePokemons: Set[Future[Pokemon]] =
+      val futurePokemons: Set[Future[Option[Pokemon]]] =
         uniqNames.map(detailsService.pokemonByName)
 
-      Future.sequence(futurePokemons.toSeq)
+      Future.sequence(futurePokemons.toSeq).map(_.flatten)
     }
 
     Action.async {
       detailsService.pokemonByName(PokemonName(pokemonName))
-        .flatMap(comparePokemon)
-        .map(comparedPokemeon => Ok(Json.toJson((comparedPokemeon))))
+        .flatMap {
+          case Some(pokemon) =>
+            comparePokemon(pokemon).map(
+              comparedPokemeon => Ok(Json.toJson((comparedPokemeon))))
+          case None => Future { NotFound }
+        }
     }
   }
 }

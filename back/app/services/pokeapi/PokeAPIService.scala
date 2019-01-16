@@ -17,17 +17,14 @@ case class PokeAPIService @Inject()(
                              with DetaileableService {
   implicit val implicitEc = ec
 
-  def getAndMap[A](route: String)(implicit rds: Reads[A]): Future[A] = {
+  def getAndMap[A](route: String)
+                  (implicit rds: Reads[A]): Future[Option[A]] = {
     val apiUrl = "https://pokeapi.co/api/v2"
 
-    def validateResponse(response: WSResponse): A =
-      Json.parse(response.body).validate[A] match {
-        case s: JsSuccess[A] => s.get
-        case e: JsError => {
-          println(s"e = ${e}")
-          throw new Exception("problem while parsing pokeapi's response")
-        }
-      }
+    def validateResponse(response: WSResponse): Option[A] =
+      if (response.status == 200)
+        Json.parse(response.body).validate[A].asOpt
+      else None
 
     ws.url(s"${apiUrl}${route}")
       .addHttpHeaders("Accept" -> "application/json")
@@ -35,14 +32,14 @@ case class PokeAPIService @Inject()(
       .map(validateResponse)
   }
 
-  def pokemons: Future[PokemonNames] =
+  def pokemons: Future[Option[PokemonNames]] =
     this.getAndMap[PokeAPIPokemonNames](s"/pokemon")
-        .map(_.sorted)
+        .map(names => names.map(_.sorted))
 
-  def pokemonByName(name: PokemonName): Future[Pokemon] =
+  def pokemonByName(name: PokemonName): Future[Option[Pokemon]] =
     this.getAndMap[PokeAPIPokemon](s"/pokemon/${name.name}")
 
-  def pokemonsOfType(pokemonType: Type): Future[PokemonNames] = {
+  def pokemonsOfType(pokemonType: Type): Future[Option[PokemonNames]] = {
     implicit val pokemonInTypeReads: Reads[PokemonName] =
       (__ \ "pokemon" \ "name").read[String].map(PokemonName.apply _)
 

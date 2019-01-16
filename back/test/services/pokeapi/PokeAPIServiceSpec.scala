@@ -3,7 +3,7 @@ import org.scalatestplus.play._
 import scala.concurrent._
 import scala.concurrent.duration._
 import play.api.mvc._
-import play.api.mvc.Results.Ok
+import play.api.mvc.Results.{Ok, NotFound}
 import play.api.libs.json._
 import play.api.test._
 import play.api.test.Helpers._
@@ -46,10 +46,11 @@ class PokeAPIServiceSpec extends PlaySpec {
       }
       val futureResult = PokeAPIService(ws, ExecutionContext.global).pokemons
       val res = Await.result(futureResult, 1 seconds)
-      (   res.names.size == 3
-      &&  res.names.contains(PokemonName("foo"))
-      &&  res.names.contains(PokemonName("bar"))
-      &&  res.names.contains(PokemonName("bafooba")))
+      res.isDefined mustBe true
+      res.get.names.size mustBe 3
+      res.get.names.contains(PokemonName("foo")) mustBe true
+      res.get.names.contains(PokemonName("bar")) mustBe true
+      res.get.names.contains(PokemonName("bafooba")) mustBe true
     }
 
     "return sorted pokemons' names" in {
@@ -84,12 +85,22 @@ class PokeAPIServiceSpec extends PlaySpec {
         }
       }
       val futureResult = PokeAPIService(ws, ExecutionContext.global).pokemons
-      Await.result(futureResult, 1 seconds) == PokemonNames(
+      Await.result(futureResult, 1 seconds) mustBe Some(PokemonNames(
         PokemonName("abc"),
         PokemonName("abcd"),
         PokemonName("def"),
         PokemonName("ghi")
-      )
+      ))
+    }
+
+    "handle not found api" in {
+      val ws = MockWS {
+        case (GET, "https://pokeapi.co/api/v2/pokemon") => Action {
+          NotFound
+        }
+      }
+      val futureResult = PokeAPIService(ws, ExecutionContext.global).pokemons
+      Await.result(futureResult, 1 seconds) mustBe None
     }
   }
 
@@ -147,12 +158,12 @@ class PokeAPIServiceSpec extends PlaySpec {
       }
       val futureResult = PokeAPIService(ws, ExecutionContext.global)
         .pokemonByName(PokemonName("some-pokemon-name"))
-      Await.result(futureResult, 1 seconds) ==
-        Pokemon(
+      Await.result(futureResult, 1 seconds) mustBe
+        Some(Pokemon(
           PokemonName("foo"),
           Some(ImageURL("foo image url")),
           Types(Type("poison"), Type("grass")),
-          Stats(Stat("speed", 45), Stat("defense", 65)))
+          Stats(Stat("speed", 45), Stat("defense", 65))))
     }
   }
 
@@ -186,9 +197,8 @@ class PokeAPIServiceSpec extends PlaySpec {
       }
       val futureResult = PokeAPIService(ws, ExecutionContext.global)
         .pokemonsOfType(Type("some-type"))
-      Await.result(futureResult, 1 seconds) mustBe (
-        PokemonNames(PokemonName("foo"), PokemonName("bar"))
-      )
+      Await.result(futureResult, 1 seconds) mustBe
+        Some(PokemonNames(PokemonName("foo"), PokemonName("bar")))
     }
   }
 

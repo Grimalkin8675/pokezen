@@ -10,7 +10,7 @@ import pokezen.PokemonNames
 
 
 trait SearcheableService {
-  def pokemons: Future[PokemonNames]
+  def pokemons: Future[Option[PokemonNames]]
 }
 
 @Singleton
@@ -20,8 +20,10 @@ case class SearchPokemon @Inject()(
     ec: ExecutionContext) extends AbstractController(cc) {
   def pokemons: Action[AnyContent] =
     Action.async {
-      searchService
-        .pokemons
-        .map { names: PokemonNames => Ok(Json.toJson(names)) }(ec)
+      searchService.pokemons
+        .map {
+          case Some(names) => Ok(Json.toJson(names))
+          case None => NotFound
+        }(ec)
     }
 }

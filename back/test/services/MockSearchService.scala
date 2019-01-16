@@ -7,8 +7,8 @@ import pokezen.controllers.SearcheableService
 
 
 case class MockSearchService() extends SearcheableService {
-  def pokemons: Future[PokemonNames] =
+  def pokemons: Future[Option[PokemonNames]] =
     Future {
-      PokemonNames(PokemonName("foo"), PokemonName("bar"))
+      Some(PokemonNames(PokemonName("foo"), PokemonName("bar")))
     }(ExecutionContext.global)
 }

@@ -29,21 +29,21 @@ case class MockDetailsService() extends DetaileableService {
     Types(Type("air")),
     Stats(Stat("speed", 90), Stat("defense", 30)))
 
-  def pokemonByName(name: PokemonName): Future[Pokemon] = Future {
+  def pokemonByName(name: PokemonName): Future[Option[Pokemon]] = Future {
     name match {
-      case PokemonName("foo") => foo
-      case PokemonName("bar") => bar
-      case PokemonName("otherFirePokemon") => otherFirePokemon
-      case PokemonName("otherAirPokemon") => otherAirPokemon
-      case _ => throw new Exception(s"pokemon not found: ${name}")
+      case PokemonName("foo") => Some(foo)
+      case PokemonName("bar") => Some(bar)
+      case PokemonName("otherFirePokemon") => Some(otherFirePokemon)
+      case PokemonName("otherAirPokemon") => Some(otherAirPokemon)
+      case _ => None
     }
   }
 
-  def pokemonsOfType(pokemonType: Type): Future[PokemonNames] = Future {
+  def pokemonsOfType(pokemonType: Type): Future[Option[PokemonNames]] = Future {
     pokemonType match {
-      case Type("fire") => PokemonNames(bar.name, otherFirePokemon.name)
-      case Type("air") => PokemonNames(bar.name, otherAirPokemon.name)
-      case _ => throw new Exception(s"pokemon type not found: ${pokemonType}")
+      case Type("fire") => Some(PokemonNames(bar.name, otherFirePokemon.name))
+      case Type("air") => Some(PokemonNames(bar.name, otherAirPokemon.name))
+      case _ => None
     }
   }
 }
