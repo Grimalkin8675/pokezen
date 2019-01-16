@@ -59,7 +59,7 @@ class ComparedPokemonSpec extends PlaySpec {
           "name": "foo",
           "image": "some url",
           "types": ["fire", "water"],
-          "baseStats": [
+          "base_stats": [
             {
               "name": "defense",
               "value": 100
@@ -69,7 +69,7 @@ class ComparedPokemonSpec extends PlaySpec {
               "value": 50
             }
           ],
-          "comparedStats": [
+          "compared_stats": [
             {
               "name": "att",
               "comparisons": {

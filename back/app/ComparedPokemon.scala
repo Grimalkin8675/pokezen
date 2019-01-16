@@ -32,8 +32,8 @@ object ComparedPokemon {
     (__ \ "name").write[PokemonName] and
     (__ \ "image").write[ImageURL] and
     (__ \ "types").write[Types] and
-    (__ \ "baseStats").write[Stats] and
-    (__ \ "comparedStats").write[Seq[ComparedStat]]
+    (__ \ "base_stats").write[Stats] and
+    (__ \ "compared_stats").write[Seq[ComparedStat]]
   )((comparedPokemon: ComparedPokemon) => (
     comparedPokemon.pokemon.name,
     comparedPokemon.pokemon.image,
