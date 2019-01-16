@@ -9,7 +9,7 @@ class ComparedPokemonSpec extends PlaySpec {
   val fooPokemon =
     Pokemon(
       PokemonName("foo"),
-      ImageURL("some url"),
+      Some(ImageURL("some url")),
       Types(Type("fire"), Type("water")),
       Stats(Stat("defense", 100), Stat("attack", 50)))
 
@@ -115,12 +115,12 @@ class ComparedPokemonSpec extends PlaySpec {
         fooPokemon,
         Pokemon(
           PokemonName(""),
-          ImageURL(""),
+          None,
           Types(Type("fire")),
           Stats(Stat("defense", 70))),
         Pokemon(
           PokemonName(""),
-          ImageURL(""),
+          None,
           Types(Type("fire")),
           Stats(Stat("defense", 90)))
       ).comparedStats mustBe List(
@@ -141,7 +141,7 @@ class ComparedPokemonSpec extends PlaySpec {
         fooPokemon,
         Pokemon(
           PokemonName(""),
-          ImageURL(""),
+          None,
           Types(Type("earth")),
           Stats(Stat("defense", 70)))
       ).comparedStats mustBe List(

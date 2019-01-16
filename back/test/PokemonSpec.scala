@@ -8,7 +8,7 @@ class PokemonSpec extends PlaySpec {
     "have a name property" in {
       Pokemon(
         PokemonName("foo"),
-        ImageURL(""),
+        None,
         Types(),
         Stats()).name mustBe PokemonName("foo")
     }
@@ -16,15 +16,15 @@ class PokemonSpec extends PlaySpec {
     "have a image property" in {
       Pokemon(
         PokemonName(""),
-        ImageURL("image_url"),
+        Some(ImageURL("image_url")),
         Types(),
-        Stats()).image mustBe ImageURL("image_url")
+        Stats()).image mustBe Some(ImageURL("image_url"))
     }
 
     "have a types property" in {
       Pokemon(
         PokemonName(""),
-        ImageURL(""),
+        None,
         Types(Type("fire"), Type("air")),
         Stats()).types mustBe Types(Type("fire"), Type("air"))
     }
@@ -32,7 +32,7 @@ class PokemonSpec extends PlaySpec {
     "have a baseStats property" in {
       Pokemon(
         PokemonName(""),
-        ImageURL(""),
+        None,
         Types(),
         Stats(Stat("speed", 70), Stat("defense", 50)))
       .baseStats mustBe Stats(Stat("speed", 70), Stat("defense", 50))
@@ -43,7 +43,7 @@ class PokemonSpec extends PlaySpec {
     "return true if pokemon has type" in {
       Pokemon(
         PokemonName(""),
-        ImageURL(""),
+        None,
         Types(Type("fire"), Type("air")),
         Stats()).hasType(Type("air")) mustBe true
     }
@@ -51,7 +51,7 @@ class PokemonSpec extends PlaySpec {
     "return true if pokemon hasn't type" in {
       Pokemon(
         PokemonName(""),
-        ImageURL(""),
+        None,
         Types(Type("fire"), Type("air")),
         Stats()).hasType(Type("water")) mustBe false
     }
@@ -61,7 +61,7 @@ class PokemonSpec extends PlaySpec {
     "return Some(stat) if pokemon has stat" in {
       Pokemon(
         PokemonName(""),
-        ImageURL(""),
+        None,
         Types(),
         Stats(Stat("speed", 70), Stat("defense", 50)))
       .statByName("speed") mustBe Some(Stat("speed", 70))
@@ -70,7 +70,7 @@ class PokemonSpec extends PlaySpec {
     "return None if pokemon hasn't stat" in {
       Pokemon(
         PokemonName(""),
-        ImageURL(""),
+        None,
         Types(),
         Stats(Stat("speed", 70), Stat("defense", 50)))
       .statByName("attack") mustBe None

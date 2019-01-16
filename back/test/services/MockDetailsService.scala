@@ -9,23 +9,23 @@ import pokezen.controllers.DetaileableService
 case class MockDetailsService() extends DetaileableService {
   implicit val ec = ExecutionContext.global
 
-  val foo = Pokemon(PokemonName("whatever"), ImageURL(""), Types(), Stats())
+  val foo = Pokemon(PokemonName("whatever"), None, Types(), Stats())
 
   val bar = Pokemon(
     PokemonName("bar"),
-    ImageURL("bar_image"),
+    Some(ImageURL("bar_image")),
     Types(Type("fire"), Type("air")),
     Stats(Stat("speed", 70), Stat("defense", 50)))
 
   val otherFirePokemon = Pokemon(
     PokemonName("otherFirePokemon"),
-    ImageURL(""),
+    None,
     Types(Type("fire")),
     Stats(Stat("speed", 60), Stat("defense", 80)))
 
   val otherAirPokemon = Pokemon(
     PokemonName("otherAirPokemon"),
-    ImageURL(""),
+    None,
     Types(Type("air")),
     Stats(Stat("speed", 90), Stat("defense", 30)))
 

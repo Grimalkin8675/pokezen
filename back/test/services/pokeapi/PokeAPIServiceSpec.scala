@@ -150,7 +150,7 @@ class PokeAPIServiceSpec extends PlaySpec {
       Await.result(futureResult, 1 seconds) ==
         Pokemon(
           PokemonName("foo"),
-          ImageURL("foo image url"),
+          Some(ImageURL("foo image url")),
           Types(Type("poison"), Type("grass")),
           Stats(Stat("speed", 45), Stat("defense", 65)))
     }

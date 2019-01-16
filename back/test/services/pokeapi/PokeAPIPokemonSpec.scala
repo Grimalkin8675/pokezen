@@ -9,7 +9,7 @@ import pokezen.services.pokeapi.PokeAPIPokemon
 class PokeAPIPokemonSpec extends PlaySpec {
   "PokeAPIPokemon" should {
     "be instance of Pokemon" in {
-      PokeAPIPokemon(PokemonName(""), ImageURL(""), Types(), Stats())
+      PokeAPIPokemon(PokemonName(""), None, Types(), Stats())
         .isInstanceOf[Pokemon] mustBe true
     }
 
@@ -61,7 +61,7 @@ class PokeAPIPokemonSpec extends PlaySpec {
           .asOpt mustBe Some(
             Pokemon(
               PokemonName("foo"),
-              ImageURL("foo image url"),
+              Some(ImageURL("foo image url")),
               Types(Type("poison"), Type("grass")),
               Stats(Stat("speed", 45), Stat("defense", 65))))
     }

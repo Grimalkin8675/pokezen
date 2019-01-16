@@ -30,7 +30,7 @@ object ComparedPokemon {
 
   implicit val comparedPokemonWrites: Writes[ComparedPokemon] = (
     (__ \ "name").write[PokemonName] and
-    (__ \ "image").write[ImageURL] and
+    (__ \ "image").writeNullable[ImageURL] and
     (__ \ "types").write[Types] and
     (__ \ "base_stats").write[Stats] and
     (__ \ "compared_stats").write[Seq[ComparedStat]]
