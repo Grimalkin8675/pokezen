@@ -7,7 +7,7 @@ import play.api.libs.json._
 import scala.concurrent._
 import play.api.libs.json._
 
-import pokezen.{Pokemon, PokemonNames, PokemonName, Type}
+import pokezen.{Pokemon, ComparedPokemon, PokemonNames, PokemonName, Type}
 
 
 trait DetaileableService {
@@ -23,40 +23,32 @@ case class PokemonDetails @Inject()(
   implicit val implicitEc = ec
 
   def pokemon(pokemonName: String): Action[AnyContent] = {
-    Action {
-      Ok(Json.parse("""
-        {
-          "name": "bar",
-          "image": "bar_image",
-          "types": ["fire", "air"],
-          "base_stats": [
-            {
-              "name": "speed",
-              "value": 70
-            },
-            {
-              "name": "defense",
-              "base": 50
-            }
-          ],
-          "stats": [
-            {
-              "name": "speed",
-              "comparisons": {
-                "fire": 5,
-                "air": -10
-              }
-            },
-            {
-              "name": "defense",
-              "comparisons": {
-                "fire": -15,
-                "air": 10
-              }
-            }
-          ]
-        }
-      """))
+    def comparePokemon(pokemon: Pokemon): Future[ComparedPokemon] = {
+      val futuresNames: Seq[Future[PokemonNames]] =
+        pokemon.types.map(detailsService.pokemonsOfType)
+
+      val futureNames: Future[Seq[PokemonNames]] =
+        Future.sequence(futuresNames)
+
+      futureNames
+        .flatMap(getPokemons)
+        .map(ComparedPokemon.compare(pokemon, _: _*))
+    }
+
+    def getPokemons(names: Seq[PokemonNames]): Future[Seq[Pokemon]] = {
+      val uniqNames: Set[PokemonName] =
+        names.foldLeft(Set[PokemonName]())(_ ++ _.toSet)
+
+      val futurePokemons: Set[Future[Pokemon]] =
+        uniqNames.map(detailsService.pokemonByName)
+
+      Future.sequence(futurePokemons.toSeq)
+    }
+
+    Action.async {
+      detailsService.pokemonByName(PokemonName(pokemonName))
+        .flatMap(comparePokemon)
+        .map(comparedPokemeon => Ok(Json.toJson((comparedPokemeon))))
     }
   }
 }

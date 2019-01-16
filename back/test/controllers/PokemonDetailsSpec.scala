@@ -34,10 +34,10 @@ class PokemonDetailsSpec extends PlaySpec {
             },
             {
               "name": "defense",
-              "base": 50
+              "value": 50
             }
           ],
-          "stats": [
+          "compared_stats": [
             {
               "name": "speed",
               "comparisons": {
