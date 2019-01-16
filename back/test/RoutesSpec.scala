@@ -36,9 +36,14 @@ class RoutesWithMockSpec extends PlaySpec with GuiceOneAppPerTest {
         .map(status(_)) mustBe Some(OK)
     }
 
-    "send 200 on valid request (/pokemon/:name)" in {
+    "send 200 on valid request (/pokemon/foo)" in {
       route(app, FakeRequest(GET, "/pokemon/foo"))
         .map(status(_)) mustBe Some(OK)
+    }
+
+    "send 400 for an inexisting pokemon (/pokemon/kaboum)" in {
+      route(app, FakeRequest(GET, "/pokemon/kaboum"))
+        .map(status(_)) mustBe Some(NOT_FOUND)
     }
   }
 }
