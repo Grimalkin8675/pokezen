@@ -5,8 +5,8 @@ import play.api.test.Helpers._
 import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
 
-import tests.MockSearchService
-import pokezen.controllers.SearcheableService
+import tests._
+import pokezen.controllers._
 
 
 class RoutesSpec extends PlaySpec with GuiceOneAppPerTest {
@@ -20,11 +20,6 @@ class RoutesSpec extends PlaySpec with GuiceOneAppPerTest {
       route(app, FakeRequest(GET, "/boum"))
         .map(status(_)) mustBe Some(NOT_FOUND)
     }
-
-    "send 200 on valid request (/pokemon/:name)" in {
-      route(app, FakeRequest(GET, "/pokemon/foo"))
-        .map(status(_)) mustBe Some(OK)
-    }
   }
 }
 
@@ -32,11 +27,17 @@ class RoutesSpec extends PlaySpec with GuiceOneAppPerTest {
 class RoutesWithMockSpec extends PlaySpec with GuiceOneAppPerTest {
   override def fakeApplication() = new GuiceApplicationBuilder()
     .overrides(bind[SearcheableService].to[MockSearchService])
+    .overrides(bind[DetaileableService].to[MockDetailsService])
     .build()
 
   "Routes with mock" should {
     "send 200 on a valid request (/pokemons)" in {
       route(app, FakeRequest(GET, "/pokemons"))
+        .map(status(_)) mustBe Some(OK)
+    }
+
+    "send 200 on valid request (/pokemon/:name)" in {
+      route(app, FakeRequest(GET, "/pokemon/foo"))
         .map(status(_)) mustBe Some(OK)
     }
   }

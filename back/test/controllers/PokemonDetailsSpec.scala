@@ -7,6 +7,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.{stubControllerComponents, contentAsString}
 import play.api.libs.json._
 
+import tests.MockDetailsService
 import pokezen.controllers.PokemonDetails
 
 
@@ -15,6 +16,7 @@ class PokemonDetailsSpec extends PlaySpec {
     "return correctly formated json" in {
       val controller: PokemonDetails =
         PokemonDetails(
+          MockDetailsService(),
           stubControllerComponents(),
           ExecutionContext.global)
       val result: Future[Result] =

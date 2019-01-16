@@ -17,6 +17,7 @@ trait DetaileableService {
 
 @Singleton
 case class PokemonDetails @Inject()(
+    detailsService: DetaileableService,
     cc: ControllerComponents,
     ec: ExecutionContext) extends AbstractController(cc) {
   implicit val implicitEc = ec
