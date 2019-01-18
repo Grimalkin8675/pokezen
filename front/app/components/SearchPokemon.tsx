@@ -6,7 +6,7 @@ import Name from '../Name';
 
 
 export interface IPokemonsGetter {
-    pokemons: Promise<Names | null>;
+    pokemons: () => Promise<Names | null>;
 }
 
 
@@ -28,8 +28,8 @@ export default class SearchPokemon extends React.Component<IProps, IState> {
     };
 
     componentDidMount() {
-        this.props.getter.pokemons
-        .then(pokemonNames => this.setState({ names: pokemonNames }));
+        this.props.getter.pokemons()
+            .then(pokemonNames => this.setState({ names: pokemonNames }));
     }
 
     render() {
