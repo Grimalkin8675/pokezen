@@ -3,8 +3,9 @@ import { shallow } from 'enzyme';
 import { MemoryRouter } from 'react-router-dom';
 
 import AppRouter from '../../components/AppRouter';
-import SearchPokemon from '../../components/SearchPokemon';
 import NotMatch from '../../components/NotMatch';
+import Pokemon from '../../components/Pokemon';
+import SearchPokemon from '../../components/SearchPokemon';
 import { resolveFooBar } from '../../__mocks__/pokemonsGetters';
 
 
@@ -43,7 +44,7 @@ describe(AppRouter, () => {
         );
 
         it('should contain NotMatch component', () => {
-            const noMatch = shallow(<NotMatch/>);
+            const noMatch = shallow(<NotMatch />);
             const kaboumIncludesNotMatch =
                 kaboum.html().includes(noMatch.html());
             expect(kaboumIncludesNotMatch).toBe(true);
@@ -56,6 +57,22 @@ describe(AppRouter, () => {
             const rootIncludesSearchPokemon =
                 kaboum.html().includes(searchPokemon.html());
             expect(rootIncludesSearchPokemon).toBe(false);
+        });
+    });
+
+    describe('route /pokemon/:name', () => {
+        const pokemonRouter = (child: JSX.Element) =>
+            <MemoryRouter initialEntries={['/pokemon/foo']}>
+                {child}
+            </MemoryRouter>;
+        const app = shallow(
+            <AppRouter getRouter={pokemonRouter}
+                       pokemonsGetter={resolveFooBar} />
+        );
+
+        it('should contain Pokemon component', () => {
+            const pokemon = shallow(<Pokemon />);
+            expect(app.html().includes(pokemon.html())).toBe(true);
         });
     });
 });
