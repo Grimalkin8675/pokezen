@@ -33,7 +33,7 @@ case class PokeAPIService @Inject()(
   }
 
   def pokemons: Future[Option[PokemonNames]] =
-    this.getAndMap[PokeAPIPokemonNames](s"/pokemon")
+    this.getAndMap[PokeAPIPokemonNames](s"/pokemon?limit=-1")
         .map(names => names.map(_.sorted))
 
   def pokemonByName(name: PokemonName): Future[Option[Pokemon]] =

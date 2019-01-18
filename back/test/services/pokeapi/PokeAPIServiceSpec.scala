@@ -40,7 +40,7 @@ class PokeAPIServiceSpec extends PlaySpec {
         }
       """
       val ws = MockWS {
-        case (GET, "https://pokeapi.co/api/v2/pokemon") => Action {
+        case (GET, "https://pokeapi.co/api/v2/pokemon?limit=-1") => Action {
           Ok(Json.parse(json))
         }
       }
@@ -80,7 +80,7 @@ class PokeAPIServiceSpec extends PlaySpec {
         }
       """
       val ws = MockWS {
-        case (GET, "https://pokeapi.co/api/v2/pokemon") => Action {
+        case (GET, "https://pokeapi.co/api/v2/pokemon?limit=-1") => Action {
           Ok(Json.parse(json))
         }
       }
@@ -95,7 +95,7 @@ class PokeAPIServiceSpec extends PlaySpec {
 
     "handle not found api" in {
       val ws = MockWS {
-        case (GET, "https://pokeapi.co/api/v2/pokemon") => Action {
+        case (GET, "https://pokeapi.co/api/v2/pokemon?limit=-1") => Action {
           NotFound
         }
       }
