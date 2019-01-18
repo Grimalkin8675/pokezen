@@ -14,15 +14,17 @@ export default class ScalAPIService implements IPokemonsGetter {
         this.wsClient = wsClient;
     }
 
-    get pokemons(): Promise<Names | null> {
+    pokemons(): Promise<Names> {
         if (this._pokemons !== null) {
-            return new Promise(resolve => resolve(this._pokemons));
+            return new Promise(resolve => resolve(this._pokemons as Names));
         }
         return this.wsClient
             .get(`/pokemons`)
             .then(response => {
-                this._pokemons = Names.fromAny(response);
-                return this._pokemons;
+                const res = Names.fromAny(response);
+                if (res === null) throw Error('Couldn\'t parse response');
+                this._pokemons = res;
+                return res;
             });
     }
 }

@@ -10,3 +10,9 @@ export const resolveFooBar: IPokemonsGetter = {
         ))
     )
 };
+
+export const rejectSomeReason: IPokemonsGetter = {
+    pokemons: () => new Promise((_resolve, reject) =>
+        reject('some reason')
+    )
+};

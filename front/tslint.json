@@ -21,6 +21,7 @@
         "member-ordering": false,
         "no-eval": false,
         "match-default-export-name": true,
-        "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"]
+        "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"],
+        "max-classes-per-file": false
     }
 }

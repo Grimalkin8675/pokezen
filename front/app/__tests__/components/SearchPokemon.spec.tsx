@@ -3,11 +3,13 @@ import { shallow, mount } from 'enzyme';
 import { MemoryRouter } from 'react-router-dom';
 
 import SearchPokemon from '../../components/SearchPokemon';
-import { resolveFooBar } from '../../__mocks__/pokemonsGetters';
+import { resolveFooBar, rejectSomeReason } from '../../__mocks__/pokemonsGetters';
 
 
 describe(SearchPokemon, () => {
     describe('render', () => {
+        const after1s = new Promise(resolve => setTimeout(resolve, 1000));
+
         it('should contain an input', () => {
             const searchPokemon = shallow(
                 <SearchPokemon getter={resolveFooBar} />
@@ -21,7 +23,6 @@ describe(SearchPokemon, () => {
                     <SearchPokemon getter={resolveFooBar} />
                 </MemoryRouter>
             );
-            const after1s = new Promise(resolve => setTimeout(resolve, 1000));
             return after1s.then(() => {
                 // from resolveFooBar mock
                 expect(searchPokemon.html().includes('Foo')).toBe(true);
@@ -36,13 +37,28 @@ describe(SearchPokemon, () => {
                     <SearchPokemon getter={resolveFooBar} />
                 </MemoryRouter>
             );
-
             searchPokemon.find(SearchPokemon).setState({ searchString: 'foo' });
-
-            const after1s = new Promise(resolve => setTimeout(resolve, 1000));
             return after1s.then(() => {
                 expect(searchPokemon.html().includes('Foo')).toBe(true);
                 expect(searchPokemon.html().includes('Bar')).toBe(false);
+                searchPokemon.unmount();
+            });
+        });
+
+        it('should show message when no pokemons could be retrieved', () => {
+            const searchPokemon = mount(
+                <MemoryRouter>
+                    <SearchPokemon getter={rejectSomeReason} />
+                </MemoryRouter>
+            );
+            return new Promise(resolve => setTimeout(resolve, 1000))
+            .then(() => {
+                expect(searchPokemon.html().includes('Foo')).toBe(false);
+                expect(searchPokemon.html().includes('Bar')).toBe(false);
+                expect(
+                    searchPokemon.html()
+                        .includes('Couldn\'t retrieve pokemons.')
+                ).toBe(true);
                 searchPokemon.unmount();
             });
         });
