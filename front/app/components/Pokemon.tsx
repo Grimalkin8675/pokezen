@@ -1,11 +1,16 @@
 import * as React from 'react';
+import Name from 'app/Name';
 
 
-export default class Pokemon extends React.Component {
+interface IProps {
+    name: Name;
+}
+
+export default class Pokemon extends React.Component<IProps> {
     render() {
         return (
             <div className='Pokemon'>
-                Pokemon
+                {this.props.name.upper().toString()}
             </div>
         );
     }

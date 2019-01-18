@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, RouteComponentProps } from 'react-router-dom';
 
 import NotMatch from './NotMatch';
 import Pokemon from './Pokemon';
 import SearchPokemon, { IPokemonsGetter } from './SearchPokemon';
+import Name from '../Name';
 
 
 interface IProps {
@@ -15,7 +16,8 @@ export default class AppRouter extends React.Component<IProps> {
     render() {
         const searchPokemon = () =>
             <SearchPokemon getter={this.props.pokemonsGetter}/>;
-        const pokemon = () => <Pokemon />;
+        const pokemon = (match: RouteComponentProps<{ name: string }>) =>
+            <Pokemon name={new Name(match.match.params.name)} />;
         const notMatch = () => <NotMatch/>;
 
         return this.props.getRouter(

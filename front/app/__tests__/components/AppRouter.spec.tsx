@@ -6,6 +6,7 @@ import AppRouter from '../../components/AppRouter';
 import NotMatch from '../../components/NotMatch';
 import Pokemon from '../../components/Pokemon';
 import SearchPokemon from '../../components/SearchPokemon';
+import Name from '../../Name';
 import { resolveFooBar } from '../../__mocks__/pokemonsGetters';
 
 
@@ -71,7 +72,7 @@ describe(AppRouter, () => {
         );
 
         it('should contain Pokemon component', () => {
-            const pokemon = shallow(<Pokemon />);
+            const pokemon = shallow(<Pokemon name={new Name('foo')} />);
             expect(app.html().includes(pokemon.html())).toBe(true);
         });
     });
