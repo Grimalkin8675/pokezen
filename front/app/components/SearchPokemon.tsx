@@ -5,17 +5,17 @@ import Names from '../Names';
 import Name from '../Name';
 
 
-interface IPokemonsResponse {
+interface IBodyGetter {
     body(searchString: string): string | JSX.Element[];
 }
 
-class Loading implements IPokemonsResponse {
+class Loading implements IBodyGetter {
     body(): string {
         return 'Loading...';
     }
 }
 
-class GotPokemons implements IPokemonsResponse {
+class PokemonLinks implements IBodyGetter {
     private names: Names;
 
     constructor (names: Names) {
@@ -38,7 +38,7 @@ class GotPokemons implements IPokemonsResponse {
     }
 }
 
-class PokemonsError implements IPokemonsResponse {
+class PokemonsError implements IBodyGetter {
     body(): string {
         return 'Couldn\'t retrieve pokemons.';
     }
@@ -55,7 +55,7 @@ interface IProps {
 }
 
 interface IState {
-    names: IPokemonsResponse;
+    names: IBodyGetter;
     searchString: string;
 }
 
@@ -70,7 +70,7 @@ export default class SearchPokemon extends React.Component<IProps, IState> {
     componentDidMount() {
         this.props.getter.pokemons()
         .then(pokemonNames => this.setState({
-            names: new GotPokemons(pokemonNames)
+            names: new PokemonLinks(pokemonNames)
         }))
         .catch(_message => this.setState({
             names: new PokemonsError()
