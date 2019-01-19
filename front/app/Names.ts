@@ -1,3 +1,5 @@
+import * as _ from 'lodash';
+
 import Name from './Name';
 
 
@@ -9,8 +11,7 @@ export default class Names {
     }
 
     static fromAny(thing: any): Names | null {
-        if (  Array.isArray(thing)
-           && thing.every((elt: any) => typeof elt === 'string')) {
+        if (  _.isArray(thing) && thing.every(_.isString) {
             const names: Name[] =
                 thing.map((elt: string) => new Name(elt));
             return new Names(...names);
