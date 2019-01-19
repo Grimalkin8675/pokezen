@@ -11,9 +11,8 @@ export default class Names {
     }
 
     static fromAny(thing: any): Names | null {
-        if (  _.isArray(thing) && thing.every(_.isString) {
-            const names: Name[] =
-                thing.map((elt: string) => new Name(elt));
+        if (_.isArray(thing) && thing.every(_.isString)) {
+            const names: Name[] = thing.map(elt => new Name(elt));
             return new Names(...names);
         }
         return null;
