@@ -1,8 +1,15 @@
 import * as React from 'react';
-import Name from 'app/Name';
 
+import ComparedPokemon from '../ComparedPokemon';
+import Name from '../Name';
+
+
+export interface IPokemonDetailsGetter {
+    pokemonDetails: (name: Name) => Promise<ComparedPokemon>;
+}
 
 interface IProps {
+    getter: IPokemonDetailsGetter;
     name: Name;
 }
 

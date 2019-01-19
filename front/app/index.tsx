@@ -15,9 +15,11 @@ const api = axios.create({
 const wsClient: IWSClient = {
     get: (url: string) => api.get(url).then(response => response.data)
 };
+const scalAPIService = new ScalAPIService(wsClient);
 
 ReactDOM.render(
     <AppRouter getRouter={router}
-               pokemonsGetter={new ScalAPIService(wsClient)} />,
+               pokemonsGetter={scalAPIService}
+               pokemonDetailsGetter={scalAPIService} />,
     document.getElementById('root')
 );
