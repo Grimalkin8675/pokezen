@@ -5,8 +5,8 @@ import play.api.test.Helpers._
 import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
 
-import tests._
-import pokezen.controllers._
+import tests.MockPokemonsService
+import pokezen.controllers.PokemonsService
 
 
 class RoutesSpec extends PlaySpec with GuiceOneAppPerTest {
@@ -26,8 +26,7 @@ class RoutesSpec extends PlaySpec with GuiceOneAppPerTest {
 
 class RoutesWithMockSpec extends PlaySpec with GuiceOneAppPerTest {
   override def fakeApplication() = new GuiceApplicationBuilder()
-    .overrides(bind[SearcheableService].to[MockSearchService])
-    .overrides(bind[DetaileableService].to[MockDetailsService])
+    .overrides(bind[PokemonsService].to[MockPokemonsService])
     .build()
 
   "Routes with mock" should {

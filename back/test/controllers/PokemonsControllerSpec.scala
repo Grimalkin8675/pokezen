@@ -7,18 +7,31 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.{stubControllerComponents, contentAsString}
 import play.api.libs.json._
 
-import tests.MockDetailsService
-import pokezen.controllers.PokemonDetails
+import tests.MockPokemonsService
+import pokezen.controllers.PokemonsController
 
 
-class PokemonDetailsSpec extends PlaySpec {
-  "PokemonDetails.pokemon(pokemonName)" should {
+class PokemonsControllerSpec extends PlaySpec {
+  implicit val ec = ExecutionContext.global
+
+  "PokemonsController.searchPokemon(searchString)" should {
+    "return correct json" in {
+      val controller: PokemonsController =
+        PokemonsController(
+          MockPokemonsService(),
+          stubControllerComponents())
+      val result: Future[Result] = controller.pokemons.apply(FakeRequest())
+      val bodyText: String = contentAsString(result)(1 seconds)
+      bodyText mustBe """["foo","bar"]"""
+    }
+  }
+
+  "PokemonsController.pokemon(pokemonName)" should {
     "return correctly formated json" in {
-      val controller: PokemonDetails =
-        PokemonDetails(
-          MockDetailsService(),
-          stubControllerComponents(),
-          ExecutionContext.global)
+      val controller: PokemonsController =
+        PokemonsController(
+          MockPokemonsService(),
+          stubControllerComponents())
       val result: Future[Result] =
         controller.pokemon("bar").apply(FakeRequest())
       val bodyText: String = contentAsString(result)(1 seconds)

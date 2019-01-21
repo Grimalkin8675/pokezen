@@ -2,22 +2,20 @@ package pokezen.services.pokeapi
 
 import javax.inject.Inject
 import scala.concurrent._
-import play.api.mvc._
 import play.api.libs.ws._
 import play.api.libs.json._
 
-import pokezen.controllers.{SearcheableService, DetaileableService}
+import pokezen.controllers.PokemonsService
 import pokezen.{Pokemon, PokemonNames, PokemonName, Type}
 
 
 case class PokeAPIService @Inject()(
-    ws: WSClient,
-    ec: ExecutionContext) extends InjectedController
-                             with SearcheableService
-                             with DetaileableService {
-  implicit val implicitEc = ec
+    ws: WSClient
+  )(
+    implicit ec: ExecutionContext
+  ) extends PokemonsService {
 
-  def getAndMap[A](route: String)
+  private def getAndMap[A](route: String)
                   (implicit rds: Reads[A]): Future[Option[A]] = {
     val apiUrl = "https://pokeapi.co/api/v2"
 
@@ -33,11 +31,11 @@ case class PokeAPIService @Inject()(
   }
 
   def pokemons: Future[Option[PokemonNames]] =
-    this.getAndMap[PokeAPIPokemonNames](s"/pokemon?limit=-1")
+    getAndMap[PokeAPIPokemonNames](s"/pokemon?limit=-1")
         .map(names => names.map(_.sorted))
 
   def pokemonByName(name: PokemonName): Future[Option[Pokemon]] =
-    this.getAndMap[PokeAPIPokemon](s"/pokemon/${name.name}")
+    getAndMap[PokeAPIPokemon](s"/pokemon/${name.name}")
 
   def pokemonsOfType(pokemonType: Type): Future[Option[PokemonNames]] = {
     implicit val pokemonInTypeReads: Reads[PokemonName] =
@@ -47,7 +45,7 @@ case class PokeAPIService @Inject()(
       (__ \ "pokemon").read[Seq[PokemonName]].map(
         (names: Seq[PokemonName]) => PokemonNames(names: _*))
     )
-    this.getAndMap[PokemonNames](
+    getAndMap[PokemonNames](
       s"/type/${pokemonType.typeName}")(namesFromTypeReads)
   }
 }

@@ -3,11 +3,17 @@ package tests
 import scala.concurrent._
 
 import pokezen._
-import pokezen.controllers.DetaileableService
+import pokezen.controllers.PokemonsService
 
 
-case class MockDetailsService() extends DetaileableService {
+case class MockPokemonsService() extends PokemonsService {
   implicit val ec = ExecutionContext.global
+
+  def pokemons: Future[Option[PokemonNames]] =
+    Future {
+      Some(PokemonNames(PokemonName("foo"), PokemonName("bar")))
+    }(ExecutionContext.global)
+
 
   val foo = Pokemon(PokemonName("whatever"), None, Types(), Stats())
 

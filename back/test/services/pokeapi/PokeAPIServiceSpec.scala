@@ -11,11 +11,13 @@ import play.core.server.Server
 import mockws.MockWS
 
 import pokezen._
-import pokezen.controllers.{SearcheableService, DetaileableService}
+import pokezen.controllers.PokemonsService
 import pokezen.services.pokeapi.PokeAPIService
 
 
 class PokeAPIServiceSpec extends PlaySpec {
+  implicit val ec = ExecutionContext.global
+
   "PokeAPIService.pokemons" should {
     "return pokemons' names" in {
       val json = """
@@ -44,7 +46,7 @@ class PokeAPIServiceSpec extends PlaySpec {
           Ok(Json.parse(json))
         }
       }
-      val futureResult = PokeAPIService(ws, ExecutionContext.global).pokemons
+      val futureResult = PokeAPIService(ws).pokemons
       val res = Await.result(futureResult, 1 seconds)
       res.isDefined mustBe true
       res.get.names.size mustBe 3
@@ -84,7 +86,7 @@ class PokeAPIServiceSpec extends PlaySpec {
           Ok(Json.parse(json))
         }
       }
-      val futureResult = PokeAPIService(ws, ExecutionContext.global).pokemons
+      val futureResult = PokeAPIService(ws).pokemons
       Await.result(futureResult, 1 seconds) mustBe Some(PokemonNames(
         PokemonName("abc"),
         PokemonName("abcd"),
@@ -99,7 +101,7 @@ class PokeAPIServiceSpec extends PlaySpec {
           NotFound
         }
       }
-      val futureResult = PokeAPIService(ws, ExecutionContext.global).pokemons
+      val futureResult = PokeAPIService(ws).pokemons
       Await.result(futureResult, 1 seconds) mustBe None
     }
   }
@@ -156,7 +158,7 @@ class PokeAPIServiceSpec extends PlaySpec {
             Ok(Json.parse(json))
           }
       }
-      val futureResult = PokeAPIService(ws, ExecutionContext.global)
+      val futureResult = PokeAPIService(ws)
         .pokemonByName(PokemonName("some-pokemon-name"))
       Await.result(futureResult, 1 seconds) mustBe
         Some(Pokemon(
@@ -195,7 +197,7 @@ class PokeAPIServiceSpec extends PlaySpec {
             Ok(Json.parse(json))
           }
       }
-      val futureResult = PokeAPIService(ws, ExecutionContext.global)
+      val futureResult = PokeAPIService(ws)
         .pokemonsOfType(Type("some-type"))
       Await.result(futureResult, 1 seconds) mustBe
         Some(PokemonNames(PokemonName("foo"), PokemonName("bar")))
@@ -203,16 +205,10 @@ class PokeAPIServiceSpec extends PlaySpec {
   }
 
   "PokeAPIService" should {
-    "extend SearcheableService" in {
+    "extend PokemonsService" in {
       val ws = MockWS(PartialFunction.empty)
-      PokeAPIService(ws, ExecutionContext.global)
-        .isInstanceOf[SearcheableService] mustBe true
-    }
-
-    "extend DetaileableService" in {
-      val ws = MockWS(PartialFunction.empty)
-      PokeAPIService(ws, ExecutionContext.global)
-        .isInstanceOf[DetaileableService] mustBe true
+      PokeAPIService(ws)
+        .isInstanceOf[PokemonsService] mustBe true
     }
   }
 }

@@ -4,9 +4,9 @@ import play.api.libs.json._
 
 
 case class Types(types: Type*) {
-  def map[T](f: Type => T): Seq[T] = this.types.map(f)
+  def map[T](f: Type => T): Seq[T] = types.map(f)
 
-  def contains(pokeType: Type): Boolean = this.types.contains(pokeType)
+  def contains(pokeType: Type): Boolean = types.contains(pokeType)
 }
 
 object Types {
