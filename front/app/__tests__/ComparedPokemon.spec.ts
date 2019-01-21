@@ -112,5 +112,17 @@ describe(ComparedPokemon, () => {
                 )
             );
         });
+
+        it('shouldn\'t parse an invalid json', () => {
+            expect(ComparedPokemon.fromAny(
+                {
+                    name: 'bar',
+                    image: null,
+                    types: {},
+                    base_stats: [],
+                    compared_stats: []
+                }
+            )).toBeNull();
+        });
     });
 });
