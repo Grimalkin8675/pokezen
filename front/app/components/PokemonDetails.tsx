@@ -44,7 +44,7 @@ export default class PokemonDetails extends React.Component<IProps, IState> {
 
 
 interface IBodyGetter {
-    body(name: Name): string | JSX.Element[];
+    body(name: Name): string | JSX.Element;
 }
 
 class Loading implements IBodyGetter {
@@ -60,8 +60,21 @@ class GotPokemon implements IBodyGetter {
         this.pokemon = pokemon;
     }
 
-    body(): string | JSX.Element[] {
-        return this.pokemon.name.upper().toString();
+    body(): JSX.Element {
+        return (
+            <React.Fragment>
+                <header>
+                    <h1>{this.pokemon.name.upper().toString()}</h1>
+                    <div className='image'>
+                        {this.pokemon.image !== null
+                            ? <img src={this.pokemon.image.toString()}
+                                alt={this.pokemon.name.toString()} />
+                            : null}
+                    </div>
+                </header>
+                <div dangerouslySetInnerHTML={{ __html: JSON.stringify(this.pokemon, undefined, 2).replace(/\n/g, '<br>').replace(/ /g, '&nbsp;') }} />
+            </React.Fragment>
+        );
     }
 }
 

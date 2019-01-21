@@ -1,23 +1,52 @@
 import ScalAPIService, { IWSClient } from '../../services/ScalAPIService';
 import Name from '../../Name';
 import Names from '../../Names';
+import ComparedPokemon from '../../ComparedPokemon';
+import ImageURL from '../../ImageURL';
+import Types from '../../Types';
+import Type from '../../Type';
+import Stats from '../../Stats';
+import Stat from '../../Stat';
+import ComparedStat from '../../ComparedStat';
 
 
 describe(ScalAPIService, () => {
-    const validGetter: IWSClient = {
-        get: () => new Promise(resolve => resolve(['foo'])),
+    const mockWSClient: IWSClient = {
+        get: (url: string) => new Promise((resolve, reject) => {
+            if (url === '/pokemons') return resolve(['foo']);
+            if (url === '/pokemon/foo') return resolve({
+                name: 'foo',
+                image: 'an url',
+                types: ['fire'],
+                base_stats: [
+                    {
+                        name: 'def',
+                        value: 50
+                    }
+                ],
+                compared_stats: [
+                    {
+                        name: 'def',
+                        comparisons: {
+                            fire: 3,
+                        }
+                    }
+                ]
+            });
+            return reject();
+        }),
     };
+    const mockedScalAPIService = new ScalAPIService(mockWSClient);
 
     describe('constructor', () => {
         it('should create a ScalAPIService', () => {
-            const service = new ScalAPIService(validGetter);
-            expect(service).toBeInstanceOf(ScalAPIService);
+            expect(mockedScalAPIService).toBeInstanceOf(ScalAPIService);
         });
     });
 
-    describe('get pokemons()', () => {
+    describe('pokemons()', () => {
         it('should return a parsed Names for a valid response', () => {
-            return expect(new ScalAPIService(validGetter).pokemons()).resolves
+            return expect(mockedScalAPIService.pokemons()).resolves
                 .toEqual(new Names(new Name('foo')));
         });
 
@@ -27,6 +56,22 @@ describe(ScalAPIService, () => {
             };
             return expect(new ScalAPIService(invalidGetter).pokemons()).rejects
                 .toEqual(new Error('Couldn\'t parse response'));
+        });
+    });
+
+    describe('pokemonDetails(name)', () => {
+        it ('should return a parse ComparedPromise for a valid response', () => {
+            return expect(mockedScalAPIService.pokemonDetails(new Name('foo')))
+                .resolves
+                .toEqual(
+                    new ComparedPokemon(
+                        new Name('foo'),
+                        new ImageURL('an url'),
+                        new Types(new Type('fire')),
+                        new Stats(new Stat('def', 50)),
+                        new ComparedStat('def', { fire: 3 })
+                    )
+                );
         });
     });
 });

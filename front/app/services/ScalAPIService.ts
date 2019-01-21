@@ -3,12 +3,6 @@ import { IPokemonDetailsGetter } from '../components/PokemonDetails';
 import Names from '../Names';
 import ComparedPokemon from '../ComparedPokemon';
 import Name from '../Name';
-import ImageURL from '../ImageURL';
-import Types from '../Types';
-import Type from '../Type';
-import Stats from '../Stats';
-import Stat from '../Stat';
-import ComparedStat from '../ComparedStat';
 
 
 export interface IWSClient {
@@ -19,6 +13,7 @@ export default class ScalAPIService implements IPokemonsGetter,
                                                IPokemonDetailsGetter {
     private wsClient: IWSClient;
     private _pokemons: Names | null = null;
+    private _pokemonDetails: { [name: string]: ComparedPokemon } = {};
 
     constructor(wsClient: IWSClient) {
         this.wsClient = wsClient;
@@ -39,19 +34,18 @@ export default class ScalAPIService implements IPokemonsGetter,
     }
 
     pokemonDetails(name: Name): Promise<ComparedPokemon> {
-        return new Promise(resolve => resolve(
-            new ComparedPokemon(
-                name,
-                new ImageURL('some url'),
-                new Types(new Type('fire')),
-                new Stats(new Stat('def', 50)),
-                new ComparedStat(
-                    'def',
-                    {
-                        fire: 3
-                    }
-                )
-            )
-        ));
+        if (this._pokemonDetails.hasOwnProperty(name.toString())) {
+            return new Promise(resolve => resolve(
+                this._pokemonDetails[name.toString()]
+            ));
+        }
+        return this.wsClient
+            .get(`/pokemon/${name}`)
+            .then(response => {
+                const res = ComparedPokemon.fromAny(response);
+                if (res === null) throw Error('Couldn\'t parse response');
+                this._pokemonDetails[name.toString()] = res;
+                return res;
+            });
     }
 }
