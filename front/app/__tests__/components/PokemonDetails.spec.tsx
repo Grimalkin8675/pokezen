@@ -9,8 +9,6 @@ import { resolveFoo } from '../../__mocks__/pokemonDetailsGetters';
 
 describe(PokemonDetails, () => {
     describe('render', () => {
-        const after1s = new Promise(resolve => setTimeout(resolve, 1000));
-
         it('should contain pokemon\'s name', () => {
             const pokemonDetails = mount(
                 <MemoryRouter>
@@ -18,7 +16,7 @@ describe(PokemonDetails, () => {
                                     getter={resolveFoo} />
                 </MemoryRouter>
             );
-            return after1s.then(() => {
+            return new Promise(r => setTimeout(r, 1000)).then(() => {
                 expect(pokemonDetails.html().includes('Foo')).toBe(true);
                 pokemonDetails.unmount();
             });
@@ -30,6 +28,21 @@ describe(PokemonDetails, () => {
                                 getter={resolveFoo} />
             );
             expect(pokemonDetails.html().includes('Loading')).toBe(true);
+        });
+
+        it('should contain error message', () => {
+            const pokemonDetails = mount(
+                <MemoryRouter>
+                    <PokemonDetails name={new Name('kaboum')}
+                                    getter={resolveFoo} />
+                </MemoryRouter>
+            );
+            return new Promise(r => setTimeout(r, 1000)).then(() => {
+                expect(pokemonDetails.html().includes(
+                    `Couldn't retrieve pokemon Kaboum`
+                )).toBe(true);
+                pokemonDetails.unmount();
+            });
         });
     });
 });
