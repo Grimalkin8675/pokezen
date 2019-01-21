@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { mount } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import { MemoryRouter } from 'react-router-dom';
 
 import PokemonDetails from '../../components/PokemonDetails';
@@ -22,6 +22,14 @@ describe(PokemonDetails, () => {
                 expect(pokemonDetails.html().includes('Foo')).toBe(true);
                 pokemonDetails.unmount();
             });
+        });
+
+        it('should contain Loading', () => {
+            const pokemonDetails = shallow(
+                <PokemonDetails name={new Name('foo')}
+                                getter={resolveFoo} />
+            );
+            expect(pokemonDetails.html().includes('Loading')).toBe(true);
         });
     });
 });
