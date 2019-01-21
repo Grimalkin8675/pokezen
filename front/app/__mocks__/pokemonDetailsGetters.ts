@@ -10,18 +10,25 @@ import ComparedStat from '../ComparedStat';
 
 
 export const resolveFoo: IPokemonDetailsGetter = {
-    pokemonDetails: (name: Name) => new Promise(resolve => resolve(
-        new ComparedPokemon(
-            name,
-            new ImageURL('some url'),
-            new Types(new Type('fire')),
-            new Stats(new Stat('def', 50)),
-            new ComparedStat(
-                'def',
-                {
-                    fire: 3
-                }
-            )
-        )
-    ))
+    pokemonDetails: (name: Name) => new Promise((resolve, reject) => {
+        if (name.toString() === 'foo') {
+            resolve(
+                new ComparedPokemon(
+                    name,
+                    new ImageURL('some url'),
+                    new Types(new Type('fire')),
+                    new Stats(new Stat('def', 50)),
+                    new ComparedStat(
+                        'def',
+                        {
+                            fire: 3
+                        }
+                    )
+                )
+            );
+        } else {
+            reject('Unknown Pokemon');
+        }
+    }
+    )
 };

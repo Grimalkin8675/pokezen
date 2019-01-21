@@ -8,8 +8,6 @@ import { resolveFooBar, rejectSomeReason } from '../../__mocks__/pokemonsGetters
 
 describe(SearchPokemon, () => {
     describe('render', () => {
-        const after1s = new Promise(resolve => setTimeout(resolve, 1000));
-
         it('should contain an input', () => {
             const searchPokemon = shallow(
                 <SearchPokemon getter={resolveFooBar} />
@@ -23,7 +21,7 @@ describe(SearchPokemon, () => {
                     <SearchPokemon getter={resolveFooBar} />
                 </MemoryRouter>
             );
-            return after1s.then(() => {
+            return new Promise(r => setTimeout(r, 1000)).then(() => {
                 // from resolveFooBar mock
                 expect(searchPokemon.html().includes('Foo')).toBe(true);
                 expect(searchPokemon.html().includes('Bar')).toBe(true);
@@ -38,7 +36,7 @@ describe(SearchPokemon, () => {
                 </MemoryRouter>
             );
             searchPokemon.find(SearchPokemon).setState({ searchString: 'foo' });
-            return after1s.then(() => {
+            return new Promise(r => setTimeout(r, 1000)).then(() => {
                 expect(searchPokemon.html().includes('Foo')).toBe(true);
                 expect(searchPokemon.html().includes('Bar')).toBe(false);
                 searchPokemon.unmount();
@@ -51,7 +49,7 @@ describe(SearchPokemon, () => {
                     <SearchPokemon getter={rejectSomeReason} />
                 </MemoryRouter>
             );
-            return new Promise(resolve => setTimeout(resolve, 1000))
+            return new Promise(r => setTimeout(r, 1000))
             .then(() => {
                 expect(searchPokemon.html().includes('Foo')).toBe(false);
                 expect(searchPokemon.html().includes('Bar')).toBe(false);
