@@ -5,46 +5,6 @@ import Names from '../Names';
 import Name from '../Name';
 
 
-interface IBodyGetter {
-    body(searchString: string): string | JSX.Element[];
-}
-
-class Loading implements IBodyGetter {
-    body(): string {
-        return 'Loading...';
-    }
-}
-
-class PokemonLinks implements IBodyGetter {
-    private names: Names;
-
-    constructor (names: Names) {
-        this.names = names;
-    }
-
-    body(searchString: string): string | JSX.Element[] {
-        if (this.names.isEmpty()) return 'No Pokemons :(';
-
-        const filtered = this.names.filter(searchString.toLowerCase());
-        if (filtered.isEmpty()) return 'No matching Pokemons.';
-
-        return filtered.map((name: Name, i: number) => (
-            <div key={i}>
-                <Link to={`/pokemon/${name}`}>
-                    {name.upper().toString()}
-                </Link>
-            </div>
-        ));
-    }
-}
-
-class PokemonsError implements IBodyGetter {
-    body(): string {
-        return 'Couldn\'t retrieve pokemons.';
-    }
-}
-
-
 export interface IPokemonsGetter {
     pokemons: () => Promise<Names>;
 }
@@ -93,5 +53,45 @@ export default class SearchPokemon extends React.Component<IProps, IState> {
         if (this.inputRef.current !== null) {
             this.setState({ searchString: this.inputRef.current.value });
         }
+    }
+}
+
+
+interface IBodyGetter {
+    body(searchString: string): string | JSX.Element[];
+}
+
+class Loading implements IBodyGetter {
+    body(): string {
+        return 'Loading...';
+    }
+}
+
+class PokemonLinks implements IBodyGetter {
+    private names: Names;
+
+    constructor (names: Names) {
+        this.names = names;
+    }
+
+    body(searchString: string): string | JSX.Element[] {
+        if (this.names.isEmpty()) return 'No Pokemons :(';
+
+        const filtered = this.names.filter(searchString.toLowerCase());
+        if (filtered.isEmpty()) return 'No matching Pokemons.';
+
+        return filtered.map((name: Name, i: number) => (
+            <div key={i}>
+                <Link to={`/pokemon/${name}`}>
+                    {name.upper().toString()}
+                </Link>
+            </div>
+        ));
+    }
+}
+
+class PokemonsError implements IBodyGetter {
+    body(): string {
+        return 'Couldn\'t retrieve pokemons.';
     }
 }
