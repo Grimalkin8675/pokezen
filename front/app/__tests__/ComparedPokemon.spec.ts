@@ -93,5 +93,24 @@ describe(ComparedPokemon, () => {
                 )
             );
         });
+
+        it('should parse another valid json', () => {
+            expect(ComparedPokemon.fromAny(
+                {
+                    name: 'bar',
+                    image: null,
+                    types: [],
+                    base_stats: [],
+                    compared_stats: []
+                }
+            )).toEqual(
+                new ComparedPokemon(
+                    new Name('bar'),
+                    null,
+                    new Types(),
+                    new Stats()
+                )
+            );
+        });
     });
 });

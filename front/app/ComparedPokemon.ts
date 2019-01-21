@@ -34,7 +34,8 @@ export default class ComparedPokemon {
         const _thing = _(thing);
         if (  _thing.isPlainObject() && _thing.keys().size() === 5
            && _thing.has('name') && _.isString(thing.name)
-           && _thing.has('image') && _.isString(thing.image)
+           && _thing.has('image') && (  _.isString(thing.image)
+                                     || thing.image === null)
            && _thing.has('types') && _.isArray(thing.types)
                                   && thing.types.every(_.isString)
            && _thing.has('base_stats') && _.isArray(thing.base_stats)
@@ -53,7 +54,8 @@ export default class ComparedPokemon {
                 .filter(_.negate(_.isNull)) as ComparedStat[];
             return new ComparedPokemon(
                 new Name(thing.name as string),
-                new ImageURL(thing.image as string),
+                thing.image === null ? null
+                                     : new ImageURL(thing.image as string),
                 new Types(...types),
                 new Stats(...baseStats),
                 ...comparedStats
