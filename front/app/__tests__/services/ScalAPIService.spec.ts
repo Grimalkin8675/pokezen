@@ -33,7 +33,10 @@ describe(ScalAPIService, () => {
                     }
                 ]
             });
-            return reject();
+            if (url === '/pokemon/kaboum') return resolve(
+                `"not a ComparedPokemon DTO"`
+            );
+            return reject(`Route not found ${url}`);
         }),
     };
     const mockedScalAPIService = new ScalAPIService(mockWSClient);
@@ -60,7 +63,7 @@ describe(ScalAPIService, () => {
     });
 
     describe('pokemonDetails(name)', () => {
-        it ('should return a parse ComparedPromise for a valid response', () => {
+        it('should return a parsed ComparedPromise for an existing pokemon', () => {
             return expect(mockedScalAPIService.pokemonDetails(new Name('foo')))
                 .resolves
                 .toEqual(
@@ -72,6 +75,12 @@ describe(ScalAPIService, () => {
                         new ComparedStat('def', { fire: 3 })
                     )
                 );
+        });
+
+        it('should return null for a not existing pokemon', () => {
+            return expect(mockedScalAPIService.pokemonDetails(new Name('bar')))
+                .rejects
+                .toBe('Route not found /pokemon/bar');
         });
     });
 });
