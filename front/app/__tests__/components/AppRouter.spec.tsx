@@ -4,10 +4,11 @@ import { MemoryRouter } from 'react-router-dom';
 
 import AppRouter from '../../components/AppRouter';
 import NotMatch from '../../components/NotMatch';
-import Pokemon from '../../components/Pokemon';
+import PokemonDetails from '../../components/PokemonDetails';
 import SearchPokemon from '../../components/SearchPokemon';
 import Name from '../../Name';
 import { resolveFooBar } from '../../__mocks__/pokemonsGetters';
+import { resolveFoo } from '../../__mocks__/pokemonDetailsGetters';
 
 
 describe(AppRouter, () => {
@@ -16,7 +17,8 @@ describe(AppRouter, () => {
             <MemoryRouter initialEntries={['/']}>{child}</MemoryRouter>;
         const root = shallow(
             <AppRouter getRouter={rootRouter}
-                       pokemonsGetter={resolveFooBar} />
+                       pokemonsGetter={resolveFooBar}
+                       pokemonDetailsGetter={resolveFoo} />
         );
 
         it('should contain SearchPokemon component', () => {
@@ -41,7 +43,8 @@ describe(AppRouter, () => {
             <MemoryRouter initialEntries={['/kaboum']}>{child}</MemoryRouter>;
         const kaboum = shallow(
             <AppRouter getRouter={kaboumRouter}
-                       pokemonsGetter={resolveFooBar} />
+                       pokemonsGetter={resolveFooBar}
+                       pokemonDetailsGetter={resolveFoo} />
         );
 
         it('should contain NotMatch component', () => {
@@ -68,11 +71,15 @@ describe(AppRouter, () => {
             </MemoryRouter>;
         const app = shallow(
             <AppRouter getRouter={pokemonRouter}
-                       pokemonsGetter={resolveFooBar} />
+                       pokemonsGetter={resolveFooBar}
+                       pokemonDetailsGetter={resolveFoo} />
         );
 
         it('should contain Pokemon component', () => {
-            const pokemon = shallow(<Pokemon name={new Name('foo')} />);
+            const pokemon = shallow(
+                <PokemonDetails name={new Name('foo')}
+                                getter={resolveFoo} />
+            );
             expect(app.html().includes(pokemon.html())).toBe(true);
         });
     });

@@ -1,4 +1,4 @@
-import { IPokemonDetailsGetter } from '../components/Pokemon';
+import { IPokemonDetailsGetter } from '../components/PokemonDetails';
 import Name from '../Name';
 import ComparedPokemon from '../ComparedPokemon';
 import ImageURL from '../ImageURL';

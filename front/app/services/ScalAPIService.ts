@@ -1,5 +1,5 @@
 import { IPokemonsGetter } from '../components/SearchPokemon';
-import { IPokemonDetailsGetter } from '../components/Pokemon';
+import { IPokemonDetailsGetter } from '../components/PokemonDetails';
 import Names from '../Names';
 import ComparedPokemon from '../ComparedPokemon';
 import Name from '../Name';

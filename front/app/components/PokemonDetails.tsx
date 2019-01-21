@@ -13,7 +13,7 @@ interface IProps {
     name: Name;
 }
 
-export default class Pokemon extends React.Component<IProps> {
+export default class PokemonDetails extends React.Component<IProps> {
     render() {
         return (
             <div className='Pokemon'>
