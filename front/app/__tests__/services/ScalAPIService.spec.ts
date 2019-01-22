@@ -77,10 +77,16 @@ describe(ScalAPIService, () => {
                 );
         });
 
-        it('should return null for a not existing pokemon', () => {
+        it('should reject for a not existing pokemon', () => {
             return expect(mockedScalAPIService.pokemonDetails(new Name('bar')))
                 .rejects
                 .toBe('Route not found /pokemon/bar');
+        });
+
+        it('should reject for an invalid pokemon', () => {
+            return expect(
+                mockedScalAPIService.pokemonDetails(new Name('kaboum'))
+            ).rejects.toEqual(new Error('Couldn\'t parse response'));
         });
     });
 });
