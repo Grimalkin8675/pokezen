@@ -17,20 +17,4 @@ module.exports = merge(common, {
         inline: true, // iframe or inline script
         host: '0.0.0.0',
     },
-    module: {
-        rules: [
-            {
-                test: /\.tsx?$/,
-                enforce: 'pre',
-                use: [
-                    {
-                        loader: 'tslint-loader',
-                        options: {
-                            configFile: 'tslint.json'
-                        }
-                    }
-                ]
-            },
-        ],
-    },
 });

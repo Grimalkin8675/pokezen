@@ -25,12 +25,12 @@ export default class PokemonDetails extends React.Component<IProps, IState> {
 
     componentDidMount() {
         this.props.getter.pokemonDetails(this.props.name)
-        .then(pokemon => this.setState({
-            pokemon: new GotPokemon(pokemon)
-        }))
-        .catch(_message => this.setState({
-            pokemon: new PokemonsError()
-        }));
+        .then(pokemon => {
+            this.setState({ pokemon: new GotPokemon(pokemon) });
+        })
+        .catch(_message => {
+            this.setState({ pokemon: new PokemonsError() });
+        });
     }
 
     render() {

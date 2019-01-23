@@ -21,7 +21,9 @@ export default class ScalAPIService implements IPokemonsGetter,
 
     pokemons(): Promise<Names> {
         if (this._pokemons !== null) {
-            return new Promise(resolve => resolve(this._pokemons as Names));
+            return new Promise(resolve => {
+                resolve(this._pokemons as Names);
+            });
         }
         return this.wsClient
             .get(`/pokemons`)
@@ -35,9 +37,9 @@ export default class ScalAPIService implements IPokemonsGetter,
 
     pokemonDetails(name: Name): Promise<ComparedPokemon> {
         if (this._pokemonDetails.hasOwnProperty(name.toString())) {
-            return new Promise(resolve => resolve(
-                this._pokemonDetails[name.toString()]
-            ));
+            return new Promise(resolve => {
+                resolve(this._pokemonDetails[name.toString()]);
+            });
         }
         return this.wsClient
             .get(`/pokemon/${name}`)

@@ -29,12 +29,12 @@ export default class SearchPokemon extends React.Component<IProps, IState> {
 
     componentDidMount() {
         this.props.getter.pokemons()
-        .then(pokemonNames => this.setState({
-            names: new PokemonLinks(pokemonNames)
-        }))
-        .catch(_message => this.setState({
-            names: new PokemonsError()
-        }));
+        .then(pokemonNames => {
+            this.setState({ names: new PokemonLinks(pokemonNames) });
+        })
+        .catch(_message => {
+            this.setState({ names: new PokemonsError() });
+        });
     }
 
     render() {
