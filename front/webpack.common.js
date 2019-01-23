@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const autoprefixer = require('autoprefixer');
 
 
 module.exports = {
@@ -7,7 +8,6 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist/'),
         filename: 'bundle.js',
-        // publicPath: '../public',
     },
     resolve: {
         extensions: ['.ts', '.tsx', '.js'],
@@ -17,7 +17,7 @@ module.exports = {
             // ts
             {
                 test: /\.tsx?$/,
-                loader: 'awesome-typescript-loader'
+                use: 'awesome-typescript-loader',
             },
             // css
             {
@@ -25,6 +25,7 @@ module.exports = {
                 use: [
                     'style-loader',
                     'css-loader',
+                    'postcss-loader',
                 ]
             },
         ],
@@ -34,5 +35,6 @@ module.exports = {
             template: path.resolve(__dirname, 'templates/index.html'),
             inject: false,
         }),
+        autoprefixer,
     ],
 }
