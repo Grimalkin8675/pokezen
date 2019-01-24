@@ -1,7 +1,6 @@
 import ComparedPokemon from '../ComparedPokemon';
 import Name from '../Name';
 import ImageURL from '../ImageURL';
-import Types from '../Types';
 import Type from '../Type';
 import Stats from '../Stats';
 import Stat from '../Stat';
@@ -11,25 +10,25 @@ import ComparedStat from '../ComparedStat';
 describe(ComparedPokemon, () => {
     describe('constructor', () => {
         it('should construct', () => {
-            expect(
-                new ComparedPokemon(
-                    new Name('foo'),
-                    new ImageURL('some url'),
-                    new Types(new Type('fire')),
-                    new Stats(new Stat('def', 50)),
-                    new ComparedStat(
-                        'def',
-                        {
-                            fire: 3
-                        }
-                    )
+            const pokemon = new ComparedPokemon(
+                new Name('foo'),
+                new ImageURL('some url'),
+                [new Type('fire')],
+                new Stats(new Stat('def', 50)),
+                new ComparedStat(
+                    'def',
+                    {
+                        fire: 3
+                    }
                 )
-            ).toBeInstanceOf(ComparedPokemon);
+            );
+            expect(pokemon).toBeInstanceOf(ComparedPokemon);
+            expect(pokemon.types).toEqual([new Type('fire')]);
             expect(
                 new ComparedPokemon(
                     new Name(''),
                     null,
-                    new Types(),
+                    [],
                     new Stats()
                 )
             ).toBeInstanceOf(ComparedPokemon);
@@ -74,7 +73,7 @@ describe(ComparedPokemon, () => {
                 new ComparedPokemon(
                     new Name('bar'),
                     new ImageURL('some url'),
-                    new Types(new Type('fire'), new Type('air')),
+                    [new Type('fire'), new Type('air')],
                     new Stats(new Stat('def', 50), new Stat('att', 60)),
                     new ComparedStat(
                         'def',
@@ -107,7 +106,7 @@ describe(ComparedPokemon, () => {
                 new ComparedPokemon(
                     new Name('bar'),
                     null,
-                    new Types(),
+                    [],
                     new Stats()
                 )
             );

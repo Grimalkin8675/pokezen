@@ -2,7 +2,6 @@ import { IPokemonDetailsGetter } from '../components/PokemonDetails';
 import Name from '../Name';
 import ComparedPokemon from '../ComparedPokemon';
 import ImageURL from '../ImageURL';
-import Types from '../Types';
 import Type from '../Type';
 import Stats from '../Stats';
 import Stat from '../Stat';
@@ -16,7 +15,7 @@ export const resolveFoo: IPokemonDetailsGetter = {
                 new ComparedPokemon(
                     name,
                     new ImageURL('some url'),
-                    new Types(new Type('fire')),
+                    [new Type('fire')],
                     new Stats(new Stat('def', 50)),
                     new ComparedStat(
                         'def',

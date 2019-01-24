@@ -2,6 +2,9 @@ import * as React from 'react';
 
 import ComparedPokemon from '../ComparedPokemon';
 import Name from '../Name';
+import Type from '../Type';
+
+import * as styles from './styles/PokemonDetails.css';
 
 
 export interface IPokemonDetailsGetter {
@@ -35,7 +38,7 @@ export default class PokemonDetails extends React.Component<IProps, IState> {
 
     render() {
         return (
-            <div className='Pokemon'>
+            <div className={styles.pokemonDetails}>
                 {this.state.pokemon.body(this.props.name)}
             </div>
         );
@@ -72,7 +75,16 @@ class GotPokemon implements IBodyGetter {
                             : null}
                     </div>
                 </header>
-                <div dangerouslySetInnerHTML={{ __html: JSON.stringify(this.pokemon, undefined, 2).replace(/\n/g, '<br>').replace(/ /g, '&nbsp;') }} />
+                {/* <div dangerouslySetInnerHTML={{ __html: JSON.stringify(this.pokemon, undefined, 2).replace(/\n/g, '<br>').replace(/ /g, '&nbsp;') }} /> */}
+                <table>
+                    <thead>
+                        <tr>
+                            <th/>
+                            {this.pokemon.types.map((type: Type, i: number) =>
+                                <th key={i}>{type.toString()}</th>)}
+                        </tr>
+                    </thead>
+                </table>
             </React.Fragment>
         );
     }
