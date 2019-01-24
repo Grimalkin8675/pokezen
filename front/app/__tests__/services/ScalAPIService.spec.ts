@@ -4,7 +4,6 @@ import Names from '../../Names';
 import ComparedPokemon from '../../ComparedPokemon';
 import ImageURL from '../../ImageURL';
 import Type from '../../Type';
-import Stats from '../../Stats';
 import Stat from '../../Stat';
 import ComparedStat from '../../ComparedStat';
 
@@ -70,7 +69,7 @@ describe(ScalAPIService, () => {
                         new Name('foo'),
                         new ImageURL('an url'),
                         [new Type('fire')],
-                        new Stats(new Stat('def', 50)),
+                        [new Stat('def', 50)],
                         new ComparedStat('def', { fire: 3 })
                     )
                 );

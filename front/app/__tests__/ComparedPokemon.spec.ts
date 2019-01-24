@@ -2,7 +2,6 @@ import ComparedPokemon from '../ComparedPokemon';
 import Name from '../Name';
 import ImageURL from '../ImageURL';
 import Type from '../Type';
-import Stats from '../Stats';
 import Stat from '../Stat';
 import ComparedStat from '../ComparedStat';
 
@@ -14,7 +13,7 @@ describe(ComparedPokemon, () => {
                 new Name('foo'),
                 new ImageURL('some url'),
                 [new Type('fire')],
-                new Stats(new Stat('def', 50)),
+                [new Stat('def', 50)],
                 new ComparedStat(
                     'def',
                     {
@@ -25,12 +24,7 @@ describe(ComparedPokemon, () => {
             expect(pokemon).toBeInstanceOf(ComparedPokemon);
             expect(pokemon.types).toEqual([new Type('fire')]);
             expect(
-                new ComparedPokemon(
-                    new Name(''),
-                    null,
-                    [],
-                    new Stats()
-                )
+                new ComparedPokemon(new Name(''), null, [], [])
             ).toBeInstanceOf(ComparedPokemon);
         });
     });
@@ -74,7 +68,7 @@ describe(ComparedPokemon, () => {
                     new Name('bar'),
                     new ImageURL('some url'),
                     [new Type('fire'), new Type('air')],
-                    new Stats(new Stat('def', 50), new Stat('att', 60)),
+                    [new Stat('def', 50), new Stat('att', 60)],
                     new ComparedStat(
                         'def',
                         {
@@ -103,12 +97,7 @@ describe(ComparedPokemon, () => {
                     compared_stats: []
                 }
             )).toEqual(
-                new ComparedPokemon(
-                    new Name('bar'),
-                    null,
-                    [],
-                    new Stats()
-                )
+                new ComparedPokemon(new Name('bar'), null, [], [])
             );
         });
 

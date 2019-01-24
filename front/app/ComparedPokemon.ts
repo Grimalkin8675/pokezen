@@ -3,7 +3,6 @@ import * as _ from 'lodash';
 import Name from './Name';
 import ImageURL from './ImageURL';
 import Type from './Type';
-import Stats from './Stats';
 import Stat from './Stat';
 import ComparedStat from './ComparedStat';
 
@@ -12,14 +11,14 @@ export default class ComparedPokemon {
     name: Name;
     image: ImageURL | null;
     types: Type[];
-    baseStats: Stats;
+    baseStats: Stat[];
     comparedStats: ComparedStat[];
 
     constructor (
         name: Name,
         image: ImageURL | null,
         types: Type[],
-        baseStats: Stats,
+        baseStats: Stat[],
         ...comparedStats: ComparedStat[]
     ) {
         this.name = name;
@@ -56,7 +55,7 @@ export default class ComparedPokemon {
                 thing.image === null ? null
                                      : new ImageURL(thing.image as string),
                 types,
-                new Stats(...baseStats),
+                baseStats,
                 ...comparedStats
             );
         }
