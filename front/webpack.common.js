@@ -36,8 +36,17 @@ module.exports = {
                         loader: 'typings-for-css-modules-loader',
                         options: {
                             modules: true,
-                            namedExport: true
-                        }
+                            namedExport: true,
+                            camelCase: true,
+                        },
+                    },
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            plugins: [
+                                require('autoprefixer'),
+                            ],
+                        },
                     },
                 ]
             },
