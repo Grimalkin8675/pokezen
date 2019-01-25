@@ -10,7 +10,8 @@ const axiosMock: IWSClient = {
             resolve(
                 {
                     name: 'pikachu',
-                    image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png',
+                    // image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png',
+                    image: null,
                     types: ['electric'],
                     base_stats:[
                         {
