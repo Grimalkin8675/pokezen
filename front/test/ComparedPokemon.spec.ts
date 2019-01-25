@@ -93,14 +93,21 @@ describe(ComparedPokemon, () => {
             new Name('foo'),
             new ImageURL('some url'),
             [new Type('fire')],
-            [new Stat('def', 50)],
-            new ComparedStat('def', { fire: 3 })
+            [new Stat('def', 50), new Stat('att', 23)],
+            new ComparedStat('def', { fire: 3 }),
+            new ComparedStat('att', { fire: -12 })
         );
 
         it('should return a number if comparison exists for stat', () => {
             expect(
                 pokemon.comparedStatToType('def', new Type('fire'))
             ).toBe(3);
+        });
+
+        it('should return a number if comparison exists for stat 2', () => {
+            expect(
+                pokemon.comparedStatToType('att', new Type('fire'))
+            ).toBe(-12);
         });
     });
 });
