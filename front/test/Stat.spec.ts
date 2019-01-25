@@ -7,5 +7,9 @@ describe(Stat, () => {
             expect(typeof upper).toBe('string');
             expect(upper).toBe('Foo');
         });
+
+        it('should handle multiple words stats', () => {
+            expect(new Stat('foo-bar', -1).upper()).toBe('Foo bar');
+        });
     });
 });

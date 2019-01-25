@@ -20,6 +20,6 @@ export default class Stat {
     }
 
     upper(): string {
-        return _.capitalize(this.name);
+        return _.capitalize(this.name).replace('-', ' ');
     }
 }
