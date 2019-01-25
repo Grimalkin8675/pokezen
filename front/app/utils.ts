@@ -8,5 +8,7 @@ export const hoverComparedStat = (
     stat: Stat,
     type: Type
 ): string => {
-    return `${name.upper()} has ${stat.value} more base ${stat.name} compared to the average electric pokemon.`;
+    const absValue = Math.abs(stat.value);
+    const moreOrLess = stat.value > 0 ? 'more' : 'less';
+    return `${name.upper()} has ${absValue} ${moreOrLess} base ${stat.name} compared to the average ${type} pokemon.`;
 };
