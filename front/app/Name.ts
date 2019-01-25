@@ -12,8 +12,8 @@ export default class Name {
         return this.name;
     }
 
-    upper(): Name {
-        return new Name(upperFirst(this.name));
+    upper(): string {
+        return upperFirst(this.name);
     }
 
     includes(searchString: string): boolean {

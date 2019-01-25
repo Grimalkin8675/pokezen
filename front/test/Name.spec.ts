@@ -11,8 +11,8 @@ describe(Name, () => {
     describe('upper()', () => {
         it('should apply lodash upperFirst', () => {
             const upper = new Name('foo').upper();
-            expect(upper).toBeInstanceOf(Name);
-            expect(upper.toString()).toBe('Foo');
+            expect(typeof upper).toBe('string');
+            expect(upper).toBe('Foo');
         });
     });
 

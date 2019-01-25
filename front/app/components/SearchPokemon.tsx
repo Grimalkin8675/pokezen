@@ -82,9 +82,7 @@ class PokemonLinks implements IBodyGetter {
 
         return filtered.map((name: Name, i: number) => (
             <div key={i}>
-                <Link to={`/pokemon/${name}`}>
-                    {name.upper().toString()}
-                </Link>
+                <Link to={`/pokemon/${name}`}>{name.upper()}</Link>
             </div>
         ));
     }
