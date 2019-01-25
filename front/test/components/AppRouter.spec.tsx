@@ -2,11 +2,11 @@ import * as React from 'react';
 import { shallow } from 'enzyme';
 import { MemoryRouter } from 'react-router-dom';
 
-import AppRouter from '../../components/AppRouter';
-import NotMatch from '../../components/NotMatch';
-import PokemonDetails from '../../components/PokemonDetails';
-import SearchPokemon from '../../components/SearchPokemon';
-import Name from '../../Name';
+import AppRouter from '../../app/components/AppRouter';
+import NotMatch from '../../app/components/NotMatch';
+import PokemonDetails from '../../app/components/PokemonDetails';
+import SearchPokemon from '../../app/components/SearchPokemon';
+import Name from '../../app/Name';
 import { resolveFooBar } from '../__mocks__/pokemonsGetters';
 import { resolveFoo } from '../__mocks__/pokemonDetailsGetters';
 

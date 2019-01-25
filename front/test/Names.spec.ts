@@ -1,5 +1,5 @@
-import Names from '../Names';
-import Name from '../Name';
+import Names from '../app/Names';
+import Name from '../app/Name';
 
 
 describe(Names, () => {

@@ -1,10 +1,10 @@
-import { IPokemonDetailsGetter } from '../components/PokemonDetails';
-import Name from '../Name';
-import ComparedPokemon from '../ComparedPokemon';
-import ImageURL from '../ImageURL';
-import Type from '../Type';
-import Stat from '../Stat';
-import ComparedStat from '../ComparedStat';
+import { IPokemonDetailsGetter } from '../../app/components/PokemonDetails';
+import Name from '../../app/Name';
+import ComparedPokemon from '../../app/ComparedPokemon';
+import ImageURL from '../../app/ImageURL';
+import Type from '../../app/Type';
+import Stat from '../../app/Stat';
+import ComparedStat from '../../app/ComparedStat';
 
 
 export const resolveFoo: IPokemonDetailsGetter = {

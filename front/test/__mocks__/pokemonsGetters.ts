@@ -1,6 +1,6 @@
-import { IPokemonsGetter } from '../../components/SearchPokemon';
-import Name from '../../Name';
-import Names from '../../Names';
+import { IPokemonsGetter } from '../../app/components/SearchPokemon';
+import Name from '../../app/Name';
+import Names from '../../app/Names';
 
 export const resolveFooBar: IPokemonsGetter = {
     pokemons: () => new Promise(resolve =>

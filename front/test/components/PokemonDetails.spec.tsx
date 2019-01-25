@@ -2,8 +2,8 @@ import * as React from 'react';
 import { mount, shallow } from 'enzyme';
 import { MemoryRouter } from 'react-router-dom';
 
-import PokemonDetails from '../../components/PokemonDetails';
-import Name from '../../Name';
+import PokemonDetails from '../../app/components/PokemonDetails';
+import Name from '../../app/Name';
 import { resolveFoo } from '../__mocks__/pokemonDetailsGetters';
 
 

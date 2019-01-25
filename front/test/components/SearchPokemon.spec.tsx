@@ -2,8 +2,8 @@ import * as React from 'react';
 import { shallow, mount } from 'enzyme';
 import { MemoryRouter } from 'react-router-dom';
 
-import SearchPokemon from '../../components/SearchPokemon';
-import { resolveFooBar, rejectSomeReason } from '../../__mocks__/pokemonsGetters';
+import SearchPokemon from '../../app/components/SearchPokemon';
+import { resolveFooBar, rejectSomeReason } from '../__mocks__/pokemonsGetters';
 
 
 describe(SearchPokemon, () => {

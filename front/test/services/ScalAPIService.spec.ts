@@ -1,11 +1,11 @@
-import ScalAPIService, { IWSClient } from '../../services/ScalAPIService';
-import Name from '../../Name';
-import Names from '../../Names';
-import ComparedPokemon from '../../ComparedPokemon';
-import ImageURL from '../../ImageURL';
-import Type from '../../Type';
-import Stat from '../../Stat';
-import ComparedStat from '../../ComparedStat';
+import ScalAPIService, { IWSClient } from '../../app/services/ScalAPIService';
+import Name from '../../app/Name';
+import Names from '../../app/Names';
+import ComparedPokemon from '../../app/ComparedPokemon';
+import ImageURL from '../../app/ImageURL';
+import Type from '../../app/Type';
+import Stat from '../../app/Stat';
+import ComparedStat from '../../app/ComparedStat';
 
 
 describe(ScalAPIService, () => {
