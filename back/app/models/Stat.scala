@@ -1,4 +1,4 @@
-package pokezen
+package pokezen.models
 
 import play.api.libs.json._
 

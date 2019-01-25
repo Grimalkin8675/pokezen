@@ -2,7 +2,7 @@ import org.scalatestplus.play._
 
 import play.api.libs.json._
 
-import pokezen._
+import pokezen.models._
 
 
 class ComparedPokemonSpec extends PlaySpec {

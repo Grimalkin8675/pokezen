@@ -6,7 +6,7 @@ import play.api.libs.ws._
 import play.api.libs.json._
 
 import pokezen.controllers.PokemonsService
-import pokezen.{Pokemon, PokemonNames, PokemonName, Type}
+import pokezen.models.{Pokemon, PokemonNames, PokemonName, Type}
 
 
 case class PokeAPIService @Inject()(

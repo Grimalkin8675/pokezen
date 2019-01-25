@@ -2,7 +2,7 @@ import org.scalatestplus.play._
 
 import play.api.libs.json._
 
-import pokezen.PokemonName
+import pokezen.models.PokemonName
 import pokezen.services.pokeapi.PokeAPIPokemonName
 
 

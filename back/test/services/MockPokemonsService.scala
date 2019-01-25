@@ -2,7 +2,7 @@ package tests
 
 import scala.concurrent._
 
-import pokezen._
+import pokezen.models._
 import pokezen.controllers.PokemonsService
 
 

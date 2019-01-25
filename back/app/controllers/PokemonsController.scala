@@ -7,7 +7,7 @@ import play.api.libs.json._
 import scala.concurrent._
 import play.api.libs.json._
 
-import pokezen._
+import pokezen.models._
 
 
 trait PokemonsService {

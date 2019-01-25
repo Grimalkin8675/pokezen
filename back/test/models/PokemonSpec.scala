@@ -1,6 +1,6 @@
 import org.scalatestplus.play._
 
-import pokezen.{Pokemon, PokemonName, ImageURL, Types, Type, Stats, Stat}
+import pokezen.models.{Pokemon, PokemonName, ImageURL, Types, Type, Stats, Stat}
 
 
 class PokemonSpec extends PlaySpec {

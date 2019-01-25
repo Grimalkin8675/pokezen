@@ -10,7 +10,7 @@ import play.api.test.Helpers._
 import play.core.server.Server
 import mockws.MockWS
 
-import pokezen._
+import pokezen.models._
 import pokezen.controllers.PokemonsService
 import pokezen.services.pokeapi.PokeAPIService
 

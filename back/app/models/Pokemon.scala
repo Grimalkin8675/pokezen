@@ -1,4 +1,4 @@
-package pokezen
+package pokezen.models
 
 
 case class Pokemon(

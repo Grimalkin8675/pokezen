@@ -2,7 +2,7 @@ import org.scalatestplus.play._
 
 import play.api.libs.json._
 
-import pokezen.{PokemonName, PokemonNameOrdering}
+import pokezen.models.{PokemonName, PokemonNameOrdering}
 
 
 class PokemonNameSpec extends PlaySpec {

@@ -3,7 +3,7 @@ package pokezen.services.pokeapi
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
 
-import pokezen.{PokemonNames, PokemonName}
+import pokezen.models.{PokemonNames, PokemonName}
 
 
 class PokeAPIPokemonNames(names: PokeAPIPokemonName*)
