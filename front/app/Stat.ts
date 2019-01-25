@@ -20,6 +20,7 @@ export default class Stat {
     }
 
     upper(): string {
+        if (this.name === 'hp') return 'HP';
         return _.capitalize(this.name).replace('-', ' ');
     }
 }

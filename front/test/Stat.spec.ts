@@ -11,5 +11,9 @@ describe(Stat, () => {
         it('should handle multiple words stats', () => {
             expect(new Stat('foo-bar', -1).upper()).toBe('Foo bar');
         });
+
+        it('should have a special handle for "hp"', () => {
+            expect(new Stat('hp', -1).upper()).toBe('HP');
+        });
     });
 });
