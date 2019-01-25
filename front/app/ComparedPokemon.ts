@@ -61,4 +61,8 @@ export default class ComparedPokemon {
         }
         return null;
     }
+
+    comparedStatToType(statName: string, type: Type): number {
+        return 3;
+    }
 }
