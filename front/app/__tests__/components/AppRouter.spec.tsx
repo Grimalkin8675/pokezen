@@ -7,8 +7,8 @@ import NotMatch from '../../components/NotMatch';
 import PokemonDetails from '../../components/PokemonDetails';
 import SearchPokemon from '../../components/SearchPokemon';
 import Name from '../../Name';
-import { resolveFooBar } from '../../__mocks__/pokemonsGetters';
-import { resolveFoo } from '../../__mocks__/pokemonDetailsGetters';
+import { resolveFooBar } from '../__mocks__/pokemonsGetters';
+import { resolveFoo } from '../__mocks__/pokemonDetailsGetters';
 
 
 describe(AppRouter, () => {

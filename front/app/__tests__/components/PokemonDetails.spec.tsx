@@ -4,7 +4,7 @@ import { MemoryRouter } from 'react-router-dom';
 
 import PokemonDetails from '../../components/PokemonDetails';
 import Name from '../../Name';
-import { resolveFoo } from '../../__mocks__/pokemonDetailsGetters';
+import { resolveFoo } from '../__mocks__/pokemonDetailsGetters';
 
 
 describe(PokemonDetails, () => {
