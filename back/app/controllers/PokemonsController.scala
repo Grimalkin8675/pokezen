@@ -18,11 +18,11 @@ trait PokemonsService {
 
 @Singleton
 case class PokemonsController @Inject()(
-    pokemonsService: PokemonsService,
-    cc: ControllerComponents
-  )(
-    implicit ec: ExecutionContext
-  ) extends AbstractController(cc) {
+  pokemonsService: PokemonsService,
+  cc: ControllerComponents
+)(
+  implicit ec: ExecutionContext
+) extends AbstractController(cc) {
 
   def pokemons: Action[AnyContent] = Action.async {
     pokemonsService.pokemons

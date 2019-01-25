@@ -11,10 +11,6 @@ class PokeAPIPokemonName(name: String) extends PokemonName(name)
 object PokeAPIPokemonName {
   def apply(name: String): PokeAPIPokemonName = new PokeAPIPokemonName(name)
 
-  implicit val pokeAPIPokemonNameReads: Reads[PokeAPIPokemonName] = (
-    (__ \ "name").read[String] and
-    (__ \ "url").read[String]
-  )(
-    (name: String, _url: String) => PokeAPIPokemonName(name)
-  )
+  implicit val pokeAPIPokemonNameReads: Reads[PokeAPIPokemonName] =
+    (__ \ "name").read[String].map(PokeAPIPokemonName.apply)
 }

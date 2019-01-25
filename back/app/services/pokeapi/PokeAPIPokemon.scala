@@ -14,10 +14,10 @@ class PokeAPIPokemon(
 
 object PokeAPIPokemon {
   def apply(
-      name: PokemonName,
-      image: Option[ImageURL],
-      types: Types,
-      baseStats: Stats): PokeAPIPokemon =
+    name: PokemonName,
+    image: Option[ImageURL],
+    types: Types,
+    baseStats: Stats): PokeAPIPokemon =
     new PokeAPIPokemon(name, image, types, baseStats)
 
   implicit val typeReads: Reads[Type] =
@@ -39,10 +39,10 @@ object PokeAPIPokemon {
       image: Option[String],
       types: Seq[Type],
       stats: Seq[Stat]) =>
-      PokeAPIPokemon(
-        PokemonName(name),
-        image.map(ImageURL(_)),
-        Types(types: _*),
-        Stats(stats: _*))
+        PokeAPIPokemon(
+          PokemonName(name),
+          image.map(ImageURL.apply),
+          Types(types: _*),
+          Stats(stats: _*))
   )
 }

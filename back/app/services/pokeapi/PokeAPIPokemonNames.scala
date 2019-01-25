@@ -13,16 +13,7 @@ object PokeAPIPokemonNames {
   def apply(pokemons: PokeAPIPokemonName*): PokeAPIPokemonNames =
     new PokeAPIPokemonNames(pokemons: _*)
 
-  implicit val pokeAPIPokemonNamesReads: Reads[PokeAPIPokemonNames] = (
-    (__ \ "count").read[Double] and
-    (__ \ "next").readNullable[String] and
-    (__ \ "previous").readNullable[Boolean] and
+  implicit val pokeAPIPokemonNamesReads: Reads[PokeAPIPokemonNames] =
     (__ \ "results").read[List[PokeAPIPokemonName]]
-  )(
-    (
-      _count: Double,
-      _next: Option[String],
-      _previous: Option[Boolean],
-      results: List[PokeAPIPokemonName]) => PokeAPIPokemonNames(results: _*)
-  )
+      .map(PokeAPIPokemonNames.apply)
 }

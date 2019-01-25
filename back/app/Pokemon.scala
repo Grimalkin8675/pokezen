@@ -2,10 +2,11 @@ package pokezen
 
 
 case class Pokemon(
-    name: PokemonName,
-    image: Option[ImageURL],
-    types: Types,
-    baseStats: Stats) {
+  name: PokemonName,
+  image: Option[ImageURL],
+  types: Types,
+  baseStats: Stats) {
+
   def hasType(pokeType: Type): Boolean = types.contains(pokeType)
 
   def hasStat(statName: String): Boolean = baseStats.contains(statName)

@@ -10,10 +10,10 @@ import pokezen.{Pokemon, PokemonNames, PokemonName, Type}
 
 
 case class PokeAPIService @Inject()(
-    ws: WSClient
-  )(
-    implicit ec: ExecutionContext
-  ) extends PokemonsService {
+  ws: WSClient
+)(
+  implicit ec: ExecutionContext
+) extends PokemonsService {
 
   private def getAndMap[A](route: String)
                   (implicit rds: Reads[A]): Future[Option[A]] = {
@@ -32,19 +32,18 @@ case class PokeAPIService @Inject()(
 
   def pokemons: Future[Option[PokemonNames]] =
     getAndMap[PokeAPIPokemonNames](s"/pokemon?limit=-1")
-        .map(names => names.map(_.sorted))
+      .map(names => names.map(_.sorted))
 
   def pokemonByName(name: PokemonName): Future[Option[Pokemon]] =
     getAndMap[PokeAPIPokemon](s"/pokemon/${name.name}")
 
   def pokemonsOfType(pokemonType: Type): Future[Option[PokemonNames]] = {
     implicit val pokemonInTypeReads: Reads[PokemonName] =
-      (__ \ "pokemon" \ "name").read[String].map(PokemonName.apply _)
+      (__ \ "pokemon" \ "name").read[String].map(PokemonName.apply)
 
-    val namesFromTypeReads: Reads[PokemonNames] = (
-      (__ \ "pokemon").read[Seq[PokemonName]].map(
-        (names: Seq[PokemonName]) => PokemonNames(names: _*))
-    )
+    val namesFromTypeReads: Reads[PokemonNames] =
+      (__ \ "pokemon").read[Seq[PokemonName]].map(PokemonNames.apply)
+
     getAndMap[PokemonNames](
       s"/type/${pokemonType.typeName}")(namesFromTypeReads)
   }
