@@ -6,6 +6,8 @@ import PokemonDetails, { IPokemonDetailsGetter } from './PokemonDetails';
 import SearchPokemon, { IPokemonsGetter } from './SearchPokemon';
 import Name from '../models/Name';
 
+import './styles/base.css';
+
 
 interface IProps {
     getRouter: (child: JSX.Element) => JSX.Element;
