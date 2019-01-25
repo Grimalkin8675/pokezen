@@ -2,7 +2,8 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 
 import Names from '../models/Names';
-import Name from '../models/Name';
+
+import * as styles from './styles/SearchPokemon.css';
 
 
 export interface IPokemonsGetter {
@@ -39,12 +40,19 @@ export default class SearchPokemon extends React.Component<IProps, IState> {
 
     render() {
         return (
-            <div className='SearchPokemon'>
-                <input ref={this.inputRef}
-                       onChange={this.onChange}
-                       type='text'
-                       placeholder='Search for pokemons!' />
-                <div>{this.state.names.body(this.state.searchString)}</div>
+            <div className={styles.main}>
+                <h1 className={styles.title}>Pokezen</h1>
+                <div className={styles.splitVertically}>
+                    <div className={styles.searchBar}>
+                        <input ref={this.inputRef}
+                            onChange={this.onChange}
+                            type='text'
+                            placeholder='Search for pokemons!' />
+                    </div>
+                    <div className={styles.pokemons}>
+                        {this.state.names.body(this.state.searchString)}
+                    </div>
+                </div>
             </div>
         );
     }
@@ -58,12 +66,16 @@ export default class SearchPokemon extends React.Component<IProps, IState> {
 
 
 interface IBodyGetter {
-    body(searchString: string): string | JSX.Element[];
+    body(searchString: string): JSX.Element;
 }
 
 class Loading implements IBodyGetter {
-    body(): string {
-        return 'Loading...';
+    body(): JSX.Element {
+        return (
+            <div className={styles.almostALink}>
+                Loading...
+            </div>
+        );
     }
 }
 
@@ -74,22 +86,39 @@ class PokemonLinks implements IBodyGetter {
         this.names = names;
     }
 
-    body(searchString: string): string | JSX.Element[] {
-        if (this.names.isEmpty()) return 'No Pokemons :(';
+    body(searchString: string): JSX.Element {
+        if (this.names.isEmpty()) {
+            return (
+                <div className={styles.almostALink}>
+                    No Pokemons :(
+                </div>
+            );
+        }
 
         const filtered = this.names.filterByString(searchString.toLowerCase());
-        if (filtered.isEmpty()) return 'No matching Pokemons.';
+        if (filtered.isEmpty()) {
+            return (
+                <div className={styles.almostALink}>
+                    No matching Pokemons.
+                </div>
+            );
+        }
 
-        return filtered.map((name: Name, i: number) => (
-            <div key={i}>
-                <Link to={`/pokemon/${name}`}>{name.upper()}</Link>
-            </div>
-        ));
+        const links = filtered.map((name, i) =>
+            <Link key={i} to={`/pokemon/${name}`} className={styles.link}>
+                {name.upper()}
+            </Link>);
+
+        return <div>{links}</div>;
     }
 }
 
 class PokemonsError implements IBodyGetter {
-    body(): string {
-        return 'Couldn\'t retrieve pokemons.';
+    body(): JSX.Element {
+        return (
+            <div className={styles.almostALink}>
+                Couldn't retrieve pokemons.
+            </div>
+        );
     }
 }
