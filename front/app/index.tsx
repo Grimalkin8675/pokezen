@@ -7,6 +7,8 @@ import config from './config';
 import AppRouter from './components/AppRouter';
 import ScalAPIService, { IWSClient } from './services/ScalAPIService';
 
+import './components/styles/base.css';
+
 
 const router = (child: JSX.Element) => <BrowserRouter>{child}</BrowserRouter>;
 const api = Axios.create({
