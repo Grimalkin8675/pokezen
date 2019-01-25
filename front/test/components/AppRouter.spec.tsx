@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import { MemoryRouter } from 'react-router-dom';
 
 import AppRouter from '../../app/components/AppRouter';
-import NotMatch from '../../app/components/NotMatch';
+import NotFound from '../../app/components/NotFound';
 import PokemonDetails from '../../app/components/PokemonDetails';
 import SearchPokemon from '../../app/components/SearchPokemon';
 import Name from '../../app/models/Name';
@@ -23,18 +23,19 @@ describe(AppRouter, () => {
 
         it('should contain SearchPokemon component', () => {
             const searchPokemon = shallow(
-                <SearchPokemon getter={resolveFooBar} />
+                <SearchPokemon getter={resolveFooBar}/>
             );
             const rootIncludesSearchPokemon =
                 root.html().includes(searchPokemon.html());
             expect(rootIncludesSearchPokemon).toBe(true);
         });
 
-        it('shouldn\'t contain NotMatch component', () => {
-            const noMatch = shallow(<NotMatch />);
-            const rootIncludesNotMatch =
-                root.html().includes(noMatch.html());
-            expect(rootIncludesNotMatch).toBe(false);
+        it('shouldn\'t contain NotFound component', () => {
+            const notFound = shallow(
+                <MemoryRouter><NotFound/></MemoryRouter>);
+            const rootIncludesNotFound =
+                root.html().includes(notFound.html());
+            expect(rootIncludesNotFound).toBe(false);
         });
     });
 
@@ -47,11 +48,12 @@ describe(AppRouter, () => {
                        pokemonDetailsGetter={resolveFoo} />
         );
 
-        it('should contain NotMatch component', () => {
-            const noMatch = shallow(<NotMatch />);
-            const kaboumIncludesNotMatch =
-                kaboum.html().includes(noMatch.html());
-            expect(kaboumIncludesNotMatch).toBe(true);
+        it('should contain NotFound component', () => {
+            const notFound = shallow(
+                <MemoryRouter><NotFound/></MemoryRouter>);
+            const kaboumIncludesNotFound =
+                kaboum.html().includes(notFound.html());
+            expect(kaboumIncludesNotFound).toBe(true);
         });
 
         it('should\'t contain SearchPokemon component', () => {

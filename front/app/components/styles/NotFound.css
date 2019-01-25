@@ -1,0 +1,20 @@
+.main {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.message {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.go-back {
+    margin-top: 1em;
+}
+
+.go-back:hover {
+    text-decoration: underline;
+}
