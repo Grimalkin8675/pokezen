@@ -79,7 +79,11 @@ const axiosMock: IWSClient = {
                     ]
                 }
             );
-        } else reject(`url not found: "${url}"`);
+        } else {
+            setTimeout(() => {
+                reject(`url not found: "${url}"`);
+            }, 3000);
+        }
     })
 };
 
