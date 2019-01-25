@@ -1,3 +1,6 @@
+import { capitalize } from 'lodash';
+
+
 export default class Type {
     private type: string;
 
@@ -7,5 +10,9 @@ export default class Type {
 
     toString(): string {
         return this.type;
+    }
+
+    upper(): string {
+        return capitalize(this.type);
     }
 }
