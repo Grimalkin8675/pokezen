@@ -77,7 +77,7 @@ class PokemonLinks implements IBodyGetter {
     body(searchString: string): string | JSX.Element[] {
         if (this.names.isEmpty()) return 'No Pokemons :(';
 
-        const filtered = this.names.filter(searchString.toLowerCase());
+        const filtered = this.names.filterByString(searchString.toLowerCase());
         if (filtered.isEmpty()) return 'No matching Pokemons.';
 
         return filtered.map((name: Name, i: number) => (

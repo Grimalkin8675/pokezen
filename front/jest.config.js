@@ -4,7 +4,7 @@ const path = require('path');
 module.exports = {
     preset: 'ts-jest',
     testEnvironment: 'jsdom',
-    setupTestFrameworkScriptFile: './test-setup.js',
+    setupTestFrameworkScriptFile: './utils/test-setup.js',
     moduleNameMapper: {
         '^.+\\.css$': path.resolve(__dirname, '__mocks__/stylesMock.js'),
     },

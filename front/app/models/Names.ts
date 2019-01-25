@@ -26,7 +26,7 @@ export default class Names {
         return this.names.map(f);
     }
 
-    filter(searchString: string): Names {
+    filterByString(searchString: string): Names {
         const trimed = searchString.trim();
         const filtered = this.names.filter(name => name.includes(trimed));
         return new Names(...filtered);

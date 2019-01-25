@@ -46,31 +46,31 @@ describe(Names, () => {
         });
     });
 
-    describe('filter(substr)', () => {
+    describe('filterByString(substr)', () => {
         it('should return a Names', () => {
-            expect(new Names(new Name('bar')).filter('foo')).toEqual(new Names());
+            expect(new Names(new Name('bar')).filterByString('foo')).toEqual(new Names());
         });
 
         it('should return same Names for an empty string', () => {
             const names = new Names(new Name('foo'));
-            expect(names.filter('')).toEqual(names);
+            expect(names.filterByString('')).toEqual(names);
         });
 
         it('should return same Names for an empty trimed string', () => {
             const names = new Names(new Name('foo'));
-            expect(names.filter('  ')).toEqual(names);
+            expect(names.filterByString('  ')).toEqual(names);
         });
 
         it('should return a complete matching Name', () => {
             const received = new Names(new Name('foo'), new Name('bar'));
             const expected = new Names(new Name('foo'));
-            expect(received.filter(' foo')).toEqual(expected);
+            expect(received.filterByString(' foo')).toEqual(expected);
         });
 
         it('should return a complete matching Name 2', () => {
             const received = new Names(new Name('foo'), new Name('bar'));
             const expected = new Names(new Name('foo'));
-            expect(received.filter('foo')).toEqual(expected);
+            expect(received.filterByString('foo')).toEqual(expected);
         });
 
         it('should return all matching Names', () => {
@@ -80,7 +80,7 @@ describe(Names, () => {
                 new Name('bar')
             );
             const expected = new Names(new Name('foo'), new Name('foobar'));
-            expect(received.filter('foo')).toEqual(expected);
+            expect(received.filterByString('foo')).toEqual(expected);
         });
     });
 });
