@@ -112,7 +112,13 @@ describe(ComparedPokemon, () => {
 
         it('should return undefined if stat doesn\'t exist', () => {
             expect(
-                pokemon.comparedStatToType('nostat', new Type('fire'))
+                pokemon.comparedStatToType('no such stat', new Type('fire'))
+            ).toBeUndefined();
+        });
+
+        it('should return undefined if type doesn\'t exist', () => {
+            expect(
+                pokemon.comparedStatToType('att', new Type('no such type'))
             ).toBeUndefined();
         });
     });
