@@ -102,7 +102,7 @@ class GotPokemon implements IBodyGetter {
                 .map(this.stat);
 
         return (
-            <React.Fragment>
+            <div className={styles.main}>
                 {nameImage}
                 <table className={styles.stats}>
                     {thead}
@@ -110,7 +110,7 @@ class GotPokemon implements IBodyGetter {
                         {stats}
                     </tbody>
                 </table>
-            </React.Fragment>
+            </div>
         );
     }
 
