@@ -1,6 +1,5 @@
 import * as _ from 'lodash';
 
-
 export default class Stat {
     name: string;
     value: number;
@@ -18,5 +17,9 @@ export default class Stat {
             return new Stat(thing.name as string, thing.value as number);
         }
         return null;
+    }
+
+    upper(): string {
+        return _.capitalize(this.name);
     }
 }
