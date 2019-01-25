@@ -101,28 +101,28 @@ describe(ComparedPokemon, () => {
         it('should return a number if comparison exists for stat', () => {
             expect(
                 pokemon.comparedStatToType(
-                    new Stat('def', -1))(new Type('fire'))
+                    new Stat('def', -1), new Type('fire'))
             ).toBe(3);
         });
 
         it('should return a number if comparison exists for stat 2', () => {
             expect(
                 pokemon.comparedStatToType(
-                    new Stat('att', -1))(new Type('fire'))
+                    new Stat('att', -1), new Type('fire'))
             ).toBe(-12);
         });
 
         it('should return undefined if stat doesn\'t exist', () => {
             expect(
                 pokemon.comparedStatToType(
-                    new Stat('no such stat', -1))(new Type('fire'))
+                    new Stat('no such stat', -1), new Type('fire'))
             ).toBeUndefined();
         });
 
         it('should return undefined if type doesn\'t exist', () => {
             expect(
                 pokemon.comparedStatToType(
-                    new Stat('att', -1))(new Type('no such type'))
+                    new Stat('att', -1), new Type('no such type'))
             ).toBeUndefined();
         });
     });
