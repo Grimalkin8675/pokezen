@@ -24,6 +24,14 @@ describe('utils', () => {
                 )
             ).toBe('Foo Bar has 2 less base attack compared to the average water pokemon.');
         });
-            // Pikachu has as much base speed as the average Electric pokemon.
+        it('should return that a pokemon has as much as average', () => {
+            expect(
+                utils.hoverComparedStat(
+                    new Name('BAZ'),
+                    new Stat('defense', 0),
+                    new Type('poison')
+                )
+            ).toBe('Baz has as much base defense as the average poison pokemon.');
+        });
     });
 });
