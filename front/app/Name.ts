@@ -1,4 +1,4 @@
-import { upperFirst } from 'lodash';
+import { capitalize } from 'lodash';
 
 
 export default class Name {
@@ -13,7 +13,10 @@ export default class Name {
     }
 
     upper(): string {
-        return upperFirst(this.name);
+        return this.name
+            .split(/[ -]/)
+            .map(capitalize)
+            .join(' ');
     }
 
     includes(searchString: string): boolean {

@@ -14,6 +14,11 @@ describe(Name, () => {
             expect(typeof upper).toBe('string');
             expect(upper).toBe('Foo');
         });
+
+        it('should handle multiple words names', () => {
+            expect(new Name('foo-bar').upper()).toBe('Foo Bar');
+            expect(new Name('foo bar').upper()).toBe('Foo Bar');
+        });
     });
 
     describe('includes(str)', () => {
