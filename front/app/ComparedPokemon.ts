@@ -62,9 +62,11 @@ export default class ComparedPokemon {
         return null;
     }
 
-    comparedStatToType(statName: string, type: Type): number | undefined {
-        const stat = this.comparedStats.find(s => s.statName === statName);
-        if (stat !== undefined) return stat.comparisons[type.toString()];
-        return undefined;
+    comparedStatToType(stat: Stat): (type: Type) => number | undefined {
+        return (type: Type): number | undefined => {
+            const found = this.comparedStats.find(s => s.statName === stat.name);
+            if (found !== undefined) return found.comparisons[type.toString()];
+            return undefined;
+        };
     }
 }

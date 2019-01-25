@@ -100,25 +100,29 @@ describe(ComparedPokemon, () => {
 
         it('should return a number if comparison exists for stat', () => {
             expect(
-                pokemon.comparedStatToType('def', new Type('fire'))
+                pokemon.comparedStatToType(
+                    new Stat('def', -1))(new Type('fire'))
             ).toBe(3);
         });
 
         it('should return a number if comparison exists for stat 2', () => {
             expect(
-                pokemon.comparedStatToType('att', new Type('fire'))
+                pokemon.comparedStatToType(
+                    new Stat('att', -1))(new Type('fire'))
             ).toBe(-12);
         });
 
         it('should return undefined if stat doesn\'t exist', () => {
             expect(
-                pokemon.comparedStatToType('no such stat', new Type('fire'))
+                pokemon.comparedStatToType(
+                    new Stat('no such stat', -1))(new Type('fire'))
             ).toBeUndefined();
         });
 
         it('should return undefined if type doesn\'t exist', () => {
             expect(
-                pokemon.comparedStatToType('att', new Type('no such type'))
+                pokemon.comparedStatToType(
+                    new Stat('att', -1))(new Type('no such type'))
             ).toBeUndefined();
         });
     });
