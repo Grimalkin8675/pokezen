@@ -1,4 +1,4 @@
-import Type from '../app/Type';
+import Type from '../../app/models/Type';
 
 describe(Type, () => {
     describe('upper()', () => {

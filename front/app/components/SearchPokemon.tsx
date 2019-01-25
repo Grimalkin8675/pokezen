@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 
-import Names from '../Names';
-import Name from '../Name';
+import Names from '../models/Names';
+import Name from '../models/Name';
 
 
 export interface IPokemonsGetter {

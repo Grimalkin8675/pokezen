@@ -3,7 +3,7 @@ import { mount, shallow } from 'enzyme';
 import { MemoryRouter } from 'react-router-dom';
 
 import PokemonDetails from '../../app/components/PokemonDetails';
-import Name from '../../app/Name';
+import Name from '../../app/models/Name';
 import { resolveFoo } from '../__mocks__/pokemonDetailsGetters';
 
 

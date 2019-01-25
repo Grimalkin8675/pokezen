@@ -1,6 +1,6 @@
-import Name from './Name';
-import Stat from './Stat';
-import Type from './Type';
+import Name from './models/Name';
+import Stat from './models/Stat';
+import Type from './models/Type';
 
 
 export const hoverComparedStat = (

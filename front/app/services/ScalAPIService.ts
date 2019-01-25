@@ -1,8 +1,8 @@
 import { IPokemonsGetter } from '../components/SearchPokemon';
 import { IPokemonDetailsGetter } from '../components/PokemonDetails';
-import Names from '../Names';
-import ComparedPokemon from '../ComparedPokemon';
-import Name from '../Name';
+import Names from '../models/Names';
+import ComparedPokemon from '../models/ComparedPokemon';
+import Name from '../models/Name';
 
 
 export interface IWSClient {

@@ -6,7 +6,7 @@ import AppRouter from '../../app/components/AppRouter';
 import NotMatch from '../../app/components/NotMatch';
 import PokemonDetails from '../../app/components/PokemonDetails';
 import SearchPokemon from '../../app/components/SearchPokemon';
-import Name from '../../app/Name';
+import Name from '../../app/models/Name';
 import { resolveFooBar } from '../__mocks__/pokemonsGetters';
 import { resolveFoo } from '../__mocks__/pokemonDetailsGetters';
 

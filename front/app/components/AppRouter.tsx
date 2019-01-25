@@ -4,7 +4,7 @@ import { Route, Switch, RouteComponentProps } from 'react-router-dom';
 import NotMatch from './NotMatch';
 import PokemonDetails, { IPokemonDetailsGetter } from './PokemonDetails';
 import SearchPokemon, { IPokemonsGetter } from './SearchPokemon';
-import Name from '../Name';
+import Name from '../models/Name';
 
 
 interface IProps {

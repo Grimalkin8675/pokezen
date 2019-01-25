@@ -1,4 +1,4 @@
-import Name from '../app/Name';
+import Name from '../../app/models/Name';
 
 
 describe(Name, () => {

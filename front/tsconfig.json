@@ -20,9 +20,6 @@
         "alwaysStrict": true
     },
     "include": [
-        "./app/*"
-    ],
-    "exclude": [
-        "./app/__tests__/*"
+        "./app/**/*"
     ]
 }

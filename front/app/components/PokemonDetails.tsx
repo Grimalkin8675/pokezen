@@ -1,9 +1,9 @@
 import * as React from 'react';
 
-import ComparedPokemon from '../ComparedPokemon';
-import Stat from '../Stat';
-import Name from '../Name';
-import Type from '../Type';
+import ComparedPokemon from '../models/ComparedPokemon';
+import Stat from '../models/Stat';
+import Name from '../models/Name';
+import Type from '../models/Type';
 
 import * as styles from './styles/PokemonDetails.css';
 import { hoverComparedStat } from '../utils';

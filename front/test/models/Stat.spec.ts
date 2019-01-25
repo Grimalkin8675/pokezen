@@ -1,4 +1,4 @@
-import Stat from '../app/Stat';
+import Stat from '../../app/models/Stat';
 
 describe(Stat, () => {
     describe('upper()', () => {

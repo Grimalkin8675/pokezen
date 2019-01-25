@@ -1,9 +1,9 @@
-import ComparedPokemon from '../app/ComparedPokemon';
-import Name from '../app/Name';
-import ImageURL from '../app/ImageURL';
-import Type from '../app/Type';
-import Stat from '../app/Stat';
-import ComparedStat from '../app/ComparedStat';
+import ComparedPokemon from '../../app/models/ComparedPokemon';
+import Name from '../../app/models/Name';
+import ImageURL from '../../app/models/ImageURL';
+import Type from '../../app/models/Type';
+import Stat from '../../app/models/Stat';
+import ComparedStat from '../../app/models/ComparedStat';
 
 
 describe(ComparedPokemon, () => {

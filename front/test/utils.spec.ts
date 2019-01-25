@@ -1,7 +1,7 @@
 import * as utils from '../app/utils';
-import Name from '../app/Name';
-import Type from '../app/Type';
-import Stat from '../app/Stat';
+import Name from '../app/models/Name';
+import Type from '../app/models/Type';
+import Stat from '../app/models/Stat';
 
 
 describe('utils', () => {
