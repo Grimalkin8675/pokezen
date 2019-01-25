@@ -5,8 +5,9 @@ import Stat from '../models/Stat';
 import Name from '../models/Name';
 import Type from '../models/Type';
 
-import * as styles from './styles/PokemonDetails.css';
 import { hoverComparedStat } from '../utils';
+
+import * as styles from './styles/PokemonDetails.css';
 
 
 export interface IPokemonDetailsGetter {
