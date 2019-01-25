@@ -1,0 +1,69 @@
+.name-image {
+    display: flex;
+    justify-content: space-between;
+}
+
+.image {
+    height: 5em;
+    width: 5em;
+    background-color: lightgrey;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    border: 2px solid black;
+}
+
+.empty-image {
+    position: absolute;
+    color: grey;
+    font-size: 5em;
+}
+
+.image>img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+
+.stats {
+    border-collapse: collapse;
+}
+
+.stats th:not(.base-stats-th), .stats td:not(.base-stat) {
+    padding: 0.67em;
+}
+
+.stats th:not(.base-stats-th) {
+    text-align: left;
+}
+
+.stats th:not(.datas-title) {
+    font-weight: normal;
+}
+
+.datas-title {
+    font-size: 1.33em;
+    font-weight: bold;
+    vertical-align: top;
+}
+
+.base-stat, .compared-stat {
+    text-align: center;
+}
+
+.base-stat, .base-stats-th {
+    padding: 0.67em 4em 0.67em 2em;
+}
+
+.base-stat {
+    font-weight: bold;
+}
+
+.green {
+    color: green;
+}
+
+.red {
+    color: red;
+}
