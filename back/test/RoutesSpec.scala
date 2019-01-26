@@ -47,8 +47,11 @@ class RoutesWithMockSpec extends PlaySpec with GuiceOneAppPerTest {
     }
 
     "send 200 on a valid request (/pokemon/foo/upvote)" in {
-      route(app, FakeRequest(POST, "/pokemon/foo/upvote"))
-        .map(status(_)) mustBe Some(OK)
+      route(
+        app,
+        FakeRequest(POST, "/pokemon/foo/upvote")
+          .withHeaders("Remote-Address" -> "nice address"))
+      .map(status(_)) mustBe Some(OK)
     }
   }
 }
