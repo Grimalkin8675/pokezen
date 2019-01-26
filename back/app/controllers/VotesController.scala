@@ -15,7 +15,7 @@ trait VoteEventWritable {
 
 @Singleton
 case class VotesController @Inject()(
-  eventWriteService: VoteEventWritable,
+  voteEventsService: VoteEventWritable,
   cc: ControllerComponents
 )(
   implicit ec: ExecutionContext
