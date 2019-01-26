@@ -1,2 +1,4 @@
 GET     /pokemons                   pokezen.controllers.PokemonsController.pokemons
 GET     /pokemon/:name              pokezen.controllers.PokemonsController.pokemon(name: String)
+
+POST    /pokemon/:name/upvote       pokezen.controllers.VotesController.upvote(name: String)

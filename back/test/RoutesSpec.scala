@@ -20,6 +20,11 @@ class RoutesSpec extends PlaySpec with GuiceOneAppPerTest {
       route(app, FakeRequest(GET, "/boum"))
         .map(status(_)) mustBe Some(NOT_FOUND)
     }
+
+    "send 200 on a valid request (/pokemon/foo/upvote)" in {
+      route(app, FakeRequest(POST, "/pokemon/foo/upvote"))
+        .map(status(_)) mustBe Some(OK)
+    }
   }
 }
 
