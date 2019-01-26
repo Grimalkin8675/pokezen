@@ -7,7 +7,7 @@ import pokezen.controllers.VoteEventWritable
 import pokezen.models.VoteEvent
 
 
-case class MockVoteEventWriteService() extends VoteEventWritable {
+case class MockVoteEventService() extends VoteEventWritable {
   implicit val ec = ExecutionContext.global
 
   var events: List[VoteEvent] = List.empty[VoteEvent]
