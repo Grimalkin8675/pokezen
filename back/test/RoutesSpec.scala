@@ -5,8 +5,8 @@ import play.api.test.Helpers._
 import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
 
-import tests.MockPokemonsService
-import pokezen.controllers.PokemonsService
+import tests.{MockPokemonsService, MockVoteEventWriteService}
+import pokezen.controllers.{PokemonsService, VoteEventWritable}
 
 
 class RoutesSpec extends PlaySpec with GuiceOneAppPerTest {
@@ -20,11 +20,6 @@ class RoutesSpec extends PlaySpec with GuiceOneAppPerTest {
       route(app, FakeRequest(GET, "/boum"))
         .map(status(_)) mustBe Some(NOT_FOUND)
     }
-
-    "send 200 on a valid request (/pokemon/foo/upvote)" in {
-      route(app, FakeRequest(POST, "/pokemon/foo/upvote"))
-        .map(status(_)) mustBe Some(OK)
-    }
   }
 }
 
@@ -32,6 +27,7 @@ class RoutesSpec extends PlaySpec with GuiceOneAppPerTest {
 class RoutesWithMockSpec extends PlaySpec with GuiceOneAppPerTest {
   override def fakeApplication() = new GuiceApplicationBuilder()
     .overrides(bind[PokemonsService].to[MockPokemonsService])
+    .overrides(bind[VoteEventWritable].to[MockVoteEventWriteService])
     .build()
 
   "Routes with mock" should {
@@ -48,6 +44,11 @@ class RoutesWithMockSpec extends PlaySpec with GuiceOneAppPerTest {
     "send 400 for an inexisting pokemon (/pokemon/kaboum)" in {
       route(app, FakeRequest(GET, "/pokemon/kaboum"))
         .map(status(_)) mustBe Some(NOT_FOUND)
+    }
+
+    "send 200 on a valid request (/pokemon/foo/upvote)" in {
+      route(app, FakeRequest(POST, "/pokemon/foo/upvote"))
+        .map(status(_)) mustBe Some(OK)
     }
   }
 }
