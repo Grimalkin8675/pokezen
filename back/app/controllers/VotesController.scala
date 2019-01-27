@@ -32,8 +32,7 @@ case class VotesController @Inject()(
             // improve this, as it could also be a ServerError
           })
         .getOrElse(Future {
-          val message = "Server couldn't identify you."
-          ???
+          InternalServerError("Server couldn't identify you.")
         })
   }
 }

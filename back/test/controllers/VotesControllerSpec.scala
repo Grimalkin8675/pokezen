@@ -54,5 +54,14 @@ class VotesControllerSpec extends PlaySpec {
       result.header.status mustBe BAD_REQUEST
       voteEventsService.events.size mustBe 1
     }
+
+    "return InternalServerError when user couldn't be identified" in {
+      val controller =
+        VotesController(MockVoteEventsService(), stubControllerComponents())
+      val upVote = controller.upvote("whatever").apply(FakeRequest())
+      val result = Await.result(upVote, 1 second)
+
+      result.header.status mustBe INTERNAL_SERVER_ERROR
+    }
   }
 }
