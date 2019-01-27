@@ -9,6 +9,16 @@ networks:
         - subnet: 10.16.0.0/24
 
 services:
+  mongodb:
+    image: mongo:4.0.3-xenial
+    hostname: pokemongo
+    networks:
+      - pokezen
+    ports:
+      - 27017
+    environment:
+      MONGO_INITDB_DATABASE: pokezen
+
   scalapi:
     build: ./back
     image: pokezen-back:latest
@@ -22,7 +32,5 @@ services:
     build: ./front
     image: pokezen-front:latest
     hostname: reactfront
-    networks:
-      - pokezen
     ports:
       - 51265:51265

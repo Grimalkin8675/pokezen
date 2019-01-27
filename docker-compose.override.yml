@@ -3,6 +3,9 @@ version: '3'
 # development
 
 services:
+  mongodb:
+    container_name: pokezen_mondodb
+
   scalapi:
     container_name: pokezen_scalapi
     volumes:
