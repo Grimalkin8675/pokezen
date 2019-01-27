@@ -13,7 +13,10 @@ case class MockVoteEventsService() extends VoteEventWritable {
   var events: List[VoteEvent] = List.empty[VoteEvent]
 
   def write(event: VoteEvent): Future[Try[String]] = Future {
-    events :+= event
-    Success("event added")
+    if (events.contains(event)) Failure(new Exception("you already voted"))
+    else {
+      events :+= event
+      Success("event added")
+    }
   }
 }

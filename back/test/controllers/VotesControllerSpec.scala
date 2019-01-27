@@ -4,7 +4,7 @@ import scala.concurrent._
 import scala.concurrent.duration._
 import play.api.mvc._
 import play.api.test.FakeRequest
-import play.api.test.Helpers.stubControllerComponents
+import play.api.test.Helpers._
 
 import tests.MockVoteEventsService
 import pokezen.controllers.VotesController
@@ -30,7 +30,29 @@ class VotesControllerSpec extends PlaySpec {
       voteEventsService.events.head match {
         case upVote: UpVote =>
           upVote.pokemonName mustBe PokemonName("foo")
+        case _ => Unit // should never happen
       }
+    }
+
+    "return BadRequest when user already voted" in {
+      val voteEventsService = MockVoteEventsService()
+      val controller =
+        VotesController(voteEventsService, stubControllerComponents())
+      val fakeRequest =
+        FakeRequest().withHeaders("Remote-Address" -> "nice address")
+
+      voteEventsService.events.size mustBe 0
+
+      val firstUpVote = controller.upvote("foo").apply(fakeRequest)
+      Await.result(firstUpVote, 1 second)
+
+      voteEventsService.events.size mustBe 1
+
+      val secondUpVote = controller.upvote("foo").apply(fakeRequest)
+      val result = Await.result(secondUpVote, 1 second)
+
+      result.header.status mustBe BAD_REQUEST
+      voteEventsService.events.size mustBe 1
     }
   }
 }
