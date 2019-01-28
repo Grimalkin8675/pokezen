@@ -4,7 +4,7 @@ version: '3'
 
 services:
   mongodb:
-    container_name: pokezen_mondodb
+    container_name: pokezen_mongodb
 
   scalapi:
     container_name: pokezen_scalapi

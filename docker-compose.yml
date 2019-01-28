@@ -6,12 +6,12 @@ networks:
   pokezen:
     ipam:
       config:
-        - subnet: 10.16.0.0/24
+        - subnet: 10.42.84.0/24
 
 services:
   mongodb:
-    image: mongo:4.0.3-xenial
-    hostname: pokemongo
+    image: mongo:4.1.7-xenial
+    hostname: mongodb
     networks:
       - pokezen
     ports:
@@ -32,5 +32,7 @@ services:
     build: ./front
     image: pokezen-front:latest
     hostname: reactfront
+    networks:
+      - pokezen
     ports:
       - 51265:51265
