@@ -16,7 +16,7 @@ case class PokeAPIService @Inject()(
 ) extends PokemonsService {
 
   private def getAndMap[A](route: String)
-                  (implicit rds: Reads[A]): Future[Option[A]] = {
+                          (implicit rds: Reads[A]): Future[Option[A]] = {
     val apiUrl = "https://pokeapi.co/api/v2"
 
     def validateResponse(response: WSResponse): Option[A] =
