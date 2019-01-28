@@ -6,7 +6,7 @@ import play.api.mvc._
 import scala.concurrent._
 import scala.util._
 
-import pokezen.models.{PokemonName, VoteEvent, UpVote}
+import pokezen.models._
 
 
 trait VoteEventWritable {
@@ -25,7 +25,7 @@ case class VotesController @Inject()(
       request.headers.get("Remote-Address")
         .map(remoteAddress =>
           voteEventsService.write(
-            UpVote(remoteAddress, PokemonName(pokemonName)))
+            UpVoted(remoteAddress, PokemonName(pokemonName)))
           .map {
             case Success(message) => Ok(message)
             case Failure(error) => BadRequest(error.toString)

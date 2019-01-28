@@ -8,7 +8,7 @@ import play.api.test.Helpers._
 
 import tests.MockVoteEventsService
 import pokezen.controllers.VotesController
-import pokezen.models.{UpVote, PokemonName}
+import pokezen.models._
 
 
 class VotesControllerSpec extends PlaySpec {
@@ -26,9 +26,9 @@ class VotesControllerSpec extends PlaySpec {
       Await.result(result, 1 second)
 
       voteEventsService.events.size mustBe 1
-      voteEventsService.events.head.isInstanceOf[UpVote] mustBe true
+      voteEventsService.events.head.isInstanceOf[UpVoted] mustBe true
       voteEventsService.events.head match {
-        case upVote: UpVote =>
+        case upVote: UpVoted =>
           upVote.pokemonName mustBe PokemonName("foo")
         case _ => Unit // should never happen
       }
