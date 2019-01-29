@@ -1,3 +1,4 @@
+const path = require('path');
 const merge = require('webpack-merge');
 
 const common = require('./webpack.common.js');
@@ -16,5 +17,22 @@ module.exports = merge(common, {
         historyApiFallback: true,
         inline: true, // iframe or inline script
         host: '0.0.0.0',
+    },
+    module: {
+        rules: [
+            {
+                test: /\.tsx?$/,
+                use: [
+                    {
+                        loader: 'tslint-loader',
+                        enforce: 'pre',
+                        options: {
+                            typeCheck: true,
+                            configFile: path.relative(__dirname, 'tslint.json'),
+                        }
+                    },
+                ],
+            },
+        ]
     },
 });

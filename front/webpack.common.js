@@ -18,13 +18,6 @@ module.exports = {
                 test: /\.tsx?$/,
                 use: [
                     'awesome-typescript-loader',
-                    {
-                        loader: 'tslint-loader',
-                        options: {
-                            typeCheck: true,
-                            configFile: path.relative(__dirname, 'tslint.json'),
-                        }
-                    },
                 ],
             },
             // css
