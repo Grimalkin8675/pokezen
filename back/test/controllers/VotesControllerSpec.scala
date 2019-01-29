@@ -2,11 +2,13 @@ import org.scalatestplus.play._
 
 import scala.concurrent._
 import scala.concurrent.duration._
+import play.api._
 import play.api.mvc._
+import play.api.mvc.Results.BadRequest
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 
-import tests.MockVoteEventsService
+import tests.MockVotesService
 import pokezen.controllers.VotesController
 import pokezen.models._
 
@@ -14,54 +16,51 @@ import pokezen.models._
 class VotesControllerSpec extends PlaySpec {
   implicit val ec = ExecutionContext.global
 
-  "VotesController.upvote(pokemonName)" should {
-    "add an upvote event to eventsService" in {
-      val voteEventsService = MockVoteEventsService()
+  "VotesController.vote(pokemonName, voteValue)" should {
+    "vote for pokemon in votesService" in {
+      val votesService = MockVotesService()
       val controller =
-        VotesController(voteEventsService, stubControllerComponents())
+        VotesController(votesService, stubControllerComponents())
       val result: Future[Result] =
-        controller.upvote("foo")
+        controller.vote("foo", 12)
           .apply(FakeRequest()
             .withHeaders("Remote-Address" -> "nice address"))
       Await.result(result, 1 second)
 
-      voteEventsService.events.size mustBe 1
-      voteEventsService.events.head.isInstanceOf[UpVoted] mustBe true
-      voteEventsService.events.head match {
-        case upVote: UpVoted =>
-          upVote.pokemonName mustBe PokemonName("foo")
-        case _ => Unit // should never happen
-      }
+      votesService.votes mustBe Map(
+        PokemonName("foo") -> Map("nice address" -> 12))
     }
 
     "return BadRequest when user already voted" in {
-      val voteEventsService = MockVoteEventsService()
+      val votesService = MockVotesService()
       val controller =
-        VotesController(voteEventsService, stubControllerComponents())
+        VotesController(votesService, stubControllerComponents())
       val fakeRequest =
         FakeRequest().withHeaders("Remote-Address" -> "nice address")
 
-      voteEventsService.events.size mustBe 0
+      votesService.votes mustBe Map.empty[PokemonName, Map[String, Int]]
 
-      val firstUpVote = controller.upvote("foo").apply(fakeRequest)
-      Await.result(firstUpVote, 1 second)
+      val firstVote = controller.vote("foo", 1).apply(fakeRequest)
+      Await.result(firstVote, 1 second)
 
-      voteEventsService.events.size mustBe 1
+      votesService.votes mustBe Map(
+        PokemonName("foo") -> Map("nice address" -> 1))
 
-      val secondUpVote = controller.upvote("foo").apply(fakeRequest)
-      val result = Await.result(secondUpVote, 1 second)
+      val secondVote = controller.vote("foo", 1).apply(fakeRequest)
+      val result = Await.result(secondVote, 1 second)
 
-      result.header.status mustBe BAD_REQUEST
-      voteEventsService.events.size mustBe 1
+      result mustBe BadRequest("You already voted this.")
+      votesService.votes mustBe Map(
+        PokemonName("foo") -> Map("nice address" -> 1))
     }
 
-    "return InternalServerError when user couldn't be identified" in {
+    "return BadRequest when user couldn't be identified" in {
       val controller =
-        VotesController(MockVoteEventsService(), stubControllerComponents())
-      val upVote = controller.upvote("whatever").apply(FakeRequest())
-      val result = Await.result(upVote, 1 second)
+        VotesController(MockVotesService(), stubControllerComponents())
+      val vote = controller.vote("whatever", -1).apply(FakeRequest())
+      val result = Await.result(vote, 1 second)
 
-      result.header.status mustBe INTERNAL_SERVER_ERROR
+      result mustBe BadRequest("Server couldn't identify you.")
     }
   }
 }

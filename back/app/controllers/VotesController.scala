@@ -9,30 +9,35 @@ import scala.util._
 import pokezen.models._
 
 
-trait VoteEventWritable {
-  def write(event: VoteEvent): Future[Try[String]]
+trait Voteable {
+  def vote(
+    remoteAddress: String,
+    name: PokemonName,
+    voteValue: Int): Future[Boolean]
 }
 
 @Singleton
 case class VotesController @Inject()(
-  voteEventsService: VoteEventWritable,
+  votesService: Voteable,
   cc: ControllerComponents
 )(
   implicit ec: ExecutionContext
 ) extends AbstractController(cc) {
-  def upvote(pokemonName: String): Action[AnyContent] = Action.async {
-    request =>
-      request.headers.get("Remote-Address")
-        .map(remoteAddress =>
-          voteEventsService.write(
-            UpVoted(remoteAddress, PokemonName(pokemonName)))
-          .map {
-            case Success(message) => Ok(message)
-            case Failure(error) => BadRequest(error.toString)
-            // improve this, as it could also be a ServerError
+  def vote(pokemonName: String, voteValue: Int): Action[AnyContent] =
+    Action.async {
+      request =>
+        request.headers.get("Remote-Address")
+          .map(remoteAddress =>
+            votesService.vote(
+              remoteAddress,
+              PokemonName(pokemonName),
+              voteValue)
+            .map { added =>
+              if (added) Ok("Vote added.")
+              else BadRequest("You already voted this.")
+            })
+          .getOrElse(Future {
+            BadRequest("Server couldn't identify you.")
           })
-        .getOrElse(Future {
-          InternalServerError("Server couldn't identify you.")
-        })
-  }
+    }
 }
