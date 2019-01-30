@@ -22,10 +22,10 @@ module.exports = merge(common, {
         rules: [
             {
                 test: /\.tsx?$/,
+                enforce: 'pre',
                 use: [
                     {
                         loader: 'tslint-loader',
-                        enforce: 'pre',
                         options: {
                             typeCheck: true,
                             configFile: path.relative(__dirname, 'tslint.json'),
